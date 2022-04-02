@@ -1,7 +1,7 @@
 import 'package:eathub/screens/select_card_screen.dart';
 import 'package:flutter/material.dart';
 
-enum CardStatus { like, yet, nope }
+enum CardStatus { like, yet, nope, nothing }
 const cardReturnMillisecond = 400;
 
 const List<Widget> homeScreenItems = [

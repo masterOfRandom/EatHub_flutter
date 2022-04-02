@@ -1,7 +1,10 @@
 import 'dart:math';
 import 'package:eathub/getx/getx_controller.dart';
 import 'package:eathub/utils/colors.dart';
+import 'package:eathub/utils/global_style.dart';
 import 'package:eathub/utils/global_var.dart';
+import 'package:eathub/widgets/brief_description.dart';
+import 'package:eathub/widgets/like_nope_yet_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -51,42 +54,46 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
             Expanded(
               child: Container(
                 alignment: Alignment.center,
-                padding: EdgeInsets.all(16),
+                padding: EdgeInsets.only(left: 8, top: 8, right: 8),
                 child: buildCards(),
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                CircleAvatar(
-                  backgroundColor: Colors.white,
-                  radius: 30,
-                  child: Icon(
-                    Icons.close_rounded,
-                    color: Color(0xFF630000),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 12),
-                  child: CircleAvatar(
-                    backgroundColor: primaryColor,
+            Container(
+              padding: EdgeInsets.all(16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  CircleAvatar(
+                    backgroundColor: Color(0xFFC25858),
                     radius: 44,
                     child: Icon(
-                      Icons.favorite,
+                      Icons.star,
                       color: Colors.white,
                       size: 42,
                     ),
                   ),
-                ),
-                CircleAvatar(
-                  backgroundColor: Colors.white,
-                  radius: 30,
-                  child: Icon(
-                    Icons.star,
-                    color: Color(0xFF630000),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 12),
+                    child: CircleAvatar(
+                      backgroundColor: Colors.white,
+                      radius: 30,
+                      child: Icon(
+                        Icons.close_rounded,
+                        color: Color(0xFF630000),
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                  CircleAvatar(
+                    backgroundColor: secondaryColor,
+                    radius: 44,
+                    child: Icon(
+                      Icons.favorite_rounded,
+                      color: Colors.white,
+                      size: 42,
+                    ),
+                  ),
+                ],
+              ),
             )
           ],
         ),
@@ -125,8 +132,8 @@ class _TinderCardState extends State<TinderCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: widget.isFront ? buildFrontCard() : buildCard(),
+    return SizedBox.expand(
+      child: widget.isFront ? buildFrontCard() : buildCard(false),
     );
   }
 
@@ -151,7 +158,7 @@ class _TinderCardState extends State<TinderCard> {
             curve: Curves.easeInOut,
             transform: resultMatrix,
             duration: Duration(milliseconds: milliseconds),
-            child: buildCard(),
+            child: buildCard(true),
           );
         });
       }),
@@ -167,17 +174,32 @@ class _TinderCardState extends State<TinderCard> {
     );
   }
 
-  Widget buildCard() {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(
-          Radius.circular(20),
+  Widget buildCard(bool isFront) {
+    return Column(
+      children: [
+        Expanded(
+          child: Stack(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.vertical(top: cardRadius),
+                  image: DecorationImage(
+                    image: NetworkImage(widget.urlImage),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              isFront ? const LikeNopeYetChecker() : Container(),
+            ],
+          ),
         ),
-        image: DecorationImage(
-          image: NetworkImage(widget.urlImage),
-          fit: BoxFit.cover,
+        const BriefDescription(
+          name: '리애',
+          address: '서울 강남구 선릉로 16길 6',
+          menu: '로스(등심)까스, 히레(안심)까스, 프리미엄 로스(등심)',
+          rating: 4.24,
         ),
-      ),
+      ],
     );
   }
 }

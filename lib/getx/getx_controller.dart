@@ -9,6 +9,8 @@ class GController extends GetxController {
   var screenSize = Size.zero.obs;
   var angle = 0.0.obs;
   var imageUrls = <String>[].obs;
+  var statusPoint = 0.0.obs;
+  var status = CardStatus.nothing.obs;
 
   void startPosition(DragStartDetails details) {
     isDragging.value = true;
@@ -17,54 +19,68 @@ class GController extends GetxController {
   void updatePosition(DragUpdateDetails details) {
     position.value += details.delta;
     final x = position.value.dx;
+    final y = position.value.dy;
+    status.value = getStatusAndUpdateStatusPoint();
+
     angle.value = 40 * x / screenSize.value.width;
   }
 
   void endPosition() {
     isDragging.value = false;
 
-    final status = getStatus();
-
-    if (status != null) {
-      Fluttertoast.cancel();
-      Fluttertoast.showToast(
-        msg: status.toString().split('.').last.toUpperCase(),
-        fontSize: 36,
-      );
-    }
-
-    switch (status) {
-      case CardStatus.like:
-        like();
-        break;
-      case CardStatus.nope:
-        nope();
-        break;
-      case CardStatus.yet:
-        yet();
-        break;
-      default:
-        resetPosition();
+    if (statusPoint.value > 60) {
+      switch (status.value) {
+        case CardStatus.like:
+          like();
+          break;
+        case CardStatus.nope:
+          nope();
+          break;
+        case CardStatus.yet:
+          yet();
+          break;
+        default:
+          resetPosition();
+      }
+    } else {
+      resetPosition();
     }
   }
 
   void resetPosition() {
     position.value = Offset.zero;
     angle.value = 0;
+    statusPoint.value = 0;
+    status.value = CardStatus.nothing;
   }
 
-  CardStatus? getStatus() {
+  CardStatus getStatusAndUpdateStatusPoint() {
     final x = position.value.dx;
     final y = position.value.dy;
 
-    final delta = 110;
-
-    if (x >= delta) {
-      return CardStatus.like;
-    } else if (x <= -delta) {
-      return CardStatus.yet;
-    } else if (y <= -delta) {
-      return CardStatus.nope;
+    // 더 좋은 방법이 있을까?
+    // 애니메이션이 느려진다면 여기를 의심하자.
+    if (y > 0) {
+      if (x > 0) {
+        statusPoint.value = x;
+        return CardStatus.like;
+      } else {
+        statusPoint.value = -x;
+        return CardStatus.yet;
+      }
+    } else {
+      if (x < y) {
+        statusPoint.value = y - x;
+        return CardStatus.yet;
+      } else {
+        if (-y > x) {
+          statusPoint.value = -y - x;
+          return CardStatus.nope;
+        } else {
+          statusPoint.value = x + y;
+          return CardStatus.like;
+        }
+      }
     }
   }
 
@@ -96,20 +112,20 @@ class GController extends GetxController {
 
   void resetUsers() {
     imageUrls.value = <String>[
-      'https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cGVyc29ufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
-      'https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
-      'https://images.unsplash.com/photo-1554151228-14d9def656e4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
-      'https://images.unsplash.com/photo-1552058544-f2b08422138a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8cGVyc29ufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
-      'https://images.unsplash.com/photo-1491349174775-aaafddd81942?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8cGVyc29ufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
-      'https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fHBlcnNvbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=900&q=60',
-      'https://images.unsplash.com/photo-1542206395-9feb3edaa68d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjV8fHBlcnNvbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=900&q=60',
-      'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzV8fHBlcnNvbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=900&q=60',
-      'https://images.unsplash.com/photo-1614786269829-d24616faf56d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDN8fHBlcnNvbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=900&q=60',
-      'https://images.unsplash.com/photo-1607346256330-dee7af15f7c5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDl8fHBlcnNvbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=900&q=60',
-      'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NTl8fHBlcnNvbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=900&q=60',
-      'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NjV8fHBlcnNvbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=900&q=60',
-      'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NzR8fHBlcnNvbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=900&q=60',
-      'https://images.unsplash.com/photo-1618835962148-cf177563c6c0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nzh8fHBlcnNvbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=900&q=60',
+      'https://img1.kakaocdn.net/cthumb/local/R0x420/?fname=http%3A%2F%2Ft1.daumcdn.net%2Fplace%2FCF25058968C0493096142CA35FC89EFC',
+      'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fmyplace-phinf.pstatic.net%2F20220220_263%2F1645354113369xzzBW_JPEG%2Fupload_3d6f35dbf92c77cee0c3f911b6cd3645.jpeg',
+      'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fmyplace-phinf.pstatic.net%2F20220322_113%2F1647954093603xlgUO_JPEG%2Fupload_2eb34d32de6381efe8b2c2acde455ef3.jpg',
+      'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fmyplace-phinf.pstatic.net%2F20220320_14%2F16477769214678csvB_JPEG%2Fupload_fca1f7a89e4baacf8f0eb200cc45f4fb.jpeg',
+      'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fmyplace-phinf.pstatic.net%2F20220323_104%2F1648026669604abgGH_JPEG%2Fupload_620d47847e212b5eb21072fb91dc9a00.jpg',
+      'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fmyplace-phinf.pstatic.net%2F20220220_29%2F1645334336147IFgpJ_JPEG%2Fupload_35eddb097619a344b7e5593deb6f4838.jpeg',
+      'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fmyplace-phinf.pstatic.net%2F20220214_182%2F1644821957660AoUWW_JPEG%2Fupload_6ea743f055f5bdc06fd00b8407c0a49f.jpg',
+      'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fmyplace-phinf.pstatic.net%2F20211205_197%2F1638701820259A7VOe_JPEG%2Fupload_2a6644e831c0975fc308b135e4fb281d.jpeg',
+      'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fmyplace-phinf.pstatic.net%2F20220127_157%2F16432721394834rkCr_JPEG%2Fupload_c820a17c54a53775fc56a1f3d42f3d4e.jpg',
+      'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fmyplace-phinf.pstatic.net%2F20220314_78%2F1647233279516afaso_JPEG%2Fupload_c1c19a6bea26b1795a5871d101476c11.jpeg',
+      'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fmyplace-phinf.pstatic.net%2F20220326_132%2F1648284109890clh1g_JPEG%2Fupload_3756a5d1d658bb9498ce1c83455ea6a2.jpeg',
+      'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fmyplace-phinf.pstatic.net%2F20220106_74%2F16414668482766EcCl_JPEG%2Fupload_e4a79787ae6edf189a338f942a1b90e7.jpeg',
+      'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fmyplace-phinf.pstatic.net%2F20211129_6%2F1638117062735Ttf7C_JPEG%2Fupload_35728b53a04a08eccee61bb717566dcc.jpeg',
+      'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fmyplace-phinf.pstatic.net%2F20220220_233%2F164535712940788D6z_JPEG%2Fupload_7e029521127db0675764585122e8d9e5.jpeg',
     ].reversed.toList();
   }
 

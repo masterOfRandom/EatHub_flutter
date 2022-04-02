@@ -18,7 +18,7 @@ class _MobileLayoutScreenState extends State<MobileLayoutScreen> {
     return Scaffold(
       backgroundColor: mobileBackgroundColor,
       appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: primaryColor,
           title: Image(
             image: Image.asset('assets/eathub_title_logo.png').image,
           )),
@@ -27,7 +27,7 @@ class _MobileLayoutScreenState extends State<MobileLayoutScreen> {
           setState(() => selectedIndex = value);
         }),
         currentIndex: selectedIndex,
-        selectedItemColor: primaryColor,
+        selectedItemColor: secondaryColor,
         unselectedItemColor: Colors.grey,
         enableFeedback: false,
         type: BottomNavigationBarType.fixed,
