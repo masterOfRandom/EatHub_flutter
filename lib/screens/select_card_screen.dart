@@ -62,30 +62,58 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
               padding: EdgeInsets.all(16),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  CircleAvatar(
-                    backgroundColor: Color(0xFFC25858),
-                    radius: 44,
+                children: [
+                  Container(
+                    height: 88,
+                    width: 88,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Color(0xFFC25858),
+                      boxShadow: [
+                        BoxShadow(
+                            offset: Offset(0, 10),
+                            blurRadius: 10,
+                            color: Color.fromARGB(51, 85, 85, 85))
+                      ],
+                    ),
                     child: Icon(
                       Icons.star,
                       color: Colors.white,
                       size: 42,
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 12),
-                    child: CircleAvatar(
-                      backgroundColor: Colors.white,
-                      radius: 30,
-                      child: Icon(
-                        Icons.close_rounded,
-                        color: Color(0xFF630000),
-                      ),
+                  Container(
+                    width: 60,
+                    height: 60,
+                    margin: EdgeInsets.symmetric(horizontal: 28),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                            offset: Offset(0, 10),
+                            blurRadius: 10,
+                            color: Color.fromARGB(51, 85, 85, 85))
+                      ],
+                    ),
+                    child: Icon(
+                      Icons.close_rounded,
+                      color: Color(0xFF630000),
                     ),
                   ),
-                  CircleAvatar(
-                    backgroundColor: secondaryColor,
-                    radius: 44,
+                  Container(
+                    height: 88,
+                    width: 88,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: secondaryColor,
+                      boxShadow: [
+                        BoxShadow(
+                            offset: Offset(0, 10),
+                            blurRadius: 10,
+                            color: Color.fromARGB(51, 85, 85, 85))
+                      ],
+                    ),
                     child: Icon(
                       Icons.favorite_rounded,
                       color: Colors.white,
