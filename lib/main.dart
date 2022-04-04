@@ -1,3 +1,4 @@
+import 'package:eathub/screens/login_screen.dart';
 import 'package:eathub/screens/mobile_layout_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MobileLayoutScreen(),
+      // home: MobileLayoutScreen(),
+      home: LoginScreen(),
     );
   }
 }
