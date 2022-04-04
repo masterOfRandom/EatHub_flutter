@@ -1,4 +1,6 @@
+import 'package:eathub/screens/sign_up_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class SignUpAndFindIdPw extends StatelessWidget {
   const SignUpAndFindIdPw({Key? key}) : super(key: key);
@@ -9,7 +11,10 @@ class SignUpAndFindIdPw extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         GestureDetector(
-          onTap: () => print('회원가입'),
+          onTap: () {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (_) => SignUpScreen()));
+          },
           child: Text(
             '회원가입',
             style: TextStyle(color: Color(0xFF797979)),
