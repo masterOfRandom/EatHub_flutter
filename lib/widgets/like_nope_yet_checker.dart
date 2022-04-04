@@ -17,7 +17,7 @@ class _LikeNopeYetCheckerState extends State<LikeNopeYetChecker> {
   Widget build(BuildContext context) {
     return Center(
       child: Obx(() {
-        var opacity = controller.statusPoint.value / 100;
+        var opacity = controller.statusPoint.value / 200;
         if (opacity > 1) {
           opacity = 1;
         }

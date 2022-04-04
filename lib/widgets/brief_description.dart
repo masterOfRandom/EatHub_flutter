@@ -21,7 +21,7 @@ class BriefDescription extends StatelessWidget {
     return Container(
       // 여기는 고쳐야 함.
       height: 160,
-      padding: EdgeInsets.all(12),
+      padding: const EdgeInsets.all(12),
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.vertical(bottom: cardRadius),
         color: primaryColor,
@@ -43,13 +43,17 @@ class BriefDescription extends StatelessWidget {
               ),
               Row(
                 children: [
-                  Image.asset(
-                    'assets/mini_star.png',
-                    height: 18,
-                    width: 18,
+                  Icon(
+                    Icons.star,
+                    color: Color(0xFFFFF38B),
                   ),
+                  // Image.asset(
+                  //   'assets/mini_star.png',
+                  //   height: 18,
+                  //   width: 18,
+                  // ),
                   Text(
-                    '(${(rating * 10).round() / 10})',
+                    '${(rating * 10).round() / 10}',
                     maxLines: 1,
                     style: const TextStyle(
                       fontWeight: FontWeight.w400,
