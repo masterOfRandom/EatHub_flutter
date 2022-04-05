@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eathub/main.dart';
 import 'package:eathub/resources/auth_methods.dart';
 import 'package:eathub/screens/login_screen.dart';
@@ -14,13 +15,16 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final idController = TextEditingController();
   final pwController = TextEditingController();
+  final nameController = TextEditingController();
+
   bool isSignUpLoading = false;
 
   @override
   void dispose() {
-    super.dispose();
     idController.dispose();
     pwController.dispose();
+    nameController.dispose();
+    super.dispose();
   }
 
   @override
@@ -44,14 +48,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 controller: pwController,
               ),
             ),
+            Container(
+              height: 50,
+              child: TextField(
+                decoration: InputDecoration(hintText: '이름'),
+                controller: nameController,
+              ),
+            ),
             ElevatedButton(
               onPressed: () async {
                 isSignUpLoading = true;
 
-                final result = await AuthMethods()
-                    .signUp(idController.text, pwController.text);
+                final result = await AuthMethods().signUp(
+                    email: idController.text,
+                    password: pwController.text,
+                    name: '정민재',
+                    favoriteKeyword: ['친절', '깨끗'],
+                    birthday: Timestamp.fromDate(DateTime.parse('1994-08-07')),
+                    profileUrl:
+                        'https://www.attendit.net/images/easyblog_shared/July_2018/7-4-18/b2ap3_large_totw_network_profile_400.jpg');
+
                 if (result == SignState.err) {
-                  print('err다~!!!');
                   setState(() {
                     isSignUpLoading = false;
                   });

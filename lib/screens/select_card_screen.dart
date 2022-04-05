@@ -159,12 +159,6 @@ class _EatCardState extends State<EatCard> {
   }
 
   @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return SizedBox.expand(
       child: widget.isFront ? buildFrontCard() : buildCard(false),

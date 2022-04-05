@@ -1,7 +1,9 @@
+import 'package:eathub/getx/getx_controller.dart';
 import 'package:eathub/presentation/custom_icon_icons.dart';
 import 'package:eathub/utils/colors.dart';
 import 'package:eathub/utils/global_var.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class MobileLayoutScreen extends StatefulWidget {
   const MobileLayoutScreen({Key? key}) : super(key: key);
@@ -12,6 +14,13 @@ class MobileLayoutScreen extends StatefulWidget {
 
 class _MobileLayoutScreenState extends State<MobileLayoutScreen> {
   int selectedIndex = 0;
+  final controller = Get.put(UserController());
+
+  @override
+  void initState() {
+    super.initState();
+    controller.refreshUser();
+  }
 
   @override
   Widget build(BuildContext context) {
