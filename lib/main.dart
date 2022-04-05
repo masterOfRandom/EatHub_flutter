@@ -11,20 +11,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(GetMaterialApp(
-    // getPages: [
-    //   GetPage(
-    //     name: '/myApp',
-    //     page: () => MyApp(),
-    //   ),
-    //   GetPage(
-    //     name: '/signUp',
-    //     page: () => SignUpScreen(),
-    //   ),
-    //   GetPage(
-    //     name: '/signIn',
-    //     page: () => LoginScreen(),
-    //   ),
-    // ],
     home: const MyApp(),
   ));
 }
@@ -37,7 +23,6 @@ class MyApp extends StatelessWidget {
     return StreamBuilder(
       stream: FirebaseAuth.instance.userChanges(),
       builder: (context, AsyncSnapshot<User?> snapshot) {
-        print('여기는 메인이다. 로그인, 로그아웃 등의 이벤트를 다 잡아야한다.');
         final user = FirebaseAuth.instance.currentUser;
         final connectionState = snapshot.connectionState;
         if (connectionState == ConnectionState.active) {

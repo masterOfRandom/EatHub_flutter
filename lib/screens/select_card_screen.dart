@@ -36,7 +36,7 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
             )
           : Stack(
               children: imageUrls
-                  .map((element) => TinderCard(
+                  .map((element) => EatCard(
                         urlImage: element,
                         isFront: imageUrls.last == element,
                       ))
@@ -130,21 +130,21 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
   }
 }
 
-class TinderCard extends StatefulWidget {
+class EatCard extends StatefulWidget {
   final String urlImage;
   final bool isFront;
 
-  const TinderCard({
+  const EatCard({
     Key? key,
     required this.urlImage,
     required this.isFront,
   }) : super(key: key);
 
   @override
-  State<TinderCard> createState() => _TinderCardState();
+  State<EatCard> createState() => _EatCardState();
 }
 
-class _TinderCardState extends State<TinderCard> {
+class _EatCardState extends State<EatCard> {
   final controller = Get.put(GController());
 
   @override
@@ -156,6 +156,12 @@ class _TinderCardState extends State<TinderCard> {
 
       controller.setScreenSize(size);
     });
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override
