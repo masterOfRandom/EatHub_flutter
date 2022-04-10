@@ -1,7 +1,24 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eathub/models/user.dart' as models;
+import 'package:eathub/resources/auth_methods.dart';
 import 'package:eathub/utils/global_var.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+
+class UserController extends GetxController {
+  var user = models.User(
+          name: '',
+          birthday: Timestamp(0, 0),
+          email: '',
+          favoriteKeyword: [''],
+          profileUrl: '')
+      .obs;
+
+  void refreshUser() async {
+    user.value = await AuthMethods().getUserData();
+  }
+}
 
 class GController extends GetxController {
   var position = Offset.zero.obs;
