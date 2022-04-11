@@ -3,8 +3,38 @@ import 'package:eathub/models/user.dart' as models;
 import 'package:eathub/resources/auth_methods.dart';
 import 'package:eathub/utils/global_var.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+
+enum Sex {
+  male,
+  female,
+}
+
+class LoginController extends GetxController {
+  var email = ''.obs;
+  var password = ''.obs;
+  var name = ''.obs;
+  var sex = Sex.male.obs;
+  var yearOfBirth = Timestamp(0, 0).obs;
+
+  void updateEmail({required final String email}) {
+    this.email.value = email;
+  }
+
+  void updatePassword({required final String password}) {
+    this.password.value = password;
+  }
+
+  void updateProfile({
+    required final String name,
+    required final Sex sex,
+    required final Timestamp yearOfBirth,
+  }) {
+    this.name.value = name;
+    this.sex.value = sex;
+    this.yearOfBirth.value = yearOfBirth;
+  }
+}
 
 class UserController extends GetxController {
   var user = models.User(

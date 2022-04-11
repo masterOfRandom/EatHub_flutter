@@ -3,6 +3,7 @@ import 'package:eathub/presentation/custom_icon_icons.dart';
 import 'package:eathub/utils/colors.dart';
 import 'package:eathub/utils/global_var.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 class MobileLayoutScreen extends StatefulWidget {
@@ -25,12 +26,11 @@ class _MobileLayoutScreenState extends State<MobileLayoutScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: mobileBackgroundColor,
+      backgroundColor: mobileBackgroundGrayColor,
       appBar: AppBar(
-          backgroundColor: primaryColor,
-          title: Image(
-            image: Image.asset('assets/eathub_title_logo.png').image,
-          )),
+        backgroundColor: mobileBackgroundGrayColor,
+        title: SvgPicture.asset('assets/table_pick_logo.svg'),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: ((value) {
           setState(() => selectedIndex = value);
