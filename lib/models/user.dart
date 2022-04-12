@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eathub/getx/getx_controller.dart';
 
 class User {
   final String name;
@@ -6,6 +7,7 @@ class User {
   final List favoriteKeyword;
   final Timestamp birthday;
   final String profileUrl;
+  final bool isMale;
 
   const User({
     required this.name,
@@ -13,6 +15,7 @@ class User {
     required this.favoriteKeyword,
     required this.birthday,
     required this.profileUrl,
+    required this.isMale,
   });
 
   Map<String, dynamic> toJson() => {
@@ -21,6 +24,7 @@ class User {
         'favorite_keyword': favoriteKeyword,
         'birthday': birthday,
         'profile_url': profileUrl,
+        'isMale': isMale,
       };
 
   static User fromSnap(DocumentSnapshot<Map<String, dynamic>> snap) {
@@ -34,6 +38,7 @@ class User {
       favoriteKeyword: snapshot['favorite_keyword'],
       birthday: snapshot['birthday'],
       profileUrl: snapshot['profile_url'],
+      isMale: snapshot['isMale'],
     );
   }
 }

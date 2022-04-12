@@ -14,7 +14,7 @@ class LoginController extends GetxController {
   var email = ''.obs;
   var password = ''.obs;
   var name = ''.obs;
-  var sex = Sex.male.obs;
+  var isMale = true.obs;
   var yearOfBirth = Timestamp(0, 0).obs;
 
   void updateEmail({required final String email}) {
@@ -27,11 +27,11 @@ class LoginController extends GetxController {
 
   void updateProfile({
     required final String name,
-    required final Sex sex,
+    required final bool isMale,
     required final Timestamp yearOfBirth,
   }) {
     this.name.value = name;
-    this.sex.value = sex;
+    this.isMale.value = isMale;
     this.yearOfBirth.value = yearOfBirth;
   }
 }
@@ -42,7 +42,8 @@ class UserController extends GetxController {
           birthday: Timestamp(0, 0),
           email: '',
           favoriteKeyword: [''],
-          profileUrl: '')
+          profileUrl: '',
+          isMale: true)
       .obs;
 
   void refreshUser() async {

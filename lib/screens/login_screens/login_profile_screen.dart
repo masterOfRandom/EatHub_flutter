@@ -100,7 +100,7 @@ class _LoginProfileScreenState extends State<LoginProfileScreen> {
         yearErrMessage == null) {
       controller.updateProfile(
           name: name,
-          sex: sex == '남자' ? Sex.male : Sex.female,
+          isMale: sex == '남자' ? true : false,
           yearOfBirth: Timestamp.fromDate(DateTime(int.parse(year))));
       showModalBottomSheet(
           context: context,
