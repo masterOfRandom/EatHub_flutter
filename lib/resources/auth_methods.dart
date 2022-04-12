@@ -15,6 +15,16 @@ class AuthMethods {
   final _auth = FirebaseAuth.instance;
   final _store = FirebaseFirestore.instance;
 
+  Future<bool> isNameOverlaped(final String name) async {
+    try {
+      final nameData =
+          await _store.collection('users').where('name', isEqualTo: name).get();
+      return nameData.size == 0;
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
   Future<bool> isEmailOverlaped(final String email) async {
     try {
       final emailData = await _store

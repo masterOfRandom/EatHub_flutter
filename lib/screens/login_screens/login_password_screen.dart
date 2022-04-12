@@ -1,4 +1,5 @@
 import 'package:eathub/getx/getx_controller.dart';
+import 'package:eathub/login_input_text_field.dart';
 import 'package:eathub/main.dart';
 import 'package:eathub/resources/auth_methods.dart';
 import 'package:eathub/screens/login_screens/login_profile_screen.dart';
@@ -64,53 +65,49 @@ class _LoginPasswordScreenState extends State<LoginPasswordScreen> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
+        backgroundColor: mobileBackgroundGrayColor,
         appBar: AppBar(
           foregroundColor: Colors.black,
           backgroundColor: mobileBackgroundGrayColor,
           elevation: 0,
         ),
-        body: Container(
-          color: mobileBackgroundGrayColor,
-          padding: EdgeInsets.all(24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 28),
-              Text(
-                '비밀번호 입력',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              Text(
-                '비밀번호',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              TextField(
-                style: TextStyle(color: grayScaleGray2, fontSize: 14),
-                keyboardType: TextInputType.emailAddress,
-                controller: passwordController,
-                decoration: InputDecoration(
-                  errorText: errMessage,
-                  focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(color: primaryRedColor)),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: grayScaleGray4),
-                  ),
+        body: SingleChildScrollView(
+          child: Container(
+            color: mobileBackgroundGrayColor,
+            padding: EdgeInsets.all(24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 28),
+                Text(
+                  '비밀번호 입력',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),
                 ),
-              ),
-              Expanded(child: Container()),
-              NextButton(
-                callback: _nextButtonCallback,
-                isLoading: isLoading,
-              ),
-            ],
+                SizedBox(
+                  height: 40,
+                ),
+                Text(
+                  '비밀번호',
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+                ),
+                SizedBox(
+                  height: 8,
+                ),
+                LoginInputTextField(
+                  controller: passwordController,
+                  errText: errMessage,
+                  isPassword: true,
+                ),
+                SizedBox(height: 70),
+              ],
+            ),
+          ),
+        ),
+        bottomSheet: Padding(
+          padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+          child: NextButton(
+            callback: _nextButtonCallback,
+            isLoading: isLoading,
           ),
         ),
       ),
