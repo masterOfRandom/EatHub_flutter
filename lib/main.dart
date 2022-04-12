@@ -1,6 +1,6 @@
-import 'package:eathub/screens/login_screen.dart';
 import 'package:eathub/screens/mobile_layout_screen.dart';
-import 'package:eathub/screens/sign_up_screen.dart';
+import 'package:eathub/screens/multi_login_screen.dart';
+import 'package:eathub/utils/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +11,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(GetMaterialApp(
+    theme: ThemeData(
+        fontFamily: 'NotoSans',
+        bottomSheetTheme:
+            BottomSheetThemeData(backgroundColor: mobileBackgroundGrayColor)),
+    debugShowCheckedModeBanner: false,
     home: const MyApp(),
   ));
 }
@@ -26,7 +31,7 @@ class MyApp extends StatelessWidget {
         final user = FirebaseAuth.instance.currentUser;
         final connectionState = snapshot.connectionState;
         if (connectionState == ConnectionState.active) {
-          if (snapshot.hasData && user != null && user.emailVerified) {
+          if (snapshot.hasData && user != null) {
             return const MobileLayoutScreen();
           } else if (snapshot.hasError) {
             return Center(
@@ -36,7 +41,7 @@ class MyApp extends StatelessWidget {
         } else if (connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         }
-        return const LoginScreen();
+        return MultiLoginScreen();
       },
     );
   }

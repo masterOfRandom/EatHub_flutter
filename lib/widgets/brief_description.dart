@@ -24,7 +24,7 @@ class BriefDescription extends StatelessWidget {
       padding: const EdgeInsets.all(12),
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.vertical(bottom: cardRadius),
-        color: primaryColor,
+        color: mobileBackgroundGrayColor,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
