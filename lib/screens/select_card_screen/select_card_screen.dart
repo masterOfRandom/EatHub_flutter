@@ -5,6 +5,7 @@ import 'package:eathub/utils/global_style.dart';
 import 'package:eathub/utils/global_var.dart';
 import 'package:eathub/widgets/brief_description.dart';
 import 'package:eathub/widgets/like_nope_yet_checker.dart';
+import 'package:eathub/widgets/select_card/recommand_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -36,7 +37,7 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
             )
           : Stack(
               children: imageUrls
-                  .map((element) => EatCard(
+                  .map((element) => FoodCard(
                         urlImage: element,
                         isFront: imageUrls.last == element,
                       ))
@@ -48,103 +49,111 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: backgroundLightPinkColor,
       body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.only(left: 8, top: 8, right: 8),
-                child: buildCards(),
+        child: Container(
+          padding: EdgeInsets.all(10),
+          child: Column(
+            children: [
+              SizedBox(height: 8),
+              RecommandText(text: '오늘은 이 메뉴 어때요?'),
+              SizedBox(height: 16),
+              Expanded(
+                child: Container(
+                  alignment: Alignment.center,
+                  // padding: EdgeInsets.only(left: 10, top: 8, right: 10),
+                  child: buildCards(),
+                ),
               ),
-            ),
-            Container(
-              padding: EdgeInsets.all(16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    height: 88,
-                    width: 88,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color(0xFFC25858),
-                      boxShadow: [
-                        BoxShadow(
-                            offset: Offset(0, 10),
-                            blurRadius: 10,
-                            color: Color.fromARGB(51, 85, 85, 85))
-                      ],
+              SizedBox(height: 36),
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 88,
+                      width: 88,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Color(0xFFC25858),
+                        boxShadow: [
+                          BoxShadow(
+                              offset: Offset(0, 10),
+                              blurRadius: 10,
+                              color: Color.fromARGB(51, 85, 85, 85))
+                        ],
+                      ),
+                      child: Icon(
+                        Icons.star,
+                        color: Colors.white,
+                        size: 42,
+                      ),
                     ),
-                    child: Icon(
-                      Icons.star,
-                      color: Colors.white,
-                      size: 42,
+                    Container(
+                      width: 60,
+                      height: 60,
+                      margin: EdgeInsets.symmetric(horizontal: 28),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                              offset: Offset(0, 10),
+                              blurRadius: 10,
+                              color: Color.fromARGB(51, 85, 85, 85))
+                        ],
+                      ),
+                      child: Icon(
+                        Icons.close_rounded,
+                        color: Color(0xFF630000),
+                      ),
                     ),
-                  ),
-                  Container(
-                    width: 60,
-                    height: 60,
-                    margin: EdgeInsets.symmetric(horizontal: 28),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                            offset: Offset(0, 10),
-                            blurRadius: 10,
-                            color: Color.fromARGB(51, 85, 85, 85))
-                      ],
+                    Container(
+                      height: 88,
+                      width: 88,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: secondaryColor,
+                        boxShadow: [
+                          BoxShadow(
+                              offset: Offset(0, 10),
+                              blurRadius: 10,
+                              color: Color.fromARGB(51, 85, 85, 85))
+                        ],
+                      ),
+                      child: Icon(
+                        Icons.favorite_rounded,
+                        color: Colors.white,
+                        size: 42,
+                      ),
                     ),
-                    child: Icon(
-                      Icons.close_rounded,
-                      color: Color(0xFF630000),
-                    ),
-                  ),
-                  Container(
-                    height: 88,
-                    width: 88,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: secondaryColor,
-                      boxShadow: [
-                        BoxShadow(
-                            offset: Offset(0, 10),
-                            blurRadius: 10,
-                            color: Color.fromARGB(51, 85, 85, 85))
-                      ],
-                    ),
-                    child: Icon(
-                      Icons.favorite_rounded,
-                      color: Colors.white,
-                      size: 42,
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            )
-          ],
+              SizedBox(height: 20),
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-class EatCard extends StatefulWidget {
+class FoodCard extends StatefulWidget {
   final String urlImage;
   final bool isFront;
 
-  const EatCard({
+  const FoodCard({
     Key? key,
     required this.urlImage,
     required this.isFront,
   }) : super(key: key);
 
   @override
-  State<EatCard> createState() => _EatCardState();
+  State<FoodCard> createState() => FoodCardState();
 }
 
-class _EatCardState extends State<EatCard> {
+class FoodCardState extends State<FoodCard> {
   final controller = Get.put(GController());
 
   @override
@@ -222,7 +231,7 @@ class _EatCardState extends State<EatCard> {
           ),
         ),
         const BriefDescription(
-          name: '리애',
+          name: '떡볶이',
           address: '서울 강남구 선릉로 16길 6',
           menu: '로스(등심)까스, 히레(안심)까스, 프리미엄 로스(등심)',
           rating: 4.24,

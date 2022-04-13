@@ -26,10 +26,11 @@ class _MobileLayoutScreenState extends State<MobileLayoutScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: mobileBackgroundGrayColor,
+      backgroundColor: backgroundWhiteColor,
       appBar: AppBar(
-        backgroundColor: mobileBackgroundGrayColor,
-        title: SvgPicture.asset('assets/table_pick_logo.svg'),
+        backgroundColor: backgroundWhiteColor,
+        title: SvgPicture.asset('assets/images/table_pick_logo.svg'),
+        elevation: 0,
       ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: ((value) {

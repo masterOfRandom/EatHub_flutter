@@ -138,10 +138,10 @@ class _SignupPasswordScreenState extends State<SignupPasswordScreen> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        backgroundColor: mobileBackgroundGrayColor,
+        backgroundColor: backgroundWhiteColor,
         appBar: AppBar(
           foregroundColor: Colors.black,
-          backgroundColor: mobileBackgroundGrayColor,
+          backgroundColor: backgroundWhiteColor,
           elevation: 0,
         ),
         body: SingleChildScrollView(

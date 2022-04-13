@@ -4,7 +4,7 @@ import 'package:eathub/main.dart';
 import 'package:eathub/resources/auth_methods.dart';
 import 'package:eathub/screens/login_screens/login_profile_screen.dart';
 import 'package:eathub/screens/login_screens/signup_password_screen.dart';
-import 'package:eathub/screens/mobile_layout_screen.dart';
+import 'package:eathub/screens/layout_screens/mobile_layout_screen.dart';
 import 'package:eathub/utils/colors.dart';
 import 'package:eathub/widgets/next_button.dart';
 import 'package:email_validator/email_validator.dart';
@@ -65,15 +65,15 @@ class _LoginPasswordScreenState extends State<LoginPasswordScreen> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        backgroundColor: mobileBackgroundGrayColor,
+        backgroundColor: backgroundWhiteColor,
         appBar: AppBar(
           foregroundColor: Colors.black,
-          backgroundColor: mobileBackgroundGrayColor,
+          backgroundColor: backgroundWhiteColor,
           elevation: 0,
         ),
         body: SingleChildScrollView(
           child: Container(
-            color: mobileBackgroundGrayColor,
+            color: backgroundWhiteColor,
             padding: EdgeInsets.all(24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
