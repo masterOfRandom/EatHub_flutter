@@ -18,11 +18,13 @@ class Introduce extends StatelessWidget {
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             SvgPicture.asset(
               'assets/table_pick_logo.svg',
               height: 28,
             ),
+            SizedBox(width: 4),
             Text(
               '입니다.',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
@@ -35,7 +37,7 @@ class Introduce extends StatelessWidget {
           style: TextStyle(
               fontSize: 16, fontWeight: FontWeight.w400, color: grayScaleGray2),
         ),
-        SizedBox(height: 8),
+        SizedBox(height: 4),
         Text(
           '메뉴를 추천받아보세요.',
           style: TextStyle(
@@ -121,17 +123,18 @@ class MultiLoginScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Introduce(),
+                Expanded(child: Container()),
                 SizedBox(height: 68),
-                LoginButton(
-                  text: '카카오 로그인',
-                  icon: Icon(Icons.message),
-                  callback: () => print('카카오~'),
-                ),
+                // LoginButton(
+                //   text: '카카오 로그인',
+                //   icon: Icon(Icons.message),
+                //   callback: () => print('카카오~'),
+                // ),
                 SizedBox(
                   height: 16,
                 ),
                 LoginButton(
-                  text: '이메일 로그인',
+                  text: '이메일로 시작하기',
                   icon: Icon(Icons.mail),
                   callback: () => Get.to(LoginEmailScreen()),
                 ),
