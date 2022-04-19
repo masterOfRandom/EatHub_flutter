@@ -69,61 +69,70 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                    height: 88,
-                    width: 88,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: secondaryPinkColor,
-                      boxShadow: [
-                        BoxShadow(
-                            offset: Offset(0, 10),
-                            blurRadius: 10,
-                            color: secondaryPinkColor.withOpacity(0.15)),
-                      ],
-                    ),
-                    child: Icon(
-                      Icons.star,
-                      color: Colors.white,
-                      size: 42,
-                    ),
-                  ),
-                  Container(
-                    width: 60,
-                    height: 60,
-                    margin: EdgeInsets.symmetric(horizontal: 28),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                            offset: Offset(0, 10),
-                            blurRadius: 10,
-                            color: secondaryPinkGrayColor.withOpacity(0.15)),
-                      ],
-                    ),
-                    child: Icon(
-                      Icons.close_rounded,
-                      color: Color(0xFF630000),
+                  GestureDetector(
+                    onTap: () => controller.yet(),
+                    child: Container(
+                      height: 88,
+                      width: 88,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: secondaryPinkColor,
+                        boxShadow: [
+                          BoxShadow(
+                              offset: Offset(0, 10),
+                              blurRadius: 10,
+                              color: secondaryPinkColor.withOpacity(0.15)),
+                        ],
+                      ),
+                      child: Icon(
+                        Icons.star,
+                        color: Colors.white,
+                        size: 42,
+                      ),
                     ),
                   ),
-                  Container(
-                    height: 88,
-                    width: 88,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: primaryRedColor,
-                      boxShadow: [
-                        BoxShadow(
-                            offset: Offset(0, 10),
-                            blurRadius: 10,
-                            color: primaryRedColor.withOpacity(0.15)),
-                      ],
+                  GestureDetector(
+                    onTap: () => controller.nope(),
+                    child: Container(
+                      width: 60,
+                      height: 60,
+                      margin: EdgeInsets.symmetric(horizontal: 28),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                              offset: Offset(0, 10),
+                              blurRadius: 10,
+                              color: secondaryPinkGrayColor.withOpacity(0.15)),
+                        ],
+                      ),
+                      child: Icon(
+                        Icons.close_rounded,
+                        color: Color(0xFF630000),
+                      ),
                     ),
-                    child: Icon(
-                      Icons.favorite_rounded,
-                      color: Colors.white,
-                      size: 42,
+                  ),
+                  GestureDetector(
+                    onTap: () => controller.like(),
+                    child: Container(
+                      height: 88,
+                      width: 88,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: primaryRedColor,
+                        boxShadow: [
+                          BoxShadow(
+                              offset: Offset(0, 10),
+                              blurRadius: 10,
+                              color: primaryRedColor.withOpacity(0.15)),
+                        ],
+                      ),
+                      child: Icon(
+                        Icons.favorite_rounded,
+                        color: Colors.white,
+                        size: 42,
+                      ),
                     ),
                   ),
                 ],

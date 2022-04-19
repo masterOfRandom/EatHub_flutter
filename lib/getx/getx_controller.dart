@@ -62,11 +62,19 @@ class GController extends GetxController {
   var statusPoint = 0.0.obs;
   var status = CardStatus.nothing.obs;
 
+  var updating = false;
+
   void startPosition(DragStartDetails details) {
+    if (updating) {
+      return;
+    }
     isDragging.value = true;
   }
 
   void updatePosition(DragUpdateDetails details) {
+    if (updating) {
+      return;
+    }
     position.value += details.delta;
     final x = position.value.dx;
     final y = position.value.dy;
@@ -76,6 +84,9 @@ class GController extends GetxController {
   }
 
   void endPosition() {
+    if (updating) {
+      return;
+    }
     isDragging.value = false;
 
     if (statusPoint.value > 60) {
@@ -153,17 +164,21 @@ class GController extends GetxController {
   }
 
   Future nextCard() async {
-    if (foods.isEmpty) return;
+    if (foods.isEmpty || updating) return;
 
+    updating = true;
     await Future.delayed(Duration(milliseconds: 200));
     foods.removeLast();
+    print(foods.length);
+    resetPosition();
     if (foods.length == 2) {
       addFoods();
     }
-    resetPosition();
+    updating = false;
   }
 
   void addFoods() async {
+    // 음식을 랜덤으로 가져오려면 수정이 필요하다.
     final newFoods = await FirestoreMethods().getNewRandomFoods(['food']);
     foods.value = newFoods.reversed.toList() + foods;
   }
