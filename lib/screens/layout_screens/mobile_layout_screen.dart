@@ -16,6 +16,7 @@ class MobileLayoutScreen extends StatefulWidget {
 class _MobileLayoutScreenState extends State<MobileLayoutScreen> {
   int selectedIndex = 0;
   final controller = Get.put(UserController());
+  final gController = Get.put(GController());
 
   @override
   void initState() {
@@ -37,9 +38,11 @@ class _MobileLayoutScreenState extends State<MobileLayoutScreen> {
           setState(() => selectedIndex = value);
         }),
         currentIndex: selectedIndex,
-        selectedItemColor: secondaryColor,
-        unselectedItemColor: Colors.grey,
+        selectedItemColor: primaryRedColor,
+        unselectedItemColor: grayScaleGray4,
         enableFeedback: false,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
         type: BottomNavigationBarType.fixed,
         items: const [
           BottomNavigationBarItem(
@@ -62,7 +65,7 @@ class _MobileLayoutScreenState extends State<MobileLayoutScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: '',
+            label: 'hihi',
           ),
         ],
       ),
