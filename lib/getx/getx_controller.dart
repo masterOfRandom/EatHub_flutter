@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eathub/models/food.dart';
 import 'package:eathub/models/user.dart' as models;
 import 'package:eathub/resources/auth_methods.dart';
+import 'package:eathub/resources/firestore_methods.dart';
 import 'package:eathub/utils/global_var.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -56,15 +58,23 @@ class GController extends GetxController {
   var isDragging = false.obs;
   var screenSize = Size.zero.obs;
   var angle = 0.0.obs;
-  var imageUrls = <String>[].obs;
+  var foods = <Food>[].obs;
   var statusPoint = 0.0.obs;
   var status = CardStatus.nothing.obs;
 
+  var updating = false;
+
   void startPosition(DragStartDetails details) {
+    if (updating) {
+      return;
+    }
     isDragging.value = true;
   }
 
   void updatePosition(DragUpdateDetails details) {
+    if (updating) {
+      return;
+    }
     position.value += details.delta;
     final x = position.value.dx;
     final y = position.value.dy;
@@ -74,6 +84,9 @@ class GController extends GetxController {
   }
 
   void endPosition() {
+    if (updating) {
+      return;
+    }
     isDragging.value = false;
 
     if (statusPoint.value > 60) {
@@ -151,30 +164,23 @@ class GController extends GetxController {
   }
 
   Future nextCard() async {
-    if (imageUrls.isEmpty) return;
+    if (foods.isEmpty || updating) return;
 
+    updating = true;
     await Future.delayed(Duration(milliseconds: 200));
-    imageUrls.removeLast();
+    foods.removeLast();
+    print(foods.length);
     resetPosition();
+    if (foods.length == 2) {
+      addFoods();
+    }
+    updating = false;
   }
 
-  void resetUsers() {
-    imageUrls.value = <String>[
-      'https://img1.kakaocdn.net/cthumb/local/R0x420/?fname=http%3A%2F%2Ft1.daumcdn.net%2Fplace%2FCF25058968C0493096142CA35FC89EFC',
-      'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fmyplace-phinf.pstatic.net%2F20220220_263%2F1645354113369xzzBW_JPEG%2Fupload_3d6f35dbf92c77cee0c3f911b6cd3645.jpeg',
-      'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fmyplace-phinf.pstatic.net%2F20220322_113%2F1647954093603xlgUO_JPEG%2Fupload_2eb34d32de6381efe8b2c2acde455ef3.jpg',
-      'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fmyplace-phinf.pstatic.net%2F20220320_14%2F16477769214678csvB_JPEG%2Fupload_fca1f7a89e4baacf8f0eb200cc45f4fb.jpeg',
-      'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fmyplace-phinf.pstatic.net%2F20220323_104%2F1648026669604abgGH_JPEG%2Fupload_620d47847e212b5eb21072fb91dc9a00.jpg',
-      'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fmyplace-phinf.pstatic.net%2F20220220_29%2F1645334336147IFgpJ_JPEG%2Fupload_35eddb097619a344b7e5593deb6f4838.jpeg',
-      'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fmyplace-phinf.pstatic.net%2F20220214_182%2F1644821957660AoUWW_JPEG%2Fupload_6ea743f055f5bdc06fd00b8407c0a49f.jpg',
-      'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fmyplace-phinf.pstatic.net%2F20211205_197%2F1638701820259A7VOe_JPEG%2Fupload_2a6644e831c0975fc308b135e4fb281d.jpeg',
-      'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fmyplace-phinf.pstatic.net%2F20220127_157%2F16432721394834rkCr_JPEG%2Fupload_c820a17c54a53775fc56a1f3d42f3d4e.jpg',
-      'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fmyplace-phinf.pstatic.net%2F20220314_78%2F1647233279516afaso_JPEG%2Fupload_c1c19a6bea26b1795a5871d101476c11.jpeg',
-      'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fmyplace-phinf.pstatic.net%2F20220326_132%2F1648284109890clh1g_JPEG%2Fupload_3756a5d1d658bb9498ce1c83455ea6a2.jpeg',
-      'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fmyplace-phinf.pstatic.net%2F20220106_74%2F16414668482766EcCl_JPEG%2Fupload_e4a79787ae6edf189a338f942a1b90e7.jpeg',
-      'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fmyplace-phinf.pstatic.net%2F20211129_6%2F1638117062735Ttf7C_JPEG%2Fupload_35728b53a04a08eccee61bb717566dcc.jpeg',
-      'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fmyplace-phinf.pstatic.net%2F20220220_233%2F164535712940788D6z_JPEG%2Fupload_7e029521127db0675764585122e8d9e5.jpeg',
-    ].reversed.toList();
+  void addFoods() async {
+    // 음식을 랜덤으로 가져오려면 수정이 필요하다.
+    final newFoods = await FirestoreMethods().getNewRandomFoods(['food']);
+    foods.value = newFoods.reversed.toList() + foods;
   }
 
   void setScreenSize(Size size) {

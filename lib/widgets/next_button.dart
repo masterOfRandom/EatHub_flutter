@@ -32,7 +32,7 @@ class NextButton extends StatelessWidget {
                 style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
-                    color: mobileBackgroundWhitePinkColor),
+                    color: backgroundLightPinkColor),
               ),
             ),
           );

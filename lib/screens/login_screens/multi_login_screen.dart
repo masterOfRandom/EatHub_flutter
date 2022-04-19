@@ -21,7 +21,7 @@ class Introduce extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             SvgPicture.asset(
-              'assets/table_pick_logo.svg',
+              'assets/images/table_pick_logo.svg',
               height: 28,
             ),
             SizedBox(width: 4),
@@ -94,8 +94,8 @@ class MultiLoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: mobileBackgroundGrayColor,
-        shadowColor: mobileBackgroundGrayColor,
+        backgroundColor: backgroundWhiteColor,
+        shadowColor: backgroundWhiteColor,
         elevation: 0,
         actions: [
           Padding(
@@ -114,7 +114,7 @@ class MultiLoginScreen extends StatelessWidget {
         ],
       ),
       body: Container(
-        color: mobileBackgroundGrayColor,
+        color: backgroundWhiteColor,
         alignment: Alignment.center,
         padding: EdgeInsets.all(24),
         child: SafeArea(

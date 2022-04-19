@@ -115,10 +115,10 @@ class _LoginProfileScreenState extends State<LoginProfileScreen> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        backgroundColor: mobileBackgroundGrayColor,
+        backgroundColor: backgroundWhiteColor,
         appBar: AppBar(
           foregroundColor: Colors.black,
-          backgroundColor: mobileBackgroundGrayColor,
+          backgroundColor: backgroundWhiteColor,
           elevation: 0,
         ),
         body: SingleChildScrollView(

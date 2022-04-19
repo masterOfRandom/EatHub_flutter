@@ -1,5 +1,5 @@
-import 'package:eathub/screens/mobile_layout_screen.dart';
-import 'package:eathub/screens/multi_login_screen.dart';
+import 'package:eathub/screens/layout_screens/mobile_layout_screen.dart';
+import 'package:eathub/screens/login_screens/multi_login_screen.dart';
 import 'package:eathub/utils/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -14,7 +14,7 @@ void main() async {
     theme: ThemeData(
         fontFamily: 'NotoSans',
         bottomSheetTheme:
-            BottomSheetThemeData(backgroundColor: mobileBackgroundGrayColor)),
+            BottomSheetThemeData(backgroundColor: backgroundWhiteColor)),
     debugShowCheckedModeBanner: false,
     home: const MyApp(),
   ));

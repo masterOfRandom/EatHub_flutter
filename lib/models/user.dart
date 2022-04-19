@@ -1,13 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:eathub/getx/getx_controller.dart';
 
 class User {
-  final String name;
-  final String email;
-  final List favoriteKeyword;
-  final Timestamp birthday;
-  final String profileUrl;
-  final bool isMale;
+  final String? name;
+  final String? email;
+  final List? favoriteKeyword;
+  final Timestamp? birthday;
+  final String? profileUrl;
+  final bool? isMale;
 
   const User({
     required this.name,
