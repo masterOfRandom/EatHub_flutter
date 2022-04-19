@@ -123,22 +123,22 @@ class GController extends GetxController {
     // 애니메이션이 느려진다면 여기를 의심하자.
     if (y > 0) {
       if (x > 0) {
-        statusPoint.value = x;
+        statusPoint.value = x * 2;
         return CardStatus.like;
       } else {
-        statusPoint.value = -x;
+        statusPoint.value = (-x) * 2;
         return CardStatus.yet;
       }
     } else {
       if (x < y) {
-        statusPoint.value = y - x;
+        statusPoint.value = (y - x) * 2;
         return CardStatus.yet;
       } else {
         if (-y > x) {
-          statusPoint.value = -y - x;
+          statusPoint.value = (-y - x) * 2;
           return CardStatus.nope;
         } else {
-          statusPoint.value = x + y;
+          statusPoint.value = (x + y) * 2;
           return CardStatus.like;
         }
       }
@@ -167,7 +167,7 @@ class GController extends GetxController {
     if (foods.isEmpty || updating) return;
 
     updating = true;
-    await Future.delayed(Duration(milliseconds: 200));
+    await Future.delayed(Duration(milliseconds: 300));
     foods.removeLast();
     print(foods.length);
     resetPosition();

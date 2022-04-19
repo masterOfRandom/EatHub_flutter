@@ -70,7 +70,12 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   GestureDetector(
-                    onTap: () => controller.yet(),
+                    onTap: () async {
+                      controller.statusPoint.value = 200;
+                      controller.status.value = CardStatus.yet;
+                      await Future.delayed(Duration(milliseconds: 150));
+                      controller.yet();
+                    },
                     child: Container(
                       height: 88,
                       width: 88,
@@ -92,7 +97,12 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () => controller.nope(),
+                    onTap: () async {
+                      controller.statusPoint.value = 200;
+                      controller.status.value = CardStatus.nope;
+                      await Future.delayed(Duration(milliseconds: 150));
+                      controller.nope();
+                    },
                     child: Container(
                       width: 60,
                       height: 60,
@@ -114,7 +124,12 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () => controller.like(),
+                    onTap: () async {
+                      controller.statusPoint.value = 200;
+                      controller.status.value = CardStatus.like;
+                      await Future.delayed(Duration(milliseconds: 150));
+                      controller.like();
+                    },
                     child: Container(
                       height: 88,
                       width: 88,
