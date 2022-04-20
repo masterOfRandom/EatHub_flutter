@@ -67,7 +67,7 @@ class _LoginPasswordScreenState extends State<LoginPasswordScreen> {
       child: Scaffold(
         backgroundColor: backgroundWhiteColor,
         appBar: AppBar(
-          foregroundColor: Colors.black,
+          foregroundColor: grayScaleGray3,
           backgroundColor: backgroundWhiteColor,
           elevation: 0,
         ),

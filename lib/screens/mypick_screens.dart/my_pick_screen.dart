@@ -60,7 +60,7 @@ class _MyPickScreenState extends State<MyPickScreen> {
                 padding: EdgeInsets.all(10),
                 child: Obx(
                   () {
-                    final likedFoods = controller.checkedFoods.value
+                    final likedFoods = controller.checkedFoods
                         .where((element) => element.status == CardStatus.like)
                         .toList();
                     return TabBarView(children: [
