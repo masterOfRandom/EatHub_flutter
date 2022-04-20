@@ -8,6 +8,7 @@ import 'package:eathub/widgets/select_card/brief_description.dart';
 import 'package:eathub/widgets/like_nope_yet_checker.dart';
 import 'package:eathub/widgets/select_card/recommand_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 class SelectCardScreen extends StatefulWidget {
@@ -23,7 +24,9 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
   @override
   void initState() {
     super.initState();
-    controller.addFoods();
+    if (controller.foods.length < 3) {
+      controller.addFoods();
+    }
   }
 
   Widget buildCards() {
@@ -51,6 +54,11 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundLightPinkColor,
+      appBar: AppBar(
+        backgroundColor: backgroundWhiteColor,
+        title: SvgPicture.asset('assets/images/table_pick_logo.svg'),
+        elevation: 0,
+      ),
       body: SafeArea(
         child: Container(
           padding: EdgeInsets.all(10),

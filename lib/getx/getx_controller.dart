@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eathub/models/checked_food.dart';
 import 'package:eathub/models/food.dart';
 import 'package:eathub/models/user.dart' as models;
 import 'package:eathub/resources/auth_methods.dart';
@@ -59,6 +60,7 @@ class GController extends GetxController {
   var screenSize = Size.zero.obs;
   var angle = 0.0.obs;
   var foods = <Food>[].obs;
+  var checkedFoods = <CheckedFood>[].obs;
   var statusPoint = 0.0.obs;
   var status = CardStatus.nothing.obs;
 
@@ -168,6 +170,12 @@ class GController extends GetxController {
 
     updating = true;
     await Future.delayed(Duration(milliseconds: 300));
+    final lastFood = foods.last;
+    checkedFoods.add(CheckedFood(
+        name: lastFood.name!,
+        imageUrl: lastFood.imageUrl!,
+        status: status.value,
+        updateTime: Timestamp.now()));
     foods.removeLast();
     print(foods.length);
     resetPosition();

@@ -28,11 +28,6 @@ class _MobileLayoutScreenState extends State<MobileLayoutScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundWhiteColor,
-      appBar: AppBar(
-        backgroundColor: backgroundWhiteColor,
-        title: SvgPicture.asset('assets/images/table_pick_logo.svg'),
-        elevation: 0,
-      ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: ((value) {
           setState(() => selectedIndex = value);
