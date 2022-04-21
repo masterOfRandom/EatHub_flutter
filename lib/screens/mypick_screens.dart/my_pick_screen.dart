@@ -30,6 +30,7 @@ class _MyPickScreenState extends State<MyPickScreen> {
         appBar: AppBar(
           backgroundColor: backgroundWhiteColor,
           title: SvgPicture.asset('assets/images/my_pick_logo.svg'),
+          elevation: 0,
         ),
         body: Scaffold(
           backgroundColor: backgroundLightPinkColor,
@@ -63,9 +64,12 @@ class _MyPickScreenState extends State<MyPickScreen> {
                     final likedFoods = controller.checkedFoods
                         .where((element) => element.status == CardStatus.like)
                         .toList();
+                    final nopedFoods = controller.checkedFoods
+                        .where((element) => element.status == CardStatus.nope)
+                        .toList();
                     return TabBarView(children: [
                       LikeScreen(likedFoods: likedFoods),
-                      NopeScreen()
+                      NopeScreen(nopedFoods: nopedFoods),
                     ]);
                   },
                 )),

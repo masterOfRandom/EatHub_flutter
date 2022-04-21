@@ -49,5 +49,19 @@
 	<string>Used to Location&apos;s Info always for Using Beacon.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Used to Location&apos;s Info for Using Beacon when In Use.</string>
+	<key>NSAppTransportSecurity</key>
+		<dict>
+			<key>NSAllowsArbitraryLoads</key>
+			<true/>
+			<key>NSAllowsArbitraryLoadsInWebContent</key>
+			<true/>
+		</dict>
+	<key>io.flutter.embedded_views_preview</key>
+    <string>YES</string>
+	<key>LSApplicationQueriesSchemes</key>
+		<array>
+			<string>https</string>
+			<string>http</string>
+		</array>
 </dict>
 </plist>

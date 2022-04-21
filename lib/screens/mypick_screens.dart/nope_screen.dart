@@ -1,19 +1,35 @@
+import 'package:eathub/models/checked_food.dart';
+import 'package:eathub/screens/restaurant_list_screens/restaurant_list_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
+import 'package:get/get.dart';
 
 class NopeScreen extends StatelessWidget {
-  const NopeScreen({Key? key}) : super(key: key);
+  final List<CheckedFood> nopedFoods;
+
+  const NopeScreen({Key? key, required this.nopedFoods}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Lottie.asset(
-          'assets/images/heart_without_background.json',
-          frameRate: FrameRate(60),
-          repeat: false,
-        ),
-      ),
+    return GridView.count(
+      mainAxisSpacing: 8,
+      crossAxisSpacing: 8,
+      crossAxisCount: 3,
+      children: nopedFoods.map((e) {
+        return GridTile(
+          child: GestureDetector(
+            onTap: () {
+              Get.to(RestaurantListScreen(foodName: e.name));
+            },
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image.network(
+                e.imageUrl,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        );
+      }).toList(),
     );
   }
 }
