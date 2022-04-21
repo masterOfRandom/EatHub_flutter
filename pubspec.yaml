@@ -89,6 +89,18 @@ flutter:
                 weight: 700
               - asset: assets/fonts/Noto_Sans_KR/NotoSansKR-Black.otf
                 weight: 900
+        - family: Baloo2
+          fonts:
+              - asset: assets/fonts/Baloo_2/static/Baloo2-Regular.ttf
+                weight: 400
+              - asset: assets/fonts/Baloo_2/static/Baloo2-Medium.ttf
+                weight: 500
+              - asset: assets/fonts/Baloo_2/static/Baloo2-SemiBold.ttf
+                weight: 600
+              - asset: assets/fonts/Baloo_2/static/Baloo2-Bold.ttf
+                weight: 700
+              - asset: assets/fonts/Baloo_2/static/Baloo2-ExtraBold.ttf
+                weight: 800
         - family: CustomIcon
           fonts:
               - asset: assets/fonts/CustomIcon.ttf

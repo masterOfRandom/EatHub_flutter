@@ -194,4 +194,6 @@ class GController extends GetxController {
   void setScreenSize(Size size) {
     screenSize.value = size;
   }
+
+  void getLocalCheckedFood() {}
 }
