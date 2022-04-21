@@ -39,7 +39,8 @@ class MyApp extends StatelessWidget {
             );
           }
         } else if (connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(
+              child: CircularProgressIndicator(color: primaryRedColor));
         }
         return MultiLoginScreen();
       },

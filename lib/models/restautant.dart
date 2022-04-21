@@ -24,8 +24,8 @@ class KakaoRestaurant {
   factory KakaoRestaurant.fromJson(dynamic data) {
     return KakaoRestaurant(
       placeName: data['place_name'],
-      placeUrl: data['placeUrl'],
-      addressName: data['addressName'],
+      placeUrl: data['place_url'],
+      addressName: data['address_name'],
       roadAddressName: data['road_address_name'],
       categoryGroupCode: data['category_group_code'],
       categoryGroupName: data['category_group_name'],

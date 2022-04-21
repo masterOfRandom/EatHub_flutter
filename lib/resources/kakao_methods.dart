@@ -1,6 +1,19 @@
-// import 'package:eathub/models/restautant.dart';
-// import 'package:location/location.dart';
+import 'dart:convert';
 
-// class KakaoMethods {
-//   Future<List<KakaoRestaurants>> getKakaoRestaurants(Location location) async {}
-// }
+import 'package:eathub/env.dart';
+import 'package:eathub/models/restautant.dart';
+import 'package:http/http.dart';
+import 'package:location/location.dart';
+
+class KakaoMethods {
+  Future<KakaoRestaurants> getKakaoRestaurants(
+      LocationData locationData, String food) async {
+    final uri = Uri.parse(
+        'https://dapi.kakao.com/v2/local/search/keyword.json?y=${locationData.latitude}&x=${locationData.longitude}&radius=3000&category_group_code=FD6&query=$food');
+    final json = await get(uri,
+        headers: {'Authorization': 'KakaoAK $KAKAO_REST_API_KEY'});
+    final parsedJson = jsonDecode(json.body);
+    final kakaoRestaurants = KakaoRestaurants.fromJson(parsedJson);
+    return kakaoRestaurants;
+  }
+}

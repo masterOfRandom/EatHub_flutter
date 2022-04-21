@@ -4,7 +4,7 @@ import 'package:eathub/models/food.dart';
 import 'package:eathub/utils/colors.dart';
 import 'package:eathub/utils/global_style.dart';
 import 'package:eathub/utils/global_var.dart';
-import 'package:eathub/widgets/my_pick/around_restaurant_list.dart';
+import 'package:eathub/screens/restaurant_list_screens/restaurant_list_screen.dart';
 import 'package:eathub/widgets/select_card/brief_description.dart';
 import 'package:eathub/widgets/like_nope_yet_checker.dart';
 import 'package:eathub/widgets/select_card/recommand_text.dart';
@@ -234,7 +234,7 @@ class FoodCardState extends State<FoodCard> {
     }, onPanEnd: (details) {
       controller.endPosition();
     }, onTap: () {
-      Get.to(AroundRestaurantList(
+      Get.to(RestaurantListScreen(
         foodName: controller.foods.last.name!,
       ));
     });

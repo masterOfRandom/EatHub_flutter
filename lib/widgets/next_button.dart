@@ -17,7 +17,7 @@ class NextButton extends StatelessWidget {
               color: primaryRedColor,
               borderRadius: BorderRadius.circular(10),
             ),
-            child: const CircularProgressIndicator(color: Colors.white))
+            child: const CircularProgressIndicator(color: primaryRedColor))
         : GestureDetector(
             onTap: callback,
             child: Container(

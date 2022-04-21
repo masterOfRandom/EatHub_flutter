@@ -1,5 +1,5 @@
 import 'package:eathub/models/checked_food.dart';
-import 'package:eathub/widgets/my_pick/around_restaurant_list.dart';
+import 'package:eathub/screens/restaurant_list_screens/restaurant_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
@@ -19,7 +19,7 @@ class LikeScreen extends StatelessWidget {
         return GridTile(
           child: GestureDetector(
             onTap: () {
-              Get.to(AroundRestaurantList(foodName: e.name));
+              Get.to(RestaurantListScreen(foodName: e.name));
             },
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
