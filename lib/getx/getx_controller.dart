@@ -171,11 +171,13 @@ class GController extends GetxController {
     updating = true;
     await Future.delayed(Duration(milliseconds: 300));
     final lastFood = foods.last;
-    checkedFoods.add(CheckedFood(
+    final checkedFood = CheckedFood(
         name: lastFood.name!,
         imageUrl: lastFood.imageUrl!,
         status: status.value,
-        updateTime: Timestamp.now()));
+        updateTime: Timestamp.now());
+    checkedFoods.add(checkedFood);
+    FirestoreMethods().addCheckedFood(checkedFood);
     foods.removeLast();
     print(foods.length);
     resetPosition();
@@ -195,5 +197,17 @@ class GController extends GetxController {
     screenSize.value = size;
   }
 
-  void getLocalCheckedFood() {}
+  void initCheckedFoods() {
+    // checked 푸드 가져오기.
+  }
+
+  void removeCheckedFoods() {
+    checkedFoods.value = [];
+  }
+
+  void removeFoods() {
+    foods.value = [];
+  }
+
+  void getLocalCheckedFood() async {}
 }

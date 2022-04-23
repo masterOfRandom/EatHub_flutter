@@ -3,6 +3,7 @@ import 'package:eathub/screens/mypick_screens.dart/like_screen.dart';
 import 'package:eathub/screens/mypick_screens.dart/nope_screen.dart';
 import 'package:eathub/utils/colors.dart';
 import 'package:eathub/utils/global_var.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -23,6 +24,9 @@ class _MyPickScreenState extends State<MyPickScreen>
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    _tabController.addListener(() {
+      setState(() {});
+    });
   }
 
   @override
@@ -91,6 +95,7 @@ class _MyPickScreenState extends State<MyPickScreen>
                       .where((element) => element.status == CardStatus.nope)
                       .toList();
                   return TabBarView(
+                    physics: NeverScrollableScrollPhysics(),
                     controller: _tabController,
                     children: [
                       LikeScreen(likedFoods: likedFoods),

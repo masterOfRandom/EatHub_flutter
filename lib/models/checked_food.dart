@@ -17,7 +17,7 @@ class CheckedFood {
   Map<String, dynamic> toJson() => {
         'name': name,
         'imageUrl': imageUrl,
-        'status': status,
+        'status': status.toString().split('.')[1],
         'updateTime': updateTime,
       };
 
@@ -26,10 +26,18 @@ class CheckedFood {
     if (snapshot == null) {
       throw 'DocumentSnapshot에 user가 없습니다.';
     }
+    final statusString = snap['status'] as String;
+    late CardStatus status;
+    CardStatus.values.forEach((e) {
+      if (e.toString().split('.') == statusString) {
+        status = e;
+        return;
+      }
+    });
     return CheckedFood(
       name: snap['name'],
       imageUrl: snap['imageUrl'],
-      status: snap['status'],
+      status: status,
       updateTime: snap['updateTime'],
     );
   }

@@ -67,7 +67,12 @@ List<Widget> homeScreenItems = [
     children: [
       Text('profile'),
       ElevatedButton(
-        onPressed: () => AuthMethods().logOut(),
+        onPressed: () {
+          final controller = Get.put(GController());
+          controller.removeCheckedFoods();
+          controller.removeFoods();
+          AuthMethods().logOut();
+        },
         child: Text('Log out'),
       ),
     ],
