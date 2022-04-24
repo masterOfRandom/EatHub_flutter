@@ -58,7 +58,10 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
       backgroundColor: backgroundLightPinkColor,
       appBar: AppBar(
         backgroundColor: backgroundWhiteColor,
-        title: SvgPicture.asset('assets/images/table_pick_logo.svg'),
+        title: const Text(
+          'Tablepick',
+          style: mainTitleTextStyle,
+        ),
         elevation: 0,
       ),
       body: SafeArea(
@@ -66,16 +69,16 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
           padding: EdgeInsets.all(10),
           child: Column(
             children: [
-              SizedBox(height: 8),
-              RecommandText(text: '오늘은 이 메뉴 어때요?'),
-              SizedBox(height: 16),
+              const SizedBox(height: 8),
+              const RecommandText(text: '오늘은 이 메뉴 어때요?'),
+              const SizedBox(height: 16),
               Expanded(
                 child: Container(
                   alignment: Alignment.center,
                   child: buildCards(),
                 ),
               ),
-              SizedBox(height: 36),
+              const SizedBox(height: 36),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

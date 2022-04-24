@@ -42,7 +42,10 @@ class _MyPickScreenState extends State<MyPickScreen>
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: backgroundWhiteColor,
-          title: SvgPicture.asset('assets/images/my_pick_logo.svg'),
+          title: const Text(
+            'My Pick',
+            style: mainTitleTextStyle,
+          ),
           elevation: 0,
         ),
         body: Scaffold(

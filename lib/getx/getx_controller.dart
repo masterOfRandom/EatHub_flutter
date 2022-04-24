@@ -181,7 +181,6 @@ class GController extends GetxController {
     FirestoreMethods().addCheckedFood(checkedFood);
     SharedPreferencesMethods().setCheckedFoods(checkedFoods);
     foods.removeLast();
-    print(foods.length);
     resetPosition();
     if (foods.length == 2) {
       addFoods();

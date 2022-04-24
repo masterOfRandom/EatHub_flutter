@@ -23,7 +23,6 @@ class CheckedFood {
     CardStatus.values.forEach((e) {
       if (e.toString().split('.')[1] == data['status']) {
         status = e;
-        print(e);
         return;
       }
     });

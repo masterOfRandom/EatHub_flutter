@@ -38,40 +38,40 @@ class _MobileLayoutScreenState extends State<MobileLayoutScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return isLoading
-        ? CircularProgressIndicator()
-        : Scaffold(
-            backgroundColor: backgroundWhiteColor,
-            bottomNavigationBar: BottomNavigationBar(
-              onTap: ((value) {
-                setState(() => selectedIndex = value);
-              }),
-              currentIndex: selectedIndex,
-              selectedItemColor: primaryRedColor,
-              unselectedItemColor: grayScaleGray4,
-              enableFeedback: false,
-              showSelectedLabels: false,
-              showUnselectedLabels: false,
-              type: BottomNavigationBarType.fixed,
-              items: const [
-                BottomNavigationBarItem(
-                  icon: Icon(
-                    CustomIcon.cards,
-                    size: 18,
-                  ),
-                  label: '',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.favorite),
-                  label: '',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.person),
-                  label: 'hihi',
-                ),
-              ],
+    return Scaffold(
+      backgroundColor: backgroundWhiteColor,
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: ((value) {
+          setState(() => selectedIndex = value);
+        }),
+        currentIndex: selectedIndex,
+        selectedItemColor: primaryRedColor,
+        unselectedItemColor: grayScaleGray4,
+        enableFeedback: false,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        type: BottomNavigationBarType.fixed,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(
+              CustomIcon.cards,
+              size: 18,
             ),
-            body: homeScreenItems[selectedIndex],
-          );
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'hihi',
+          ),
+        ],
+      ),
+      body: isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : homeScreenItems[selectedIndex],
+    );
   }
 }
