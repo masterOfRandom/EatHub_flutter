@@ -15,49 +15,63 @@ class MobileLayoutScreen extends StatefulWidget {
 
 class _MobileLayoutScreenState extends State<MobileLayoutScreen> {
   int selectedIndex = 0;
+  bool isLoading = false;
   final controller = Get.put(UserController());
   final gController = Get.put(GController());
+
+  initCheckedFoods() async {
+    setState(() {
+      isLoading = true;
+    });
+    await gController.initCheckedFoods();
+    setState(() {
+      isLoading = false;
+    });
+  }
 
   @override
   void initState() {
     super.initState();
     controller.refreshUser();
+    initCheckedFoods();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: backgroundWhiteColor,
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: ((value) {
-          setState(() => selectedIndex = value);
-        }),
-        currentIndex: selectedIndex,
-        selectedItemColor: primaryRedColor,
-        unselectedItemColor: grayScaleGray4,
-        enableFeedback: false,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(
-              CustomIcon.cards,
-              size: 18,
+    return isLoading
+        ? CircularProgressIndicator()
+        : Scaffold(
+            backgroundColor: backgroundWhiteColor,
+            bottomNavigationBar: BottomNavigationBar(
+              onTap: ((value) {
+                setState(() => selectedIndex = value);
+              }),
+              currentIndex: selectedIndex,
+              selectedItemColor: primaryRedColor,
+              unselectedItemColor: grayScaleGray4,
+              enableFeedback: false,
+              showSelectedLabels: false,
+              showUnselectedLabels: false,
+              type: BottomNavigationBarType.fixed,
+              items: const [
+                BottomNavigationBarItem(
+                  icon: Icon(
+                    CustomIcon.cards,
+                    size: 18,
+                  ),
+                  label: '',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.favorite),
+                  label: '',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.person),
+                  label: 'hihi',
+                ),
+              ],
             ),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'hihi',
-          ),
-        ],
-      ),
-      body: homeScreenItems[selectedIndex],
-    );
+            body: homeScreenItems[selectedIndex],
+          );
   }
 }

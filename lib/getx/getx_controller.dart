@@ -4,6 +4,7 @@ import 'package:eathub/models/food.dart';
 import 'package:eathub/models/user.dart' as models;
 import 'package:eathub/resources/auth_methods.dart';
 import 'package:eathub/resources/firestore_methods.dart';
+import 'package:eathub/resources/shared_preference_methods.dart';
 import 'package:eathub/utils/global_var.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -172,12 +173,13 @@ class GController extends GetxController {
     await Future.delayed(Duration(milliseconds: 300));
     final lastFood = foods.last;
     final checkedFood = CheckedFood(
-        name: lastFood.name!,
-        imageUrl: lastFood.imageUrl!,
-        status: status.value,
-        updateTime: Timestamp.now());
+      name: lastFood.name!,
+      imageUrl: lastFood.imageUrl!,
+      status: status.value,
+    );
     checkedFoods.add(checkedFood);
     FirestoreMethods().addCheckedFood(checkedFood);
+    SharedPreferencesMethods().setCheckedFoods(checkedFoods);
     foods.removeLast();
     print(foods.length);
     resetPosition();
@@ -197,17 +199,23 @@ class GController extends GetxController {
     screenSize.value = size;
   }
 
-  void initCheckedFoods() {
+  Future<void> initCheckedFoods() async {
     // checked 푸드 가져오기.
+    final foods = await SharedPreferencesMethods().getCheckedFoods();
+    if (foods == null) {
+      // 로컬에 없으면 땡겨오기.
+      checkedFoods.value = await FirestoreMethods().getCheckedFoods();
+    } else {
+      checkedFoods.value = foods;
+    }
   }
 
   void removeCheckedFoods() {
+    SharedPreferencesMethods().removeCheckedFoods();
     checkedFoods.value = [];
   }
 
   void removeFoods() {
     foods.value = [];
   }
-
-  void getLocalCheckedFood() async {}
 }

@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class KakaoRestaurant {
   final String placeName;
   final String placeUrl;

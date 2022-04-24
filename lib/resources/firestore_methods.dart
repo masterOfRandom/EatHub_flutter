@@ -41,11 +41,13 @@ class FirestoreMethods {
     if (_user.currentUser == null) {
       throw 'no user error';
     }
+    final data = food.toJson();
+    data['updateTime'] = Timestamp.now();
     _store
         .collection('users')
         .doc(_user.currentUser!.uid)
         .collection('checkedFoods')
-        .add(food.toJson());
+        .add(data);
   }
 
   Future<List<CheckedFood>> getCheckedFoods() async {

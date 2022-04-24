@@ -5,21 +5,34 @@ class CheckedFood {
   final String name;
   final String imageUrl;
   final CardStatus status;
-  final Timestamp updateTime;
 
   const CheckedFood({
     required this.name,
     required this.imageUrl,
     required this.status,
-    required this.updateTime,
   });
 
   Map<String, dynamic> toJson() => {
         'name': name,
         'imageUrl': imageUrl,
         'status': status.toString().split('.')[1],
-        'updateTime': updateTime,
       };
+
+  static CheckedFood fromJson(dynamic data) {
+    late CardStatus status;
+    CardStatus.values.forEach((e) {
+      if (e.toString().split('.')[1] == data['status']) {
+        status = e;
+        print(e);
+        return;
+      }
+    });
+    return CheckedFood(
+      name: data['name'],
+      imageUrl: data['imageUrl'],
+      status: status,
+    );
+  }
 
   static CheckedFood fromSnap(DocumentSnapshot<Map<String, dynamic>> snap) {
     final snapshot = snap.data();
@@ -29,8 +42,9 @@ class CheckedFood {
     final statusString = snap['status'] as String;
     late CardStatus status;
     CardStatus.values.forEach((e) {
-      if (e.toString().split('.') == statusString) {
+      if (e.toString().split('.')[1] == statusString) {
         status = e;
+
         return;
       }
     });
@@ -38,7 +52,6 @@ class CheckedFood {
       name: snap['name'],
       imageUrl: snap['imageUrl'],
       status: status,
-      updateTime: snap['updateTime'],
     );
   }
 }
