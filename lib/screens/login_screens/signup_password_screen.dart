@@ -1,5 +1,5 @@
 import 'package:eathub/getx/getx_controller.dart';
-import 'package:eathub/login_input_text_field.dart';
+import 'package:eathub/widgets/login/login_input_text_field.dart';
 import 'package:eathub/resources/auth_methods.dart';
 import 'package:eathub/screens/login_screens/login_profile_screen.dart';
 import 'package:eathub/utils/colors.dart';
@@ -140,7 +140,7 @@ class _SignupPasswordScreenState extends State<SignupPasswordScreen> {
       child: Scaffold(
         backgroundColor: backgroundWhiteColor,
         appBar: AppBar(
-          foregroundColor: Colors.black,
+          foregroundColor: grayScaleGray3,
           backgroundColor: backgroundWhiteColor,
           elevation: 0,
         ),

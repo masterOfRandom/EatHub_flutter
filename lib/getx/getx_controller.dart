@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eathub/models/checked_food.dart';
 import 'package:eathub/models/food.dart';
 import 'package:eathub/models/user.dart' as models;
 import 'package:eathub/resources/auth_methods.dart';
 import 'package:eathub/resources/firestore_methods.dart';
+import 'package:eathub/resources/shared_preference_methods.dart';
 import 'package:eathub/utils/global_var.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -59,6 +61,7 @@ class GController extends GetxController {
   var screenSize = Size.zero.obs;
   var angle = 0.0.obs;
   var foods = <Food>[].obs;
+  var checkedFoods = <CheckedFood>[].obs;
   var statusPoint = 0.0.obs;
   var status = CardStatus.nothing.obs;
 
@@ -123,22 +126,22 @@ class GController extends GetxController {
     // 애니메이션이 느려진다면 여기를 의심하자.
     if (y > 0) {
       if (x > 0) {
-        statusPoint.value = x;
+        statusPoint.value = x * 2;
         return CardStatus.like;
       } else {
-        statusPoint.value = -x;
+        statusPoint.value = (-x) * 2;
         return CardStatus.yet;
       }
     } else {
       if (x < y) {
-        statusPoint.value = y - x;
+        statusPoint.value = (y - x) * 2;
         return CardStatus.yet;
       } else {
         if (-y > x) {
-          statusPoint.value = -y - x;
+          statusPoint.value = (-y - x) * 2;
           return CardStatus.nope;
         } else {
-          statusPoint.value = x + y;
+          statusPoint.value = (x + y) * 2;
           return CardStatus.like;
         }
       }
@@ -167,9 +170,17 @@ class GController extends GetxController {
     if (foods.isEmpty || updating) return;
 
     updating = true;
-    await Future.delayed(Duration(milliseconds: 200));
+    await Future.delayed(Duration(milliseconds: 300));
+    final lastFood = foods.last;
+    final checkedFood = CheckedFood(
+      name: lastFood.name!,
+      imageUrl: lastFood.imageUrl!,
+      status: status.value,
+    );
+    checkedFoods.add(checkedFood);
+    FirestoreMethods().addCheckedFood(checkedFood);
+    SharedPreferencesMethods().setCheckedFoods(checkedFoods);
     foods.removeLast();
-    print(foods.length);
     resetPosition();
     if (foods.length == 2) {
       addFoods();
@@ -185,5 +196,25 @@ class GController extends GetxController {
 
   void setScreenSize(Size size) {
     screenSize.value = size;
+  }
+
+  Future<void> initCheckedFoods() async {
+    // checked 푸드 가져오기.
+    final foods = await SharedPreferencesMethods().getCheckedFoods();
+    if (foods == null) {
+      // 로컬에 없으면 땡겨오기.
+      checkedFoods.value = await FirestoreMethods().getCheckedFoods();
+    } else {
+      checkedFoods.value = foods;
+    }
+  }
+
+  void removeCheckedFoods() {
+    SharedPreferencesMethods().removeCheckedFoods();
+    checkedFoods.value = [];
+  }
+
+  void removeFoods() {
+    foods.value = [];
   }
 }

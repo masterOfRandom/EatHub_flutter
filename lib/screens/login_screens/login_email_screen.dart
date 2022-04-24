@@ -1,9 +1,9 @@
 import 'package:eathub/getx/getx_controller.dart';
-import 'package:eathub/login_input_text_field.dart';
 import 'package:eathub/resources/auth_methods.dart';
 import 'package:eathub/screens/login_screens/login_password_screen.dart';
 import 'package:eathub/screens/login_screens/signup_password_screen.dart';
 import 'package:eathub/utils/colors.dart';
+import 'package:eathub/widgets/login/login_input_text_field.dart';
 import 'package:eathub/widgets/next_button.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
@@ -64,7 +64,7 @@ class _LoginEmailScreenState extends State<LoginEmailScreen> {
       child: Scaffold(
         backgroundColor: backgroundWhiteColor,
         appBar: AppBar(
-          foregroundColor: Colors.black,
+          foregroundColor: grayScaleGray3,
           backgroundColor: backgroundWhiteColor,
           elevation: 0,
         ),

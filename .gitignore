@@ -47,3 +47,4 @@ app.*.map.json
 
 # Secrete
 GoogleService-Info.plist
+env.dart

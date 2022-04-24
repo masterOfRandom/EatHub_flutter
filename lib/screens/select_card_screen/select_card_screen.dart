@@ -1,13 +1,16 @@
 import 'dart:math';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eathub/getx/getx_controller.dart';
 import 'package:eathub/models/food.dart';
 import 'package:eathub/utils/colors.dart';
 import 'package:eathub/utils/global_style.dart';
 import 'package:eathub/utils/global_var.dart';
+import 'package:eathub/screens/restaurant_list_screens/restaurant_list_screen.dart';
 import 'package:eathub/widgets/select_card/brief_description.dart';
 import 'package:eathub/widgets/like_nope_yet_checker.dart';
 import 'package:eathub/widgets/select_card/recommand_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 class SelectCardScreen extends StatefulWidget {
@@ -23,7 +26,9 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
   @override
   void initState() {
     super.initState();
-    controller.addFoods();
+    if (controller.foods.length < 3) {
+      controller.addFoods();
+    }
   }
 
   Widget buildCards() {
@@ -51,26 +56,39 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundLightPinkColor,
+      appBar: AppBar(
+        backgroundColor: backgroundWhiteColor,
+        title: const Text(
+          'Tablepick',
+          style: mainTitleTextStyle,
+        ),
+        elevation: 0,
+      ),
       body: SafeArea(
         child: Container(
           padding: EdgeInsets.all(10),
           child: Column(
             children: [
-              SizedBox(height: 8),
-              RecommandText(text: '오늘은 이 메뉴 어때요?'),
-              SizedBox(height: 16),
+              const SizedBox(height: 8),
+              const RecommandText(text: '오늘은 이 메뉴 어때요?'),
+              const SizedBox(height: 16),
               Expanded(
                 child: Container(
                   alignment: Alignment.center,
                   child: buildCards(),
                 ),
               ),
-              SizedBox(height: 36),
+              const SizedBox(height: 36),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   GestureDetector(
-                    onTap: () => controller.yet(),
+                    onTap: () async {
+                      controller.statusPoint.value = 200;
+                      controller.status.value = CardStatus.yet;
+                      await Future.delayed(Duration(milliseconds: 150));
+                      controller.yet();
+                    },
                     child: Container(
                       height: 88,
                       width: 88,
@@ -92,7 +110,12 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () => controller.nope(),
+                    onTap: () async {
+                      controller.statusPoint.value = 200;
+                      controller.status.value = CardStatus.nope;
+                      await Future.delayed(Duration(milliseconds: 150));
+                      controller.nope();
+                    },
                     child: Container(
                       width: 60,
                       height: 60,
@@ -114,7 +137,12 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () => controller.like(),
+                    onTap: () async {
+                      controller.statusPoint.value = 200;
+                      controller.status.value = CardStatus.like;
+                      await Future.delayed(Duration(milliseconds: 150));
+                      controller.like();
+                    },
                     child: Container(
                       height: 88,
                       width: 88,
@@ -210,7 +238,9 @@ class FoodCardState extends State<FoodCard> {
     }, onPanEnd: (details) {
       controller.endPosition();
     }, onTap: () {
-      print('tap!');
+      Get.to(RestaurantListScreen(
+        foodName: controller.foods.last.name!,
+      ));
     });
   }
 
@@ -224,9 +254,10 @@ class FoodCardState extends State<FoodCard> {
                 decoration: BoxDecoration(
                   borderRadius: const BorderRadius.vertical(top: cardRadius),
                   image: DecorationImage(
-                    image: NetworkImage(widget.food.imageUrl == null
-                        ? defaultFoodImageUrl
-                        : widget.food.imageUrl!),
+                    image: CachedNetworkImageProvider(
+                        widget.food.imageUrl == null
+                            ? defaultFoodImageUrl
+                            : widget.food.imageUrl!),
                     fit: BoxFit.cover,
                   ),
                 ),

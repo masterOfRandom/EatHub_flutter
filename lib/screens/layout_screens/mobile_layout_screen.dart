@@ -15,24 +15,31 @@ class MobileLayoutScreen extends StatefulWidget {
 
 class _MobileLayoutScreenState extends State<MobileLayoutScreen> {
   int selectedIndex = 0;
+  bool isLoading = false;
   final controller = Get.put(UserController());
   final gController = Get.put(GController());
+
+  initCheckedFoods() async {
+    setState(() {
+      isLoading = true;
+    });
+    await gController.initCheckedFoods();
+    setState(() {
+      isLoading = false;
+    });
+  }
 
   @override
   void initState() {
     super.initState();
     controller.refreshUser();
+    initCheckedFoods();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundWhiteColor,
-      appBar: AppBar(
-        backgroundColor: backgroundWhiteColor,
-        title: SvgPicture.asset('assets/images/table_pick_logo.svg'),
-        elevation: 0,
-      ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: ((value) {
           setState(() => selectedIndex = value);
@@ -57,19 +64,14 @@ class _MobileLayoutScreenState extends State<MobileLayoutScreen> {
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              CustomIcon.community,
-              size: 20,
-            ),
-            label: '',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'hihi',
           ),
         ],
       ),
-      body: homeScreenItems[selectedIndex],
+      body: isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : homeScreenItems[selectedIndex],
     );
   }
 }
