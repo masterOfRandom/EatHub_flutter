@@ -73,7 +73,7 @@ class _SetRangeDialogState extends State<SetRangeDialog> {
       ),
       content: Column(
         children: [
-          Text('주변 식당을 탐색하는 거리 범위를 설정해보세요'),
+          Text('주변 식당을 탐색하는\n거리 범위를 설정해보세요'),
           CupertinoSlider(
             thumbColor: primaryRedColor,
             activeColor: primaryRedColor,

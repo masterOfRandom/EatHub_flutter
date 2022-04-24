@@ -44,7 +44,7 @@ class _MyPickScreenState extends State<MyPickScreen>
           backgroundColor: backgroundWhiteColor,
           title: const Text(
             'My Pick',
-            style: mainTitleTextStyle,
+            style: pageTitleTextStyle,
           ),
           elevation: 0,
         ),

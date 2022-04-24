@@ -1,5 +1,6 @@
 import 'package:eathub/getx/getx_controller.dart';
 import 'package:eathub/resources/auth_methods.dart';
+import 'package:eathub/screens/my_page_screens/introduce_screen.dart';
 import 'package:eathub/utils/colors.dart';
 import 'package:eathub/widgets/my_page/logout_dialog.dart';
 import 'package:eathub/widgets/my_page/set_range_dialog.dart';
@@ -47,7 +48,12 @@ class _SettingListState extends State<MyPageList> {
                   });
             }),
         Divider(),
-        _myPageTile(lead: Icons.gps_fixed, text: '테이블픽 소개', callback: () {}),
+        _myPageTile(
+            lead: Icons.gps_fixed,
+            text: '테이블픽 소개',
+            callback: () {
+              Get.to(IntroduceScreen());
+            }),
         Divider(),
         _myPageTile(lead: Icons.gps_fixed, text: '고객 문의', callback: () {}),
         Divider(),
