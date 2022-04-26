@@ -1,4 +1,4 @@
-package com.example.flutter_app
+package com.mijeong.table_pick
 
 import io.flutter.embedding.android.FlutterActivity
 
