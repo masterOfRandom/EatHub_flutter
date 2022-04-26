@@ -4,7 +4,7 @@ import 'package:eathub/resources/auth_methods.dart';
 import 'package:eathub/utils/colors.dart';
 import 'package:eathub/widgets/login/login_input_text_field.dart';
 import 'package:eathub/widgets/login/terms_of_service.dart';
-import 'package:eathub/widgets/next_button.dart';
+import 'package:eathub/widgets/table_pick_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -172,7 +172,8 @@ class _LoginProfileScreenState extends State<LoginProfileScreen> {
         ),
         bottomSheet: Padding(
           padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-          child: NextButton(
+          child: TablePickElevatedButton(
+            text: '다음',
             callback: _nextButtonCallback,
             isLoading: isLoading,
           ),

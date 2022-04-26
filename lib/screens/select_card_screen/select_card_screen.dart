@@ -60,7 +60,7 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
         backgroundColor: backgroundWhiteColor,
         title: const Text(
           'Tablepick',
-          style: mainTitleTextStyle,
+          style: pageTitleTextStyle,
         ),
         elevation: 0,
       ),

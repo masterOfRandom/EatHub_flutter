@@ -30,6 +30,7 @@ class LogoutDialog extends StatelessWidget {
             controller.removeCheckedFoods();
             controller.removeFoods();
             AuthMethods().logOut();
+            Navigator.pop(context);
           },
         ),
       ],

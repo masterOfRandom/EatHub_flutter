@@ -64,6 +64,7 @@ class GController extends GetxController {
   var checkedFoods = <CheckedFood>[].obs;
   var statusPoint = 0.0.obs;
   var status = CardStatus.nothing.obs;
+  var range = 1000.obs;
 
   var updating = false;
 
@@ -216,5 +217,9 @@ class GController extends GetxController {
 
   void removeFoods() {
     foods.value = [];
+  }
+
+  void setRange(int newRange) {
+    range.value = newRange;
   }
 }

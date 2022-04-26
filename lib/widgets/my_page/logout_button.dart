@@ -15,6 +15,6 @@ class LogoutButton extends StatelessWidget {
           controller.removeFoods();
           AuthMethods().logOut();
         },
-        child: Text('logout'));
+        child: const Text('logout'));
   }
 }

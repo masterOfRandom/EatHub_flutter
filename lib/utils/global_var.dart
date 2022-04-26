@@ -23,6 +23,8 @@ const mainTitleTextStyle = TextStyle(
     fontWeight: FontWeight.w900,
     color: primaryRedColor,
     fontSize: 32);
+const pageTitleTextStyle = TextStyle(
+    fontWeight: FontWeight.w500, color: primaryBlackColor, fontSize: 20);
 List<Widget> homeScreenItems = [
   const MyPageScreen(),
   const SelectCardScreen(),
