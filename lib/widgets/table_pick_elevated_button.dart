@@ -1,10 +1,12 @@
 import 'package:eathub/utils/colors.dart';
 import 'package:flutter/material.dart';
 
-class NextButton extends StatelessWidget {
+class TablePickElevatedButton extends StatelessWidget {
   final VoidCallback? callback;
   final bool isLoading;
-  const NextButton({Key? key, this.callback, required this.isLoading})
+  final String text;
+  const TablePickElevatedButton(
+      {Key? key, this.callback, required this.isLoading, required this.text})
       : super(key: key);
 
   @override
@@ -27,9 +29,9 @@ class NextButton extends StatelessWidget {
                 color: primaryRedColor,
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: const Text(
-                '다음',
-                style: TextStyle(
+              child: Text(
+                text,
+                style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
                     color: backgroundLightPinkColor),

@@ -6,7 +6,7 @@ import 'package:eathub/screens/login_screens/login_profile_screen.dart';
 import 'package:eathub/screens/login_screens/signup_password_screen.dart';
 import 'package:eathub/screens/layout_screens/mobile_layout_screen.dart';
 import 'package:eathub/utils/colors.dart';
-import 'package:eathub/widgets/next_button.dart';
+import 'package:eathub/widgets/table_pick_elevated_button.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -105,7 +105,8 @@ class _LoginPasswordScreenState extends State<LoginPasswordScreen> {
         ),
         bottomSheet: Padding(
           padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-          child: NextButton(
+          child: TablePickElevatedButton(
+            text: '다음',
             callback: _nextButtonCallback,
             isLoading: isLoading,
           ),

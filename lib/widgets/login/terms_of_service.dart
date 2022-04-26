@@ -1,7 +1,7 @@
 import 'package:eathub/getx/getx_controller.dart';
 import 'package:eathub/resources/auth_methods.dart';
 import 'package:eathub/utils/terms.dart';
-import 'package:eathub/widgets/next_button.dart';
+import 'package:eathub/widgets/table_pick_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -80,7 +80,8 @@ class _TermsOfServiceSheetState extends State<TermsOfServiceSheet> {
         Expanded(child: Container()),
         Padding(
           padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-          child: NextButton(
+          child: TablePickElevatedButton(
+            text: '다음',
             isLoading: isLoading,
             callback: () async {
               setState(() {
