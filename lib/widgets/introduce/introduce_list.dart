@@ -4,6 +4,7 @@ import 'package:eathub/screens/my_page_screens/introduce_screen.dart';
 import 'package:eathub/utils/colors.dart';
 import 'package:eathub/widgets/my_page/logout_dialog.dart';
 import 'package:eathub/widgets/my_page/set_range_dialog.dart';
+import 'package:eathub/widgets/my_page/withdrawal_dialog.dart';
 import 'package:eathub/widgets/table_pick_elevated_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -96,7 +97,9 @@ class _SettingListState extends State<IntroduceList> {
                         SizedBox(height: 32),
                         TextButton(
                           onPressed: () {
-                            print('회원탈퇴');
+                            showDialog(
+                                context: context,
+                                builder: (_) => WithdrawalDialog());
                           },
                           child: Text('회원탈퇴',
                               style: TextStyle(
