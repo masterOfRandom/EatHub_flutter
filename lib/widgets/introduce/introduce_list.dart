@@ -2,6 +2,7 @@ import 'package:eathub/getx/getx_controller.dart';
 import 'package:eathub/resources/auth_methods.dart';
 import 'package:eathub/screens/my_page_screens/introduce_screen.dart';
 import 'package:eathub/utils/colors.dart';
+import 'package:eathub/utils/global_var.dart';
 import 'package:eathub/widgets/my_page/logout_dialog.dart';
 import 'package:eathub/widgets/my_page/set_range_dialog.dart';
 import 'package:eathub/widgets/my_page/withdrawal_dialog.dart';
@@ -9,6 +10,7 @@ import 'package:eathub/widgets/table_pick_elevated_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class IntroduceList extends StatefulWidget {
   const IntroduceList({Key? key}) : super(key: key);
@@ -41,13 +43,26 @@ class _SettingListState extends State<IntroduceList> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          _myPageTile(lead: Icons.gps_fixed, text: '이용약관', callback: () {}),
+          _myPageTile(
+              lead: Icons.gps_fixed,
+              text: '이용약관',
+              callback: () async {
+                await launch(termsOfServiceUrl);
+              }),
           const Divider(),
           _myPageTile(
-              lead: Icons.gps_fixed, text: '개인 정보 처리 방침', callback: () {}),
+              lead: Icons.gps_fixed,
+              text: '개인 정보 처리 방침',
+              callback: () async {
+                await launch(termsOfPrivacyPolicyUrl);
+              }),
           const Divider(),
           _myPageTile(
-              lead: Icons.gps_fixed, text: '위치 기반 서비스 약관', callback: () {}),
+              lead: Icons.gps_fixed,
+              text: '위치 기반 서비스 약관',
+              callback: () async {
+                await launch(termsOfLocationPolicyUrl);
+              }),
           const Divider(),
           _myPageTile(
               lead: Icons.gps_fixed,

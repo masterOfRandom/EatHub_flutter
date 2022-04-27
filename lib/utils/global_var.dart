@@ -14,6 +14,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 const defaultFoodImageUrl =
     'https://i.pinimg.com/564x/dd/9d/c9/dd9dc9d83423bc037b511d73b29e6b80.jpg';
+const termsOfServiceUrl =
+    'https://100000000.notion.site/29df5c6fe30f4e9ea1b15158d8415e38';
+const termsOfPrivacyPolicyUrl =
+    'https://100000000.notion.site/018ccd8b888b48568bede7438a2752d5';
+const termsOfLocationPolicyUrl =
+    'https://100000000.notion.site/5181ae16ba9240c093083fdfac322966';
 
 enum CardStatus { like, yet, nope, nothing }
 

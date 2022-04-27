@@ -4,6 +4,7 @@ import 'package:eathub/utils/terms.dart';
 import 'package:eathub/widgets/table_pick_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TermsOfServiceSheet extends StatefulWidget {
   const TermsOfServiceSheet({Key? key}) : super(key: key);
@@ -71,7 +72,9 @@ class _TermsOfServiceSheetState extends State<TermsOfServiceSheet> {
               e.isNecessaried ? Text(' (필수)') : Text(' (선택)'),
               Expanded(child: Container()),
               TextButton(
-                onPressed: () => print('보기'),
+                onPressed: () async {
+                  await launch(e.url);
+                },
                 child: Text('보기'),
               ),
             ],
@@ -87,7 +90,9 @@ class _TermsOfServiceSheetState extends State<TermsOfServiceSheet> {
               setState(() {
                 isLoading = true;
               });
-              if (isCheckedList[0] == true && isCheckedList[1] == true) {
+              if (isCheckedList[0] == true &&
+                  isCheckedList[1] == true &&
+                  isCheckedList[2] == true) {
                 final email = controller.email.value;
                 final password = controller.password.value;
                 final name = controller.name.value;
@@ -108,7 +113,7 @@ class _TermsOfServiceSheetState extends State<TermsOfServiceSheet> {
                   Get.back();
                   Get.back();
                 } else {
-                  Get.snackbar('회원가입 문제...', '나중에 로그인시 발생하는 모든 문제 확인 후 해결하기.');
+                  Get.snackbar('회원가입에 문제가 발생했습니다.', '고객센터에 문의해주세요.');
                 }
               }
               setState(() {

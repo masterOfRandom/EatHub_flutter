@@ -23,6 +23,7 @@ class _IntroduceScreenState extends State<IntroduceScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        foregroundColor: grayScaleGray3,
         backgroundColor: backgroundWhiteColor,
         title: const Text(
           '테이블픽 소개',
