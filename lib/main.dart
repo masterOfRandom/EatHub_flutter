@@ -1,12 +1,16 @@
+import 'package:eathub/env.dart';
 import 'package:eathub/screens/layout_screens/mobile_layout_screen.dart';
-import 'package:eathub/screens/login_screens/multi_login_screen.dart';
+import 'package:eathub/screens/login_screens/onboard_screen.dart';
 import 'package:eathub/utils/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:new_version/new_version.dart';
 
 void main() async {
+  // version setting
+  NewVersion(iOSAppStoreCountry: 'KR');
   // firebase init 전 widget binding
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();

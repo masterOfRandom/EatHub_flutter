@@ -36,6 +36,7 @@ class _MyPageScreenState extends State<MyPageScreen>
         elevation: 0,
       ),
       body: Container(
+        color: backgroundLightPinkColor,
         padding: EdgeInsets.all(20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,

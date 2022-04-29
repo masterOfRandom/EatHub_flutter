@@ -1,5 +1,6 @@
 import 'package:eathub/getx/getx_controller.dart';
 import 'package:eathub/resources/auth_methods.dart';
+import 'package:eathub/resources/firestore_methods.dart';
 import 'package:eathub/utils/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,9 +28,11 @@ class WithdrawalDialog extends StatelessWidget {
         CupertinoDialogAction(
           child: Text('회원탈퇴'),
           textStyle: TextStyle(color: grayScaleGray3),
-          onPressed: () {
+          onPressed: () async {
             // 회원탈퇴
-            print('회원탈퇴');
+            await FirestoreMethods().deleteUserData();
+            await AuthMethods().withDrawal();
+            Navigator.pop(context);
             Navigator.pop(context);
           },
         ),

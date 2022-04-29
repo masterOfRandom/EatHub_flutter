@@ -55,8 +55,6 @@ class _SettingListState extends State<MyPageList> {
               Get.to(IntroduceScreen());
             }),
         Divider(),
-        _myPageTile(lead: Icons.gps_fixed, text: '고객 문의', callback: () {}),
-        Divider(),
         _myPageTile(
             lead: Icons.gps_fixed,
             text: '로그아웃',

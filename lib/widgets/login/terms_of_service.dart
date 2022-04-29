@@ -1,7 +1,7 @@
 import 'package:eathub/getx/getx_controller.dart';
 import 'package:eathub/resources/auth_methods.dart';
 import 'package:eathub/utils/terms.dart';
-import 'package:eathub/widgets/table_pick_elevated_button.dart';
+import 'package:eathub/table_pick_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';

@@ -4,7 +4,7 @@ import 'package:eathub/screens/login_screens/login_password_screen.dart';
 import 'package:eathub/screens/login_screens/signup_password_screen.dart';
 import 'package:eathub/utils/colors.dart';
 import 'package:eathub/widgets/login/login_input_text_field.dart';
-import 'package:eathub/widgets/table_pick_elevated_button.dart';
+import 'package:eathub/table_pick_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:get/get.dart';

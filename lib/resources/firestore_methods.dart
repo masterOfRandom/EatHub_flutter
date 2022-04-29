@@ -61,4 +61,11 @@ class FirestoreMethods {
         .get();
     return snap.docs.map((e) => CheckedFood.fromSnap(e)).toList();
   }
+
+  deleteUserData() async {
+    if (_user.currentUser == null) {
+      throw 'no user error';
+    }
+    await _store.collection('users').doc(_user.currentUser!.uid).delete();
+  }
 }

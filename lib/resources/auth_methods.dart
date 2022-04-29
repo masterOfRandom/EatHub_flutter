@@ -100,4 +100,12 @@ class AuthMethods {
         await _store.collection('users').doc(_auth.currentUser!.uid).get();
     return models.User.fromSnap(userData);
   }
+
+  withDrawal() async {
+    if (_auth.currentUser == null) {
+      throw '로그인이 안된 유저입니다.';
+    }
+
+    await _auth.currentUser!.delete();
+  }
 }

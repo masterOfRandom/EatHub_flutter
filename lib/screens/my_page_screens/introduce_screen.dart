@@ -32,6 +32,7 @@ class _IntroduceScreenState extends State<IntroduceScreen> {
         elevation: 0,
       ),
       body: Container(
+        color: backgroundLightPinkColor,
         padding: EdgeInsets.all(20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
