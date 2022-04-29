@@ -1,3 +1,4 @@
+import 'package:eathub/etc/get_back_icon_button.dart';
 import 'package:eathub/getx/getx_controller.dart';
 import 'package:eathub/widgets/login/login_input_text_field.dart';
 import 'package:eathub/resources/auth_methods.dart';
@@ -140,7 +141,7 @@ class _SignupPasswordScreenState extends State<SignupPasswordScreen> {
       child: Scaffold(
         backgroundColor: backgroundWhiteColor,
         appBar: AppBar(
-          foregroundColor: grayScaleGray3,
+          leading: const GetBackIconButton(),
           backgroundColor: backgroundWhiteColor,
           elevation: 0,
         ),

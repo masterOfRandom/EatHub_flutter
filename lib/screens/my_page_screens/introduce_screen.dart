@@ -1,10 +1,8 @@
+import 'package:eathub/etc/get_back_icon_button.dart';
 import 'package:eathub/getx/getx_controller.dart';
 import 'package:eathub/utils/colors.dart';
 import 'package:eathub/utils/global_var.dart';
 import 'package:eathub/widgets/introduce/introduce_list.dart';
-import 'package:eathub/widgets/my_page/logout_button.dart';
-import 'package:eathub/widgets/my_page/my_page_list.dart';
-import 'package:eathub/widgets/my_page/say_hello_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -23,7 +21,7 @@ class _IntroduceScreenState extends State<IntroduceScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        foregroundColor: grayScaleGray3,
+        leading: const GetBackIconButton(),
         backgroundColor: backgroundWhiteColor,
         title: const Text(
           '테이블픽 소개',

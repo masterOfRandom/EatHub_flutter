@@ -7,46 +7,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
-class LoginButton extends StatelessWidget {
-  final Color color;
-  final Icon? icon;
-  final String text;
-  final VoidCallback? callback;
-
-  const LoginButton({
-    Key? key,
-    this.color = Colors.grey,
-    this.icon,
-    required this.text,
-    this.callback,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: callback,
-      child: Container(
-        alignment: Alignment.centerLeft,
-        child: Row(
-          children: [
-            icon == null
-                ? Container()
-                : Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    child: icon!),
-            Text(text),
-          ],
-        ),
-        height: 52,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: color,
-        ),
-      ),
-    );
-  }
-}
-
 class MultiLoginScreen extends StatefulWidget {
   const MultiLoginScreen({Key? key}) : super(key: key);
 
@@ -70,7 +30,6 @@ class _MultiLoginScreenState extends State<MultiLoginScreen> {
   List<Widget> _items() {
     return [
       OnboardStandardForm(
-        padding: 0,
         imageWidget: Lottie.asset(
           'assets/lotties/onboard_first_page.json',
           frameRate: FrameRate(60),
@@ -101,8 +60,7 @@ class _MultiLoginScreenState extends State<MultiLoginScreen> {
         buttonText: '다음',
       ),
       OnboardStandardForm(
-        padding: 40,
-        imageWidget: Image.asset('assets/images/onboard_second_page.png'),
+        imageWidget: SvgPicture.asset('assets/images/onboard_second_page.svg'),
         title: const Text('메뉴 카드를 넘겨보세요',
             style: TextStyle(fontWeight: FontWeight.w700, fontSize: 24)),
         descript: '마음에 드시는 메뉴를 픽해보세요\n버튼을 눌러도 선택됩니다',
@@ -110,8 +68,7 @@ class _MultiLoginScreenState extends State<MultiLoginScreen> {
         buttonText: '다음',
       ),
       OnboardStandardForm(
-        padding: 40,
-        imageWidget: Image.asset('assets/images/onboard_third_page.png'),
+        imageWidget: SvgPicture.asset('assets/images/onboard_third_page.svg'),
         title: const Text('마이픽을 확인해보세요',
             style: TextStyle(fontWeight: FontWeight.w700, fontSize: 24)),
         descript: '선택된 LIKE와 NOPE은\n마이픽에서 확인할 수 있어요',
@@ -119,12 +76,11 @@ class _MultiLoginScreenState extends State<MultiLoginScreen> {
         buttonText: '다음',
       ),
       OnboardStandardForm(
-        padding: 40,
-        imageWidget: Image.asset('assets/images/onboard_fourth_page.png'),
+        imageWidget: SvgPicture.asset('assets/images/onboard_fourth_page.svg'),
         title: const Text('원하시는 메뉴가 이곳에',
             style: TextStyle(fontWeight: FontWeight.w700, fontSize: 24)),
         descript: '고르신 메뉴가 마음에 드셨나요?\n가까운 이곳은 어떠세요?',
-        callback: () => Get.to(LoginEmailScreen()),
+        callback: () => Get.to(const LoginEmailScreen()),
         buttonText: '이메일로 시작하기',
       ),
     ];
@@ -133,31 +89,37 @@ class _MultiLoginScreenState extends State<MultiLoginScreen> {
   Widget oneIndicator(bool isChecked) {
     return AnimatedContainer(
       height: 8,
-      width: 8,
+      width: isChecked ? 16 : 8,
       duration: Duration(milliseconds: 200),
       decoration: isChecked
           ? BoxDecoration(
               color: primaryRedColor,
-              shape: BoxShape.circle,
+              borderRadius: BorderRadius.circular(4),
             )
           : BoxDecoration(
-              color: secondaryPinkGrayColor, shape: BoxShape.circle),
+              color: grayScaleGray4,
+              borderRadius: BorderRadius.circular(4),
+            ),
     );
   }
 
   Widget _indicator(int index) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        oneIndicator(index == 0),
-        SizedBox(width: 8),
-        oneIndicator(index == 1),
-        SizedBox(width: 8),
-        oneIndicator(index == 2),
-        SizedBox(width: 8),
-        oneIndicator(index == 3),
-      ],
+    return Container(
+      padding: EdgeInsets.only(top: 16, left: 16),
+      width: double.infinity,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          oneIndicator(index == 0),
+          const SizedBox(width: 8),
+          oneIndicator(index == 1),
+          const SizedBox(width: 8),
+          oneIndicator(index == 2),
+          const SizedBox(width: 8),
+          oneIndicator(index == 3),
+        ],
+      ),
     );
   }
 
@@ -167,10 +129,9 @@ class _MultiLoginScreenState extends State<MultiLoginScreen> {
       body: Container(
         color: backgroundWhiteColor,
         child: SafeArea(
-          child: Column(
+          child: Stack(
             children: [
-              _indicator(checkedPageIndex),
-              Expanded(
+              Positioned(
                 child: CarouselSlider(
                   carouselController: carouselController,
                   options: CarouselOptions(
@@ -184,6 +145,9 @@ class _MultiLoginScreenState extends State<MultiLoginScreen> {
                   items: _items(),
                 ),
               ),
+              Positioned(
+                child: _indicator(checkedPageIndex),
+              )
             ],
           ),
         ),

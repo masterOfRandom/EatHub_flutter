@@ -18,17 +18,18 @@ class LoginInputTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      obscureText: this.isPassword,
+      obscureText: isPassword,
       focusNode: focusNode,
-      style: TextStyle(color: grayScaleGray2, fontSize: 14),
+      style: const TextStyle(color: grayScaleGray2, fontSize: 14),
       keyboardType: TextInputType.emailAddress,
       controller: controller,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 13),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 24, vertical: 13),
         errorText: errText,
         focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide(color: primaryRedColor)),
+            borderSide: const BorderSide(color: Colors.black)),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(color: grayScaleGray4),

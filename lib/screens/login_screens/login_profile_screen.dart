@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eathub/etc/get_back_icon_button.dart';
 import 'package:eathub/getx/getx_controller.dart';
 import 'package:eathub/resources/auth_methods.dart';
 import 'package:eathub/utils/colors.dart';
@@ -117,7 +118,7 @@ class _LoginProfileScreenState extends State<LoginProfileScreen> {
       child: Scaffold(
         backgroundColor: backgroundWhiteColor,
         appBar: AppBar(
-          foregroundColor: grayScaleGray3,
+          leading: const GetBackIconButton(),
           backgroundColor: backgroundWhiteColor,
           elevation: 0,
         ),

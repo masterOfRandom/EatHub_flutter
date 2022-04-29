@@ -43,8 +43,8 @@ class _MyPickScreenState extends State<MyPickScreen>
         appBar: AppBar(
           backgroundColor: backgroundWhiteColor,
           title: const Text(
-            'My Pick',
-            style: pageTitleTextStyle,
+            'My pick',
+            style: mainTitleTextStyle,
           ),
           elevation: 0,
         ),

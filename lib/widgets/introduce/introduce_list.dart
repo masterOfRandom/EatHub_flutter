@@ -97,13 +97,16 @@ class _SettingListState extends State<IntroduceList> {
               setState(() {});
             },
           ),
+          SizedBox(height: 8),
           AnimatedContainer(
             decoration: isMore
                 ? BoxDecoration(
                     border: Border.all(color: grayScaleGray5),
                     borderRadius:
                         BorderRadius.vertical(bottom: Radius.circular(10)))
-                : BoxDecoration(),
+                : BoxDecoration(
+                    border: Border.all(color: Color(0x00000000)),
+                  ),
             duration: Duration(milliseconds: 500),
             height: isMore ? 260 : 0,
             curve: Curves.ease,
@@ -158,7 +161,11 @@ class _SettingListState extends State<IntroduceList> {
                   )
                 : Container(),
           ),
-          const Divider(),
+          !isMore
+              ? const Divider(height: 0)
+              : SizedBox(
+                  height: 0,
+                ),
         ],
       ),
     );

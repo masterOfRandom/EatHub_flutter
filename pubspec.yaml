@@ -70,9 +70,6 @@ flutter:
         - assets/images/heart_with_background.json
         - assets/images/heart_without_background.json
         - assets/lotties/onboard_first_page.json
-        - assets/images/onboard_second_page.png
-        - assets/images/onboard_third_page.png
-        - assets/images/onboard_fourth_page.png
         - assets/images/onboard_second_page.svg
         - assets/images/onboard_third_page.svg
         - assets/images/onboard_fourth_page.svg

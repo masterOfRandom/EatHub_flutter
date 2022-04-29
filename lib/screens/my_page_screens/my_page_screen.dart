@@ -30,7 +30,7 @@ class _MyPageScreenState extends State<MyPageScreen>
       appBar: AppBar(
         backgroundColor: backgroundWhiteColor,
         title: const Text(
-          'My Page',
+          'My page',
           style: mainTitleTextStyle,
         ),
         elevation: 0,

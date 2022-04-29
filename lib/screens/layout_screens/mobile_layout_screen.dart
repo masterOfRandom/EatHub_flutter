@@ -64,8 +64,8 @@ class _MobileLayoutScreenState extends State<MobileLayoutScreen> {
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'hihi',
+            icon: Icon(Icons.import_contacts_outlined),
+            label: '',
           ),
         ],
       ),

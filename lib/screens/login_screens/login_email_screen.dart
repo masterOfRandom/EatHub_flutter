@@ -1,3 +1,4 @@
+import 'package:eathub/etc/get_back_icon_button.dart';
 import 'package:eathub/getx/getx_controller.dart';
 import 'package:eathub/resources/auth_methods.dart';
 import 'package:eathub/screens/login_screens/login_password_screen.dart';
@@ -32,16 +33,11 @@ class _LoginEmailScreenState extends State<LoginEmailScreen> {
     final email = emailController.text;
     setState(() {
       isLoading = true;
-      errMessage = null;
     });
     if (email.isEmpty) {
-      setState(() {
-        errMessage = '입력창이 비어있습니다.';
-      });
+      errMessage = '입력창이 비어있습니다.';
     } else if (!EmailValidator.validate(email)) {
-      setState(() {
-        errMessage = '이메일 형식이 올바르지 않습니다.';
-      });
+      errMessage = '이메일 형식이 올바르지 않습니다.';
     } else {
       // 중복 확인.
       final isOverlap = await AuthMethods().isEmailOverlaped(email);
@@ -52,9 +48,8 @@ class _LoginEmailScreenState extends State<LoginEmailScreen> {
         Get.to(SignupPasswordScreen());
       }
     }
-    setState(() {
-      isLoading = false;
-    });
+    isLoading = false;
+    setState(() {});
   }
 
   @override
@@ -64,7 +59,7 @@ class _LoginEmailScreenState extends State<LoginEmailScreen> {
       child: Scaffold(
         backgroundColor: backgroundWhiteColor,
         appBar: AppBar(
-          foregroundColor: grayScaleGray3,
+          leading: const GetBackIconButton(),
           backgroundColor: backgroundWhiteColor,
           elevation: 0,
         ),
@@ -90,7 +85,10 @@ class _LoginEmailScreenState extends State<LoginEmailScreen> {
                 SizedBox(
                   height: 8,
                 ),
-                LoginInputTextField(controller: emailController),
+                LoginInputTextField(
+                  controller: emailController,
+                  errText: errMessage,
+                ),
               ],
             ),
           ),

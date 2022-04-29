@@ -88,7 +88,7 @@ class _SetRangeDialogState extends State<SetRangeDialog> {
           ),
           Container(
             alignment: Alignment.centerRight,
-            child: Text('${indexToRange(range.toInt())}m'),
+            child: Text('${indexToRange(range.toInt()).toInt()}m'),
           )
         ],
       ),

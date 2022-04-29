@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eathub/etc/get_back_icon_button.dart';
 import 'package:eathub/models/restautant.dart';
 import 'package:eathub/resources/kakao_methods.dart';
 import 'package:eathub/utils/colors.dart';
+import 'package:eathub/utils/global_var.dart';
 import 'package:eathub/widgets/restaurant_list/food_name_container.dart';
 import 'package:eathub/widgets/restaurant_list/restaurants_list_view.dart';
 import 'package:flutter/material.dart';
@@ -49,10 +51,10 @@ class _AroundRestaurantListState extends State<RestaurantListScreen> {
     return Scaffold(
       backgroundColor: backgroundLightPinkColor,
       appBar: AppBar(
-        foregroundColor: grayScaleGray3,
+        leading: const GetBackIconButton(),
         backgroundColor: backgroundWhiteColor,
         elevation: 0,
-        title: SvgPicture.asset('assets/images/table_pick_logo.svg'),
+        title: Text('Tablepick', style: mainTitleTextStyle),
       ),
       body: SafeArea(
         child: Padding(
