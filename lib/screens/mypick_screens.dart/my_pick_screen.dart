@@ -1,4 +1,5 @@
 import 'package:eathub/getx/getx_controller.dart';
+import 'package:eathub/presentation/table_pick_icons.dart';
 import 'package:eathub/screens/mypick_screens.dart/like_screen.dart';
 import 'package:eathub/screens/mypick_screens.dart/nope_screen.dart';
 import 'package:eathub/utils/colors.dart';
@@ -41,6 +42,7 @@ class _MyPickScreenState extends State<MyPickScreen>
       length: 2,
       child: Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           backgroundColor: backgroundWhiteColor,
           title: const Text(
             'My pick',
@@ -58,29 +60,25 @@ class _MyPickScreenState extends State<MyPickScreen>
               controller: _tabController,
               indicatorColor: primaryRedColor,
               indicatorSize: TabBarIndicatorSize.label,
+              unselectedLabelColor: secondaryPinkGrayColor,
+              labelColor: primaryRedColor,
+              indicatorWeight: 4,
               tabs: [
                 Tab(
-                  child: Text(
-                    'like',
-                    style: TextStyle(
-                        color: _tabController.index == 0
-                            ? primaryRedColor
-                            : grayScaleGray4,
-                        fontFamily: 'Baloo2',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 32),
+                  height: 80,
+                  icon: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 40),
+                    child: Icon(
+                      TablePick.smallHeart,
+                    ),
                   ),
                 ),
                 Tab(
-                  child: Text(
-                    'nope',
-                    style: TextStyle(
-                        color: _tabController.index == 1
-                            ? primaryRedColor
-                            : grayScaleGray4,
-                        fontFamily: 'Baloo2',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 32),
+                  icon: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 40),
+                    child: Icon(
+                      TablePick.smallx,
+                    ),
                   ),
                 ),
               ],
@@ -88,6 +86,7 @@ class _MyPickScreenState extends State<MyPickScreen>
           ),
           body: SafeArea(
             child: Container(
+              color: backgroundWhiteColor,
               padding: EdgeInsets.all(10),
               child: Obx(
                 () {

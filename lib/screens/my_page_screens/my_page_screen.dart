@@ -28,6 +28,7 @@ class _MyPageScreenState extends State<MyPageScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: backgroundWhiteColor,
         title: const Text(
           'My page',
@@ -43,7 +44,7 @@ class _MyPageScreenState extends State<MyPageScreen>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 20),
-            SayHelloText(name: userController.user.value.name!),
+            Obx(() => SayHelloText(name: userController.user.value.name)),
             const SizedBox(height: 52),
             const MyPageList(),
           ],

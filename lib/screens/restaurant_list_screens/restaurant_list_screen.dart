@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:eathub/etc/get_back_icon_button.dart';
+import 'package:eathub/widgets/etc/get_back_icon_button.dart';
 import 'package:eathub/models/restautant.dart';
 import 'package:eathub/resources/kakao_methods.dart';
 import 'package:eathub/utils/colors.dart';
@@ -51,6 +51,7 @@ class _AroundRestaurantListState extends State<RestaurantListScreen> {
     return Scaffold(
       backgroundColor: backgroundLightPinkColor,
       appBar: AppBar(
+        centerTitle: true,
         leading: const GetBackIconButton(),
         backgroundColor: backgroundWhiteColor,
         elevation: 0,

@@ -2,16 +2,18 @@ import 'dart:math';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eathub/getx/getx_controller.dart';
 import 'package:eathub/models/food.dart';
+import 'package:eathub/presentation/table_pick_icons.dart';
 import 'package:eathub/utils/colors.dart';
 import 'package:eathub/utils/global_style.dart';
 import 'package:eathub/utils/global_var.dart';
 import 'package:eathub/screens/restaurant_list_screens/restaurant_list_screen.dart';
 import 'package:eathub/widgets/select_card/brief_description.dart';
 import 'package:eathub/widgets/like_nope_yet_checker.dart';
+import 'package:eathub/widgets/select_card/empty_card.dart';
 import 'package:eathub/widgets/select_card/recommand_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 class SelectCardScreen extends StatefulWidget {
   const SelectCardScreen({Key? key}) : super(key: key);
@@ -35,12 +37,7 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
     return Obx(() {
       final foods = controller.foods;
       return foods.isEmpty
-          ? Center(
-              child: Text(
-                '더이상 음식이 없습니다... 모든 음식을 다 보셨군요??',
-                style: TextStyle(fontSize: 32),
-              ),
-            )
+          ? EmptyCard()
           : Stack(
               children: foods
                   .map((food) => FoodCard(
@@ -57,6 +54,7 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
     return Scaffold(
       backgroundColor: backgroundLightPinkColor,
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: backgroundWhiteColor,
         title: const Text(
           'Tablepick',
@@ -69,8 +67,11 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
           padding: EdgeInsets.all(10),
           child: Column(
             children: [
-              const SizedBox(height: 8),
-              const RecommandText(text: '오늘은 이 메뉴 어때요?'),
+              Obx(() {
+                return RecommandText(
+                    text: '오늘은 이 메뉴 어때요?',
+                    isVisible: controller.foods.isNotEmpty);
+              }),
               const SizedBox(height: 16),
               Expanded(
                 child: Container(
@@ -103,7 +104,7 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
                         ],
                       ),
                       child: Icon(
-                        Icons.star,
+                        TablePick.smallYet,
                         color: Colors.white,
                         size: 42,
                       ),
@@ -131,7 +132,7 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
                         ],
                       ),
                       child: Icon(
-                        Icons.close_rounded,
+                        TablePick.smallx,
                         color: Color(0xFF630000),
                       ),
                     ),
@@ -157,7 +158,7 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
                         ],
                       ),
                       child: Icon(
-                        Icons.favorite_rounded,
+                        TablePick.smallHeart,
                         color: Colors.white,
                         size: 42,
                       ),

@@ -1,3 +1,4 @@
+import 'package:eathub/presentation/table_pick_icons.dart';
 import 'package:eathub/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,8 +9,7 @@ class GetBackIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      child:
-          const Icon(Icons.arrow_back_ios_new_rounded, color: grayScaleGray2),
+      child: const Icon(TablePick.arrow_back_ios_new, color: grayScaleGray2),
       onTap: () {
         Get.back();
       },

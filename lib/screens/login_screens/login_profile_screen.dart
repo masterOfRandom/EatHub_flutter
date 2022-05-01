@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:eathub/etc/get_back_icon_button.dart';
+import 'package:eathub/widgets/etc/get_back_icon_button.dart';
 import 'package:eathub/getx/getx_controller.dart';
 import 'package:eathub/resources/auth_methods.dart';
 import 'package:eathub/utils/colors.dart';
@@ -100,14 +100,18 @@ class _LoginProfileScreenState extends State<LoginProfileScreen> {
         sexErrMessage == null &&
         yearErrMessage == null) {
       controller.updateProfile(
-          name: name,
-          isMale: sex == '남자' ? true : false,
-          yearOfBirth: Timestamp.fromDate(DateTime(int.parse(year))));
+        name: name,
+        isMale: sex == '남자' ? true : false,
+        yearOfBirth: Timestamp.fromDate(DateTime(int.parse(year))),
+      );
       showModalBottomSheet(
-          context: context,
-          builder: (context) {
-            return TermsOfServiceSheet();
-          });
+        constraints: BoxConstraints(maxHeight: 450),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        context: context,
+        builder: (context) {
+          return TermsOfServiceSheet();
+        },
+      );
     }
   }
 

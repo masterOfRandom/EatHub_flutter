@@ -42,7 +42,7 @@ class LoginController extends GetxController {
 
 class UserController extends GetxController {
   var user = models.User(
-          name: '',
+          name: '초기화',
           birthday: Timestamp(0, 0),
           email: '',
           favoriteKeyword: [''],

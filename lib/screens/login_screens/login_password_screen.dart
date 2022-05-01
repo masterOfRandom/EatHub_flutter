@@ -1,4 +1,5 @@
-import 'package:eathub/etc/get_back_icon_button.dart';
+import 'package:eathub/confirm_dialog.dart';
+import 'package:eathub/widgets/etc/get_back_icon_button.dart';
 import 'package:eathub/getx/getx_controller.dart';
 import 'package:eathub/widgets/login/login_input_text_field.dart';
 import 'package:eathub/main.dart';
@@ -9,6 +10,7 @@ import 'package:eathub/screens/layout_screens/mobile_layout_screen.dart';
 import 'package:eathub/utils/colors.dart';
 import 'package:eathub/table_pick_elevated_button.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -22,7 +24,6 @@ class LoginPasswordScreen extends StatefulWidget {
 class _LoginPasswordScreenState extends State<LoginPasswordScreen> {
   final passwordController = TextEditingController();
   final controller = Get.put(LoginController());
-  final userController = Get.put(UserController());
   String? errMessage;
   var isLoading = false;
 
@@ -47,7 +48,6 @@ class _LoginPasswordScreenState extends State<LoginPasswordScreen> {
           .signIn(controller.email.value, controller.password.value);
       if (state == SignState.success) {
         FocusManager.instance.primaryFocus?.unfocus();
-        userController.refreshUser();
         Get.back();
         Get.back();
         Get.snackbar('로그인 성공', '로그인에 성공하셨습니다!');
@@ -72,6 +72,24 @@ class _LoginPasswordScreenState extends State<LoginPasswordScreen> {
           leading: const GetBackIconButton(),
           backgroundColor: backgroundWhiteColor,
           elevation: 0,
+          actions: [
+            Container(
+              padding: EdgeInsets.only(right: 20),
+              child: TextButton(
+                child: Text(
+                  '고객문의',
+                  style: TextStyle(fontSize: 16),
+                ),
+                onPressed: () => showCupertinoDialog(
+                  context: context,
+                  builder: (_) => ConfirmDialog(
+                    title: '이메일 문의',
+                    content: ('tablepick2022@gmail.com로\n문의 해주세요'),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
         body: SingleChildScrollView(
           child: Container(

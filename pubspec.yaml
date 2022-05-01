@@ -69,6 +69,7 @@ flutter:
         - assets/images/my_pick_logo.svg
         - assets/images/heart_with_background.json
         - assets/images/heart_without_background.json
+        - assets/lotties/empty_card.json
         - assets/lotties/onboard_first_page.json
         - assets/images/onboard_second_page.svg
         - assets/images/onboard_third_page.svg
@@ -109,8 +110,8 @@ flutter:
                 weight: 700
               - asset: assets/fonts/Baloo_2/static/Baloo2-ExtraBold.ttf
                 weight: 800
-        - family: CustomIcon
+        - family: TablePick
           fonts:
-              - asset: assets/fonts/CustomIcon.ttf
+              - asset: assets/tablePickCustomIcons/fonts/TablePick.ttf
     # For details regarding fonts from package dependencies,
     # see https://flutter.dev/custom-fonts/#from-packages

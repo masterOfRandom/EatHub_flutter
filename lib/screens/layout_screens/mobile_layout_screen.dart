@@ -1,9 +1,8 @@
 import 'package:eathub/getx/getx_controller.dart';
-import 'package:eathub/presentation/custom_icon_icons.dart';
+import 'package:eathub/presentation/table_pick_icons.dart';
 import 'package:eathub/utils/colors.dart';
 import 'package:eathub/utils/global_var.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 class MobileLayoutScreen extends StatefulWidget {
@@ -29,6 +28,30 @@ class _MobileLayoutScreenState extends State<MobileLayoutScreen> {
     });
   }
 
+  final _items = const [
+    BottomNavigationBarItem(
+      icon: Icon(
+        TablePick.card,
+        size: 18,
+      ),
+      label: '',
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(
+        TablePick.smallHeart,
+        size: 18,
+      ),
+      label: '',
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(
+        TablePick.contacts,
+        size: 18,
+      ),
+      label: '',
+    ),
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -38,34 +61,38 @@ class _MobileLayoutScreenState extends State<MobileLayoutScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final indicatorLength = MediaQuery.of(context).size.width / _items.length;
     return Scaffold(
       backgroundColor: backgroundWhiteColor,
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: ((value) {
-          setState(() => selectedIndex = value);
-        }),
-        currentIndex: selectedIndex,
-        selectedItemColor: primaryRedColor,
-        unselectedItemColor: grayScaleGray4,
-        enableFeedback: false,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(
-              CustomIcon.cards,
-              size: 18,
+      bottomNavigationBar: Stack(
+        children: [
+          BottomNavigationBar(
+            elevation: 0,
+            backgroundColor: backgroundWhiteColor,
+            onTap: ((value) {
+              setState(() => selectedIndex = value);
+            }),
+            currentIndex: selectedIndex,
+            selectedItemColor: primaryRedColor,
+            unselectedItemColor: grayScaleGray4,
+            enableFeedback: false,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            selectedFontSize: 0,
+            unselectedFontSize: 0,
+            type: BottomNavigationBarType.fixed,
+            items: _items,
+          ),
+          AnimatedPositioned(
+            top: 0,
+            curve: Curves.ease,
+            duration: Duration(milliseconds: 200),
+            left: selectedIndex * indicatorLength + indicatorLength / 8,
+            child: Container(
+              height: 2,
+              color: primaryRedColor,
+              width: indicatorLength * 3 / 4,
             ),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.import_contacts_outlined),
-            label: '',
           ),
         ],
       ),

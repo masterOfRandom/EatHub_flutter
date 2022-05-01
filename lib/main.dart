@@ -16,6 +16,16 @@ void main() async {
   await Firebase.initializeApp();
   runApp(GetMaterialApp(
     theme: ThemeData(
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+            primary: Colors.black,
+          ),
+        ),
+        checkboxTheme: CheckboxThemeData(
+            shape: CircleBorder(),
+            fillColor: MaterialStateColor.resolveWith((states) {
+              return primaryRedColor;
+            })),
         fontFamily: 'NotoSans',
         bottomSheetTheme:
             BottomSheetThemeData(backgroundColor: backgroundWhiteColor)),

@@ -1,4 +1,4 @@
-import 'package:eathub/etc/get_back_icon_button.dart';
+import 'package:eathub/widgets/etc/get_back_icon_button.dart';
 import 'package:eathub/getx/getx_controller.dart';
 import 'package:eathub/utils/colors.dart';
 import 'package:eathub/utils/global_var.dart';
@@ -15,12 +15,12 @@ class IntroduceScreen extends StatefulWidget {
 
 class _IntroduceScreenState extends State<IntroduceScreen> {
   final controller = Get.put(GController());
-  final userController = Get.put(UserController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         leading: const GetBackIconButton(),
         backgroundColor: backgroundWhiteColor,
         title: const Text(

@@ -98,7 +98,9 @@ class AuthMethods {
     }
     final userData =
         await _store.collection('users').doc(_auth.currentUser!.uid).get();
-    return models.User.fromSnap(userData);
+
+    final result = models.User.fromSnap(userData);
+    return result;
   }
 
   withDrawal() async {
