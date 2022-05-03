@@ -24,6 +24,9 @@ class SelectCardScreen extends StatefulWidget {
 
 class _SelectCardScreenState extends State<SelectCardScreen> {
   final controller = Get.put(GController());
+  bool isPressedYet = false;
+  bool isPressedLike = false;
+  bool isPressedNope = false;
 
   @override
   void initState() {
@@ -64,7 +67,7 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
       ),
       body: SafeArea(
         child: Container(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           child: Column(
             children: [
               Obx(() {
@@ -84,10 +87,22 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   GestureDetector(
+                    onTapDown: (detail) {
+                      isPressedYet = true;
+                      setState(() {});
+                    },
+                    onTapCancel: () {
+                      isPressedYet = false;
+                      setState(() {});
+                    },
+                    onTapUp: (detail) {
+                      isPressedYet = false;
+                      setState(() {});
+                    },
                     onTap: () async {
                       controller.statusPoint.value = 200;
                       controller.status.value = CardStatus.yet;
-                      await Future.delayed(Duration(milliseconds: 150));
+                      await Future.delayed(const Duration(milliseconds: 150));
                       controller.yet();
                     },
                     child: Container(
@@ -104,13 +119,25 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
                         ],
                       ),
                       child: Icon(
-                        TablePick.smallYet,
+                        isPressedYet ? TablePick.bigYet : TablePick.smallYet,
                         color: Colors.white,
                         size: 42,
                       ),
                     ),
                   ),
                   GestureDetector(
+                    onTapDown: (detail) {
+                      isPressedNope = true;
+                      setState(() {});
+                    },
+                    onTapCancel: () {
+                      isPressedNope = false;
+                      setState(() {});
+                    },
+                    onTapUp: (detail) {
+                      isPressedNope = false;
+                      setState(() {});
+                    },
                     onTap: () async {
                       controller.statusPoint.value = 200;
                       controller.status.value = CardStatus.nope;
@@ -132,12 +159,24 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
                         ],
                       ),
                       child: Icon(
-                        TablePick.smallx,
-                        color: Color(0xFF630000),
+                        isPressedNope ? TablePick.bigx : TablePick.smallx,
+                        color: secondaryPinkGrayColor,
                       ),
                     ),
                   ),
                   GestureDetector(
+                    onTapDown: (detail) {
+                      isPressedLike = true;
+                      setState(() {});
+                    },
+                    onTapCancel: () {
+                      isPressedLike = false;
+                      setState(() {});
+                    },
+                    onTapUp: (detail) {
+                      isPressedLike = false;
+                      setState(() {});
+                    },
                     onTap: () async {
                       controller.statusPoint.value = 200;
                       controller.status.value = CardStatus.like;
@@ -158,7 +197,9 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
                         ],
                       ),
                       child: Icon(
-                        TablePick.smallHeart,
+                        isPressedLike
+                            ? TablePick.bigHeart
+                            : TablePick.smallHeart,
                         color: Colors.white,
                         size: 42,
                       ),
@@ -211,38 +252,57 @@ class FoodCardState extends State<FoodCard> {
   }
 
   Widget buildFrontCard() {
-    return GestureDetector(child: LayoutBuilder(builder: (context, constrains) {
-      return Obx(() {
-        final milliseconds =
-            controller.isDragging.value ? 0 : cardReturnMillisecond;
-        final position = controller.position.value;
+    return GestureDetector(
+      child: LayoutBuilder(builder: (context, constrains) {
+        return Obx(() {
+          final isDragging = controller.isDragging.value;
+          final milliseconds = isDragging ? 0 : cardReturnMillisecond;
+          final position = controller.position.value;
 
-        final center = constrains.smallest.center(Offset.zero);
-        final angle = controller.angle.value * pi / 180;
-        final rotatedMatrix = Matrix4.identity()
-          ..translate(center.dx, center.dy)
-          ..rotateZ(angle)
-          ..translate(-center.dx, -center.dy);
-        final resultMatrix = rotatedMatrix..translate(position.dx, position.dy);
+          final center = constrains.smallest.center(Offset.zero);
+          final angle = controller.angle.value * pi / 180;
+          final rotatedMatrix = isDragging
+              ? (Matrix4.identity()
+                ..translate(center.dx, center.dy)
+                ..scale(1.05)
+                ..rotateZ(angle)
+                ..translate(-center.dx, -center.dy))
+              : Matrix4.identity()
+            ..translate(center.dx, center.dy)
+            ..rotateZ(angle)
+            ..translate(-center.dx, -center.dy);
+          final resultMatrix = rotatedMatrix
+            ..translate(position.dx, position.dy);
 
-        return AnimatedContainer(
-          curve: Curves.easeInOut,
-          transform: resultMatrix,
-          duration: Duration(milliseconds: milliseconds),
-          child: buildCard(true),
-        );
-      });
-    }), onPanStart: (details) {
-      controller.startPosition(details);
-    }, onPanUpdate: (details) {
-      controller.updatePosition(details);
-    }, onPanEnd: (details) {
-      controller.endPosition();
-    }, onTap: () {
-      Get.to(RestaurantListScreen(
-        foodName: controller.foods.last.name!,
-      ));
-    });
+          return AnimatedContainer(
+            curve: Curves.easeInOut,
+            transform: resultMatrix,
+            duration: Duration(milliseconds: milliseconds),
+            child: buildCard(true),
+          );
+        });
+      }),
+      onTapDown: (details) {
+        controller.isDragging.value = true;
+      },
+      onTapUp: (details) {
+        controller.isDragging.value = false;
+      },
+      onPanStart: (details) {
+        controller.startPosition(details);
+      },
+      onPanUpdate: (details) {
+        controller.updatePosition(details);
+      },
+      onPanEnd: (details) {
+        controller.endPosition();
+      },
+      onTap: () {
+        Get.to(RestaurantListScreen(
+          foodName: controller.foods.last.name!,
+        ));
+      },
+    );
   }
 
   Widget buildCard(bool isFront) {

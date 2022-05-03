@@ -67,27 +67,19 @@ class _SignupPasswordScreenState extends State<SignupPasswordScreen> {
       errMessage = '비밀번호가 비었습니다.';
     } else {
       // 비밀번호는 8자리 이상,
-      // 소문자, 숫자가 하나 이상씩 섞여야한다.
-      errMessage = '';
+      // 영어, 숫자가 하나 이상씩 섞여야한다.
+      errMessage = null;
       setState(() {
         isPasswordPass = false;
       });
-      if (password.length < 8) {
+      if (!password.contains(new RegExp(r'[0-9]')) ||
+          !password.contains(new RegExp(r'[a-zA-Z]')) ||
+          !password.contains(new RegExp(r'[!@#$%^*+=-]')) ||
+          password.length < 8) {
         setState(() {
-          errMessage = errMessage! + '8개 이상의 문자. ';
+          errMessage = '비밀번호는 영문, 숫자, 특수문자(!@#\$%^*+=-) 조합 8자 이상이어야 합니다.';
         });
-      }
-      if (!password.contains(new RegExp(r'[0-9]'))) {
-        setState(() {
-          errMessage = errMessage! + '하나 이상의 숫자. ';
-        });
-      }
-      if (!password.contains(new RegExp(r'[a-zA-Z]'))) {
-        setState(() {
-          errMessage = errMessage! + '하나 이상의 영어. ';
-        });
-      }
-      if (errMessage!.length == 0) {
+      } else {
         setState(() {
           errMessage = null;
           isPasswordPass = true;

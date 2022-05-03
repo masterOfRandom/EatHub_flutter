@@ -67,7 +67,7 @@ class AuthMethods {
     required final bool isMale,
   }) async {
     try {
-      final result = await _auth.createUserWithEmailAndPassword(
+      await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       final user = _auth.currentUser;
       if (user != null) {
@@ -75,7 +75,6 @@ class AuthMethods {
           birthday: birthday,
           name: name,
           email: email,
-          favoriteKeyword: favoriteKeyword,
           profileUrl: profileUrl,
           isMale: isMale,
         );

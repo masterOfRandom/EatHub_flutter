@@ -117,6 +117,8 @@ class _LoginPasswordScreenState extends State<LoginPasswordScreen> {
                   controller: passwordController,
                   errText: errMessage,
                   isPassword: true,
+                  hintText: '비밀번호를 입력해 주세요',
+                  isLogin: true,
                 ),
                 SizedBox(height: 70),
               ],

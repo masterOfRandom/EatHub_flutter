@@ -42,7 +42,6 @@ class FirestoreMethods {
       throw 'no user error';
     }
     final data = food.toJson();
-    data['updateTime'] = Timestamp.now();
     _store
         .collection('users')
         .doc(_user.currentUser!.uid)
@@ -60,6 +59,19 @@ class FirestoreMethods {
         .collection('checkedFoods')
         .get();
     return snap.docs.map((e) => CheckedFood.fromSnap(e)).toList();
+  }
+
+  Future<void> removeCheckedFood(CheckedFood food) async {
+    if (_user.currentUser == null) {
+      throw 'no user error';
+    }
+    final snap = await _store
+        .collection('users')
+        .doc(_user.currentUser!.uid)
+        .collection('checkedFoods')
+        .where('name', isEqualTo: food.name)
+        .get();
+    snap.docs[0].reference.delete();
   }
 
   deleteUserData() async {

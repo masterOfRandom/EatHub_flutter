@@ -9,11 +9,6 @@ import 'package:eathub/utils/global_var.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-enum Sex {
-  male,
-  female,
-}
-
 class LoginController extends GetxController {
   var email = ''.obs;
   var password = ''.obs;
@@ -45,7 +40,6 @@ class UserController extends GetxController {
           name: '초기화',
           birthday: Timestamp(0, 0),
           email: '',
-          favoriteKeyword: [''],
           profileUrl: '',
           isMale: true)
       .obs;
@@ -93,7 +87,7 @@ class GController extends GetxController {
     }
     isDragging.value = false;
 
-    if (statusPoint.value > 60) {
+    if (statusPoint.value > 100) {
       switch (status.value) {
         case CardStatus.like:
           like();
@@ -177,6 +171,7 @@ class GController extends GetxController {
       name: lastFood.name!,
       imageUrl: lastFood.imageUrl!,
       status: status.value,
+      updateTime: Timestamp.now(),
     );
     checkedFoods.add(checkedFood);
     FirestoreMethods().addCheckedFood(checkedFood);
@@ -208,10 +203,24 @@ class GController extends GetxController {
     } else {
       checkedFoods.value = foods;
     }
+    final nowDate = Timestamp.now().toDate();
+    checkedFoods.removeWhere((element) {
+      final date = element.updateTime.toDate();
+      if (element.status == CardStatus.yet &&
+          date.year <= nowDate.year &&
+          date.month <= nowDate.month &&
+          date.day < nowDate.day) {
+        FirestoreMethods().removeCheckedFood(element);
+        return true;
+      } else {
+        return false;
+      }
+    });
+    SharedPreferencesMethods().updateCheckedFoods(checkedFoods);
   }
 
-  void removeCheckedFoods() {
-    SharedPreferencesMethods().removeCheckedFoods();
+  Future<void> removeCheckedFoods() async {
+    await SharedPreferencesMethods().removeCheckedFoods();
     checkedFoods.value = [];
   }
 
@@ -221,5 +230,15 @@ class GController extends GetxController {
 
   void setRange(int newRange) {
     range.value = newRange;
+  }
+
+  deleteCheckedFood(CheckedFood food) async {
+    await FirestoreMethods().removeCheckedFood(food);
+    checkedFoods.remove(food);
+  }
+
+  updateCheckedFoods() async {
+    await SharedPreferencesMethods().removeCheckedFoods();
+    await SharedPreferencesMethods().updateCheckedFoods(checkedFoods);
   }
 }

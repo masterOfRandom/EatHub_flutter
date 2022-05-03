@@ -66,7 +66,7 @@ class _SettingListState extends State<MyPageList> {
                   builder: (_) {
                     return ConfirmDialog(
                       title: '이메일 문의',
-                      content: 'tablepick2022@gmail.com로 문의해주세요',
+                      content: 'tablepick2022@gmail.com로\n문의해주세요',
                     );
                   });
             }),

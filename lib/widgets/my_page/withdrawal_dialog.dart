@@ -16,8 +16,8 @@ class WithdrawalDialog extends StatelessWidget {
         '회원탈퇴',
         style: TextStyle(color: primaryRedColor),
       ),
-      content:
-          Text('정말로 탈퇴 하실건가요..?😢', style: TextStyle(color: grayScaleGray2)),
+      content: Text('정말로 탈퇴 하실건가요..?😢\n탈퇴하시게 되면 그동안\n픽했던 데이터는 사라집니다',
+          style: TextStyle(color: grayScaleGray2)),
       actions: [
         CupertinoDialogAction(
           child: Text('취소'),

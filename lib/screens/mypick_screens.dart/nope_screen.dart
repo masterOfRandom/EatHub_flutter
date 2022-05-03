@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eathub/models/checked_food.dart';
 import 'package:eathub/screens/restaurant_list_screens/restaurant_list_screen.dart';
+import 'package:eathub/widgets/my_pick/delete_food_dialog.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -19,7 +21,11 @@ class NopeScreen extends StatelessWidget {
         return GridTile(
           child: GestureDetector(
             onTap: () {
-              Get.to(RestaurantListScreen(foodName: e.name));
+              showCupertinoDialog(
+                  context: context,
+                  builder: (_) {
+                    return DeleteFoodDialog(food: e);
+                  });
             },
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),

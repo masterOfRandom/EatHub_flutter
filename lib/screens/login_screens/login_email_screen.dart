@@ -108,6 +108,7 @@ class _LoginEmailScreenState extends State<LoginEmailScreen> {
                 LoginInputTextField(
                   controller: emailController,
                   errText: errMessage,
+                  hintText: '이메일을 입력해주세요',
                 ),
               ],
             ),
