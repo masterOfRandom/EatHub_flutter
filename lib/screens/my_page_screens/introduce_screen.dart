@@ -29,16 +29,18 @@ class _IntroduceScreenState extends State<IntroduceScreen> {
         ),
         elevation: 0,
       ),
-      body: Container(
-        color: backgroundLightPinkColor,
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            SizedBox(height: 32),
-            IntroduceList(),
-          ],
+      body: SingleChildScrollView(
+        child: Container(
+          color: backgroundLightPinkColor,
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: const [
+              SizedBox(height: 32),
+              IntroduceList(),
+            ],
+          ),
         ),
       ),
     );
