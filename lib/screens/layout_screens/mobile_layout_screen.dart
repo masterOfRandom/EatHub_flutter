@@ -57,6 +57,7 @@ class _MobileLayoutScreenState extends State<MobileLayoutScreen> {
     super.initState();
     controller.refreshUser();
     initCheckedFoods();
+    gController.randomIndexInit();
   }
 
   @override

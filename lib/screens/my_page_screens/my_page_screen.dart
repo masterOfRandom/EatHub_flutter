@@ -1,4 +1,5 @@
 import 'package:eathub/getx/getx_controller.dart';
+import 'package:eathub/resources/firebase_storage_methods.dart';
 import 'package:eathub/utils/colors.dart';
 import 'package:eathub/utils/global_var.dart';
 import 'package:eathub/widgets/my_page/logout_button.dart';
@@ -22,6 +23,7 @@ class _MyPageScreenState extends State<MyPageScreen>
   @override
   void initState() {
     super.initState();
+    // FirebaseStorageMethods().getFoodImageUrl('hello');
   }
 
   @override

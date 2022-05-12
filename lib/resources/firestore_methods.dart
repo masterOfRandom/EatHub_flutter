@@ -10,20 +10,22 @@ class FirestoreMethods {
   final _store = FirebaseFirestore.instance;
   final controller = Get.put(GController());
 
-  Future<List<Food>> getNewRandomFoods(List<String> alreadyHadFoods) async {
-    // 다 가져오는걸로 테스트
+  Future<List<Food>> getNewRandomFoods() async {
+    // print('getNewRandomFoods에 들어옴');
+    final randomIndex = controller.getRandomIndex();
+    print(randomIndex);
+    if (randomIndex == null) {
+      return [];
+    }
     final checkedFoodsName =
         controller.checkedFoods.map((element) => element.name).toList();
     checkedFoodsName.addAll(controller.foods.map((element) => element.name!));
-    late QuerySnapshot<Map<String, dynamic>> foodsSnap;
-    if (checkedFoodsName.isEmpty) {
-      foodsSnap = await _store.collection('foods').where('name').get();
-    } else {
-      foodsSnap = await _store
-          .collection('foods')
-          .where('name', whereNotIn: checkedFoodsName)
-          .get();
-    }
+    final QuerySnapshot<Map<String, dynamic>> foodsSnap = await _store
+        .collection('foods')
+        .orderBy('randomIndex')
+        .where('randomIndex', isGreaterThanOrEqualTo: randomIndex)
+        .limit(controller.randomIndex.value.limit)
+        .get();
     final foods = foodsSnap.docs.map((e) {
       final food = e.data();
       return Food(
@@ -34,6 +36,12 @@ class FirestoreMethods {
           flavors: food['flavors'],
           textures: food['textures']);
     }).toList();
+    // 가지고 있는 checkedFoods와 비교 적으면 recursive를 해야하나...
+    foods.removeWhere((element) => checkedFoodsName.contains(element.name));
+    if (foods.length < 3) {
+      final addedFoods = await getNewRandomFoods();
+      foods.addAll(addedFoods);
+    }
     return foods;
   }
 
@@ -79,5 +87,14 @@ class FirestoreMethods {
       throw 'no user error';
     }
     await _store.collection('users').doc(_user.currentUser!.uid).delete();
+  }
+
+  Future<int?> getFoodsLength() async {
+    final snap = await _store.collection('env').doc('foodsData').get();
+    if (snap.data() == null) {
+      return null;
+    }
+    final result = snap.data()!['length'];
+    return result;
   }
 }

@@ -7,6 +7,7 @@ class Food {
   final String? category;
   final List? flavors;
   final List? textures;
+  final int? randomIndex;
 
   const Food({
     this.name,
@@ -15,6 +16,7 @@ class Food {
     this.category,
     this.flavors,
     this.textures,
+    this.randomIndex,
   });
 
   Map<String, dynamic> toJson() => {
@@ -24,6 +26,7 @@ class Food {
         'category': category,
         'flavors': flavors,
         'textures': textures,
+        'randomIndex': randomIndex,
       };
 
   static Food fromSnap(DocumentSnapshot<Map<String, dynamic>> snap) {
@@ -38,6 +41,7 @@ class Food {
       category: snap['category'],
       flavors: snap['flavors'],
       textures: ['textures'],
+      randomIndex: snap['randomIndex'],
     );
   }
 }

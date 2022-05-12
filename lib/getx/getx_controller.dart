@@ -8,6 +8,48 @@ import 'package:eathub/resources/shared_preference_methods.dart';
 import 'package:eathub/utils/global_var.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'dart:math';
+
+class RandomIndex {
+  int _startIndex = 0;
+  DateTime _updateDate = DateTime.now();
+  int _index = 0;
+  final limit = 8;
+  final int foodsLength;
+
+  int getRandomStartIndex() {
+    return (Random().nextDouble() * foodsLength)
+        .floor();
+  }
+
+  RandomIndex({required this.foodsLength}) {
+    _startIndex = getRandomStartIndex();
+  }
+
+  updateDateTime() {
+    final now = DateTime.now();
+
+    if (now.year <= _updateDate.year &&
+        now.month <= _updateDate.month &&
+        now.day <= _updateDate.day) {
+      return;
+    }
+    _updateDate = now;
+    _startIndex = getRandomStartIndex();
+    print('startIndex = $_startIndex');
+  }
+
+  // null은 다 봤다는 뜻.
+  int? getRandomIndex() {
+    updateDateTime();
+    print('getRandom index : $_index, foodsLength: $foodsLength');
+    if (_index > foodsLength) {
+      return null;
+    }
+    _index += limit;
+    return _index % foodsLength;
+  }
+}
 
 class LoginController extends GetxController {
   var email = ''.obs;
@@ -59,8 +101,24 @@ class GController extends GetxController {
   var statusPoint = 0.0.obs;
   var status = CardStatus.nothing.obs;
   var range = 1000.obs;
-
+  var randomIndex = RandomIndex(foodsLength: 1).obs;
   var updating = false;
+
+  void randomIndexInit() async {
+    final foodsLength = await FirestoreMethods().getFoodsLength();
+    if (foodsLength == null) {
+      throw 'foodsLength 데이터를 받아오는데에 실패했습니다.';
+    }
+    randomIndex.value = RandomIndex(foodsLength: foodsLength);
+  }
+
+  int? getRandomIndex() {
+    final result = randomIndex.value.getRandomIndex();
+    if (result == null) {
+      return null;
+    }
+    return result;
+  }
 
   void startPosition(DragStartDetails details) {
     if (updating) {
@@ -186,7 +244,7 @@ class GController extends GetxController {
 
   void addFoods() async {
     // 음식을 랜덤으로 가져오려면 수정이 필요하다.
-    final newFoods = await FirestoreMethods().getNewRandomFoods(['food']);
+    final newFoods = await FirestoreMethods().getNewRandomFoods();
     foods.value = newFoods.reversed.toList() + foods;
   }
 
