@@ -15,7 +15,7 @@ class _RecommandTextState extends State<RecommandText> {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      duration: Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 200),
       curve: Curves.ease,
       alignment: Alignment.center,
       height: widget.isVisible ? 58 : 0,
@@ -25,7 +25,7 @@ class _RecommandTextState extends State<RecommandText> {
       ),
       child: Text(
         widget.text,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.w400,
         ),

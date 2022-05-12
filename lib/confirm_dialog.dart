@@ -16,7 +16,7 @@ class ConfirmDialog extends StatelessWidget {
     return CupertinoAlertDialog(
       title: Text(
         title,
-        style: TextStyle(
+        style: const TextStyle(
           color: primaryRedColor,
           fontSize: 16,
           fontWeight: FontWeight.w700,
@@ -24,7 +24,7 @@ class ConfirmDialog extends StatelessWidget {
       ),
       content: Text(
         content,
-        style: TextStyle(
+        style: const TextStyle(
           color: grayScaleGray2,
           fontWeight: FontWeight.w300,
           fontSize: 16,
@@ -35,7 +35,7 @@ class ConfirmDialog extends StatelessWidget {
           onPressed: () {
             Get.back();
           },
-          child: Text(
+          child: const Text(
             '확인',
             style: TextStyle(
                 color: grayScaleGray3,

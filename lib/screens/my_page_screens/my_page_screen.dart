@@ -1,8 +1,6 @@
 import 'package:eathub/getx/getx_controller.dart';
-import 'package:eathub/resources/firebase_storage_methods.dart';
 import 'package:eathub/utils/colors.dart';
 import 'package:eathub/utils/global_var.dart';
-import 'package:eathub/widgets/my_page/logout_button.dart';
 import 'package:eathub/widgets/my_page/my_page_list.dart';
 import 'package:eathub/widgets/my_page/say_hello_text.dart';
 import 'package:flutter/material.dart';
@@ -40,12 +38,12 @@ class _MyPageScreenState extends State<MyPageScreen>
       ),
       body: Container(
         color: backgroundLightPinkColor,
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Obx(() => SayHelloText(name: userController.user.value.name)),
             const SizedBox(height: 52),
             const MyPageList(),

@@ -31,13 +31,13 @@ class _IntroduceScreenState extends State<IntroduceScreen> {
       ),
       body: Container(
         color: backgroundLightPinkColor,
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 32),
-            const IntroduceList(),
+          children: const [
+            SizedBox(height: 32),
+            IntroduceList(),
           ],
         ),
       ),

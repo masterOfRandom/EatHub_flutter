@@ -42,7 +42,7 @@ class _SettingListState extends State<IntroduceList> {
   }) {
     return ListTile(
       title: Text(text),
-      trailing: Icon(
+      trailing: const Icon(
         Icons.expand_more,
         color: grayScaleGray4,
       ),
@@ -81,7 +81,7 @@ class _SettingListState extends State<IntroduceList> {
               ),
             ),
             trailing: AnimatedRotation(
-              duration: Duration(milliseconds: 500),
+              duration: const Duration(milliseconds: 500),
               curve: Curves.ease,
               turns: isMore ? 0.5 : 0,
               child: Icon(
@@ -97,17 +97,17 @@ class _SettingListState extends State<IntroduceList> {
               setState(() {});
             },
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           AnimatedContainer(
             decoration: isMore
                 ? BoxDecoration(
                     border: Border.all(color: grayScaleGray5),
-                    borderRadius:
-                        BorderRadius.vertical(bottom: Radius.circular(10)))
+                    borderRadius: const BorderRadius.vertical(
+                        bottom: Radius.circular(10)))
                 : BoxDecoration(
-                    border: Border.all(color: Color(0x00000000)),
+                    border: Border.all(color: const Color(0x00000000)),
                   ),
-            duration: Duration(milliseconds: 500),
+            duration: const Duration(milliseconds: 500),
             height: isMore ? 260 : 0,
             curve: Curves.ease,
             onEnd: () {
@@ -117,12 +117,13 @@ class _SettingListState extends State<IntroduceList> {
             child: visible
                 ? Container(
                     width: double.infinity,
-                    padding: EdgeInsets.symmetric(horizontal: 32, vertical: 20),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 32, vertical: 20),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('버전정보',
+                        const Text('버전정보',
                             style: TextStyle(
                                 fontWeight: FontWeight.w700, fontSize: 20)),
                         Text(
@@ -130,9 +131,9 @@ class _SettingListState extends State<IntroduceList> {
                         ),
                         Text(
                           '최신버전 ${versionStatus != null ? versionStatus!.storeVersion : '-'}',
-                          style: TextStyle(color: primaryRedColor),
+                          style: const TextStyle(color: primaryRedColor),
                         ),
-                        SizedBox(height: 16),
+                        const SizedBox(height: 16),
                         isExistNewVersion
                             ? TablePickElevatedButton(
                                 isLoading: false,
@@ -143,16 +144,16 @@ class _SettingListState extends State<IntroduceList> {
                                   }
                                 },
                               )
-                            : TablePickDeactivatedButton(
+                            : const TablePickDeactivatedButton(
                                 text: '최신버전입니다.', isLoading: false),
-                        SizedBox(height: 32),
+                        const SizedBox(height: 32),
                         TextButton(
                           onPressed: () {
                             showDialog(
                                 context: context,
-                                builder: (_) => WithdrawalDialog());
+                                builder: (_) => const WithdrawalDialog());
                           },
-                          child: Text('회원탈퇴',
+                          child: const Text('회원탈퇴',
                               style: TextStyle(
                                   color: grayScaleGray3, fontSize: 20)),
                         ),
@@ -163,7 +164,7 @@ class _SettingListState extends State<IntroduceList> {
           ),
           !isMore
               ? const Divider(height: 0)
-              : SizedBox(
+              : const SizedBox(
                   height: 0,
                 ),
         ],

@@ -13,7 +13,6 @@ class FirestoreMethods {
   Future<List<Food>> getNewRandomFoods() async {
     // print('getNewRandomFoods에 들어옴');
     final randomIndex = controller.getRandomIndex();
-    print(randomIndex);
     if (randomIndex == null) {
       return [];
     }

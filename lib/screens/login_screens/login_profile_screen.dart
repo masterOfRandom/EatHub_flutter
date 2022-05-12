@@ -95,11 +95,11 @@ class _LoginProfileScreenState extends State<LoginProfileScreen> {
         yearOfBirth: Timestamp.fromDate(DateTime(int.parse(year))),
       );
       showModalBottomSheet(
-        constraints: BoxConstraints(maxHeight: 450),
+        constraints:const BoxConstraints(maxHeight: 450),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         context: context,
         builder: (context) {
-          return TermsOfServiceSheet();
+          return const TermsOfServiceSheet();
         },
       );
     }
@@ -108,7 +108,7 @@ class _LoginProfileScreenState extends State<LoginProfileScreen> {
   Widget _listTitle(String title) {
     return Text(
       title,
-      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
     );
   }
 
@@ -125,38 +125,38 @@ class _LoginProfileScreenState extends State<LoginProfileScreen> {
         ),
         body: SingleChildScrollView(
           child: Container(
-            padding: EdgeInsets.all(24),
+            padding: const EdgeInsets.all(24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 28),
-                Text(
+                const SizedBox(height: 28),
+                const Text(
                   '프로필 설정',
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),
                 ),
-                SizedBox(height: 40),
+                const SizedBox(height: 40),
                 _listTitle('닉네임'),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 LoginInputTextField(
                   focusNode: nameFocusNode,
                   controller: nameController,
                   errText: nameErrMessage,
                   hintText: '닉네임을 입력해주세요',
                 ),
-                SizedBox(height: 40),
+                const SizedBox(height: 40),
                 _listTitle('성별'),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 ChooseSexButton(isMale: isMale, setMale: _setMale),
-                SizedBox(height: 40),
+                const SizedBox(height: 40),
                 _listTitle('출생 연도'),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 LoginInputTextField(
                   focusNode: yearFocusNode,
                   controller: yearController,
                   errText: yearErrMessage,
                   hintText: '4자리로 입력해주세요',
                 ),
-                SizedBox(height: 70),
+                const SizedBox(height: 70),
               ],
             ),
           ),

@@ -4,9 +4,7 @@ import 'package:eathub/screens/mypick_screens.dart/like_screen.dart';
 import 'package:eathub/screens/mypick_screens.dart/nope_screen.dart';
 import 'package:eathub/utils/colors.dart';
 import 'package:eathub/utils/global_var.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 class MyPickScreen extends StatefulWidget {
@@ -63,11 +61,11 @@ class _MyPickScreenState extends State<MyPickScreen>
               unselectedLabelColor: secondaryPinkGrayColor,
               labelColor: primaryRedColor,
               indicatorWeight: 4,
-              tabs: [
+              tabs: const [
                 Tab(
                   height: 80,
                   icon: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 40),
+                    padding: EdgeInsets.symmetric(horizontal: 40),
                     child: Icon(
                       TablePick.smallHeart,
                     ),
@@ -75,7 +73,7 @@ class _MyPickScreenState extends State<MyPickScreen>
                 ),
                 Tab(
                   icon: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 40),
+                    padding: EdgeInsets.symmetric(horizontal: 40),
                     child: Icon(
                       TablePick.smallx,
                     ),
@@ -87,7 +85,7 @@ class _MyPickScreenState extends State<MyPickScreen>
           body: SafeArea(
             child: Container(
               color: backgroundWhiteColor,
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: Obx(
                 () {
                   final likedFoods = controller.checkedFoods
@@ -97,7 +95,7 @@ class _MyPickScreenState extends State<MyPickScreen>
                       .where((element) => element.status == CardStatus.nope)
                       .toList();
                   return TabBarView(
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     controller: _tabController,
                     children: [
                       LikeScreen(likedFoods: likedFoods),

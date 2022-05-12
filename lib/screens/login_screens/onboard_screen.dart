@@ -90,7 +90,7 @@ class _MultiLoginScreenState extends State<MultiLoginScreen> {
     return AnimatedContainer(
       height: 8,
       width: isChecked ? 16 : 8,
-      duration: Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 200),
       decoration: isChecked
           ? BoxDecoration(
               color: primaryRedColor,
@@ -105,7 +105,7 @@ class _MultiLoginScreenState extends State<MultiLoginScreen> {
 
   Widget _indicator(int index) {
     return Container(
-      padding: EdgeInsets.only(top: 16, left: 16),
+      padding: const EdgeInsets.only(top: 16, left: 16),
       width: double.infinity,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,

@@ -25,7 +25,7 @@ class _TermsOfServiceSheetState extends State<TermsOfServiceSheet> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,13 +92,13 @@ class _TermsOfServiceSheetState extends State<TermsOfServiceSheet> {
                           }),
                     ),
                     Text(e.title),
-                    e.isNecessaried ? Text(' (필수)') : Text(' (선택)'),
+                    e.isNecessaried ? const Text(' (필수)') : const Text(' (선택)'),
                     Expanded(child: Container()),
                     TextButton(
                       onPressed: () async {
                         await launch(e.url);
                       },
-                      child: Text('보기'),
+                      child: const Text('보기'),
                     ),
                   ],
                 );
@@ -143,7 +143,7 @@ class _TermsOfServiceSheetState extends State<TermsOfServiceSheet> {
                     showCupertinoDialog(
                         context: context,
                         builder: (_) {
-                          return ConfirmDialog(
+                          return const ConfirmDialog(
                               title: '약관 동의',
                               content: '필수 약관을 확인하시고\n동의 체크 해주세요');
                         });

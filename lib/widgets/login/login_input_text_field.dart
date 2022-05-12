@@ -73,7 +73,7 @@ class _LoginInputTextFieldState extends State<LoginInputTextField> {
             borderSide: const BorderSide(color: Colors.black)),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: grayScaleGray4),
+          borderSide: const BorderSide(color: grayScaleGray4),
         ),
       ),
     );

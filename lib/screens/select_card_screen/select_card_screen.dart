@@ -13,7 +13,6 @@ import 'package:eathub/widgets/select_card/empty_card.dart';
 import 'package:eathub/widgets/select_card/recommand_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lottie/lottie.dart';
 
 class SelectCardScreen extends StatefulWidget {
   const SelectCardScreen({Key? key}) : super(key: key);
@@ -40,7 +39,7 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
     return Obx(() {
       final foods = controller.foods;
       return foods.isEmpty
-          ? EmptyCard()
+          ? const EmptyCard()
           : Stack(
               children: foods
                   .map((food) => FoodCard(
@@ -113,7 +112,7 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
                         color: secondaryPinkColor,
                         boxShadow: [
                           BoxShadow(
-                              offset: Offset(0, 10),
+                              offset: const Offset(0, 10),
                               blurRadius: 10,
                               color: secondaryPinkColor.withOpacity(0.15)),
                         ],
@@ -141,19 +140,19 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
                     onTap: () async {
                       controller.statusPoint.value = 200;
                       controller.status.value = CardStatus.nope;
-                      await Future.delayed(Duration(milliseconds: 150));
+                      await Future.delayed(const Duration(milliseconds: 150));
                       controller.nope();
                     },
                     child: Container(
                       width: 60,
                       height: 60,
-                      margin: EdgeInsets.symmetric(horizontal: 28),
+                      margin: const EdgeInsets.symmetric(horizontal: 28),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: Colors.white,
                         boxShadow: [
                           BoxShadow(
-                              offset: Offset(0, 10),
+                              offset: const Offset(0, 10),
                               blurRadius: 10,
                               color: secondaryPinkGrayColor.withOpacity(0.15)),
                         ],
@@ -180,7 +179,7 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
                     onTap: () async {
                       controller.statusPoint.value = 200;
                       controller.status.value = CardStatus.like;
-                      await Future.delayed(Duration(milliseconds: 150));
+                      await Future.delayed(const Duration(milliseconds: 150));
                       controller.like();
                     },
                     child: Container(
@@ -191,7 +190,7 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
                         color: primaryRedColor,
                         boxShadow: [
                           BoxShadow(
-                              offset: Offset(0, 10),
+                              offset: const Offset(0, 10),
                               blurRadius: 10,
                               color: primaryRedColor.withOpacity(0.15)),
                         ],
@@ -207,7 +206,7 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
                   ),
                 ],
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
             ],
           ),
         ),

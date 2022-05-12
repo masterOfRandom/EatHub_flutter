@@ -87,7 +87,7 @@ class _MobileLayoutScreenState extends State<MobileLayoutScreen> {
           AnimatedPositioned(
             top: 0,
             curve: Curves.ease,
-            duration: Duration(milliseconds: 200),
+            duration: const Duration(milliseconds: 200),
             left: selectedIndex * indicatorLength + indicatorLength / 8,
             child: Container(
               height: 2,

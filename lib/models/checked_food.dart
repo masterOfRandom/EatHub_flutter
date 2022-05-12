@@ -29,12 +29,14 @@ class CheckedFood {
 
   static CheckedFood fromSharedJson(dynamic data) {
     late CardStatus status;
-    CardStatus.values.forEach((e) {
+
+    for (var i = 0; i < CardStatus.values.length; i++) {
+      final e = CardStatus.values[i];
       if (e.toString().split('.')[1] == data['status']) {
         status = e;
-        return;
+        break;
       }
-    });
+    }
     return CheckedFood(
       name: data['name'],
       imageUrl: data['imageUrl'],
@@ -50,13 +52,14 @@ class CheckedFood {
     }
     final statusString = snap['status'] as String;
     late CardStatus status;
-    CardStatus.values.forEach((e) {
+
+    for (var i = 0; i < CardStatus.values.length; i++) {
+      final e = CardStatus.values[i];
       if (e.toString().split('.')[1] == statusString) {
         status = e;
-
-        return;
+        break;
       }
-    });
+    }
     return CheckedFood(
       name: snap['name'],
       imageUrl: snap['imageUrl'],

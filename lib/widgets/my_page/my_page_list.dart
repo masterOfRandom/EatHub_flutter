@@ -1,7 +1,5 @@
 import 'package:eathub/confirm_dialog.dart';
-import 'package:eathub/getx/getx_controller.dart';
 import 'package:eathub/presentation/table_pick_icons.dart';
-import 'package:eathub/resources/auth_methods.dart';
 import 'package:eathub/screens/my_page_screens/introduce_screen.dart';
 import 'package:eathub/utils/colors.dart';
 import 'package:eathub/widgets/my_page/logout_dialog.dart';
@@ -26,7 +24,7 @@ class _SettingListState extends State<MyPageList> {
     return ListTile(
       leading: Icon(lead),
       title: Text(text),
-      trailing: Icon(
+      trailing: const Icon(
         TablePick.navigate_next,
         color: grayScaleGray4,
       ),
@@ -49,14 +47,14 @@ class _SettingListState extends State<MyPageList> {
                     return const SetRangeDialog();
                   });
             }),
-        Divider(),
+        const Divider(),
         _myPageTile(
             lead: TablePick.card,
             text: '테이블픽 소개',
             callback: () {
-              Get.to(IntroduceScreen());
+              Get.to(const IntroduceScreen());
             }),
-        Divider(),
+        const Divider(),
         _myPageTile(
             lead: TablePick.help,
             text: '고객 문의',
@@ -64,13 +62,13 @@ class _SettingListState extends State<MyPageList> {
               showCupertinoDialog(
                   context: context,
                   builder: (_) {
-                    return ConfirmDialog(
+                    return const ConfirmDialog(
                       title: '이메일 문의',
                       content: 'tablepick2022@gmail.com로\n문의해주세요',
                     );
                   });
             }),
-        Divider(),
+        const Divider(),
         _myPageTile(
             lead: TablePick.logout,
             text: '로그아웃',
@@ -82,7 +80,7 @@ class _SettingListState extends State<MyPageList> {
                     return const LogoutDialog();
                   });
             }),
-        Divider(),
+        const Divider(),
       ],
     );
   }

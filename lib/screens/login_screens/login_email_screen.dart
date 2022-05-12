@@ -45,9 +45,9 @@ class _LoginEmailScreenState extends State<LoginEmailScreen> {
       final isOverlap = await AuthMethods().isEmailOverlaped(email);
       controller.updateEmail(email: email);
       if (isOverlap) {
-        Get.to(LoginPasswordScreen());
+        Get.to(const LoginPasswordScreen());
       } else {
-        Get.to(SignupPasswordScreen());
+        Get.to(const SignupPasswordScreen());
       }
     }
     isLoading = false;
@@ -66,15 +66,15 @@ class _LoginEmailScreenState extends State<LoginEmailScreen> {
           elevation: 0,
           actions: [
             Container(
-              padding: EdgeInsets.only(right: 20),
+              padding: const EdgeInsets.only(right: 20),
               child: TextButton(
-                child: Text(
+                child: const Text(
                   '고객문의',
                   style: TextStyle(fontSize: 16),
                 ),
                 onPressed: () => showCupertinoDialog(
                   context: context,
-                  builder: (_) => ConfirmDialog(
+                  builder: (_) => const ConfirmDialog(
                     title: '이메일 문의',
                     content: ('tablepick2022@gmail.com로\n문의 해주세요'),
                   ),
@@ -86,23 +86,23 @@ class _LoginEmailScreenState extends State<LoginEmailScreen> {
         body: SingleChildScrollView(
           child: Container(
             color: backgroundWhiteColor,
-            padding: EdgeInsets.all(24),
+            padding: const EdgeInsets.all(24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 28),
-                Text(
+              children:  [
+                const SizedBox(height: 28),
+                const Text(
                   '이메일로 시작',
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
-                Text(
+                const Text(
                   '이메일',
                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 8,
                 ),
                 LoginInputTextField(

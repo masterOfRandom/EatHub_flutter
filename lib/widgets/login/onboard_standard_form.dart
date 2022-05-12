@@ -1,4 +1,3 @@
-import 'package:carousel_slider/carousel_controller.dart';
 import 'package:eathub/utils/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +23,7 @@ class OnboardStandardForm extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          padding: EdgeInsets.only(top: 24),
+          padding: const EdgeInsets.only(top: 24),
           color: onboardingPinkColor,
           alignment: Alignment.center,
           width: double.infinity,
@@ -37,22 +36,22 @@ class OnboardStandardForm extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               title,
-              SizedBox(height: 28),
+              const SizedBox(height: 28),
               Text(
                 descript,
-                style: TextStyle(fontSize: 18),
+                style: const TextStyle(fontSize: 18),
               ),
             ],
           ),
         ),
         Expanded(child: Container()),
         Container(
-          padding: EdgeInsets.only(right: 8),
+          padding:const EdgeInsets.only(right: 8),
           alignment: Alignment.centerRight,
           child: TextButton(
             child: Text(
               buttonText,
-              style: TextStyle(
+              style:const TextStyle(
                   color: primaryRedColor,
                   fontWeight: FontWeight.w700,
                   fontSize: 20),

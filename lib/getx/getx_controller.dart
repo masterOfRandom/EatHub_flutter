@@ -18,8 +18,9 @@ class RandomIndex {
   final int foodsLength;
 
   int getRandomStartIndex() {
-    return (Random().nextDouble() * foodsLength)
-        .floor();
+    final seed = DateTime.now().millisecondsSinceEpoch;
+    final result = (Random(seed).nextDouble() * foodsLength).floor();
+    return result;
   }
 
   RandomIndex({required this.foodsLength}) {
@@ -36,18 +37,16 @@ class RandomIndex {
     }
     _updateDate = now;
     _startIndex = getRandomStartIndex();
-    print('startIndex = $_startIndex');
   }
 
   // null은 다 봤다는 뜻.
   int? getRandomIndex() {
     updateDateTime();
-    print('getRandom index : $_index, foodsLength: $foodsLength');
     if (_index > foodsLength) {
       return null;
     }
     _index += limit;
-    return _index % foodsLength;
+    return (_startIndex + _index) % foodsLength;
   }
 }
 
@@ -100,7 +99,7 @@ class GController extends GetxController {
   var checkedFoods = <CheckedFood>[].obs;
   var statusPoint = 0.0.obs;
   var status = CardStatus.nothing.obs;
-  var range = 1000.obs;
+  var range = 5000.obs;
   var randomIndex = RandomIndex(foodsLength: 1).obs;
   var updating = false;
 
@@ -133,7 +132,6 @@ class GController extends GetxController {
     }
     position.value += details.delta;
     final x = position.value.dx;
-    final y = position.value.dy;
     status.value = getStatusAndUpdateStatusPoint();
 
     angle.value = 40 * x / screenSize.value.width;
@@ -223,7 +221,7 @@ class GController extends GetxController {
     if (foods.isEmpty || updating) return;
 
     updating = true;
-    await Future.delayed(Duration(milliseconds: 300));
+    await Future.delayed(const Duration(milliseconds: 300));
     final lastFood = foods.last;
     final checkedFood = CheckedFood(
       name: lastFood.name!,

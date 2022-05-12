@@ -2,14 +2,9 @@ import 'package:eathub/confirm_dialog.dart';
 import 'package:eathub/widgets/etc/get_back_icon_button.dart';
 import 'package:eathub/getx/getx_controller.dart';
 import 'package:eathub/widgets/login/login_input_text_field.dart';
-import 'package:eathub/main.dart';
 import 'package:eathub/resources/auth_methods.dart';
-import 'package:eathub/screens/login_screens/login_profile_screen.dart';
-import 'package:eathub/screens/login_screens/signup_password_screen.dart';
-import 'package:eathub/screens/layout_screens/mobile_layout_screen.dart';
 import 'package:eathub/utils/colors.dart';
 import 'package:eathub/table_pick_elevated_button.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -74,15 +69,15 @@ class _LoginPasswordScreenState extends State<LoginPasswordScreen> {
           elevation: 0,
           actions: [
             Container(
-              padding: EdgeInsets.only(right: 20),
+              padding: const EdgeInsets.only(right: 20),
               child: TextButton(
-                child: Text(
+                child: const Text(
                   '고객문의',
                   style: TextStyle(fontSize: 16),
                 ),
                 onPressed: () => showCupertinoDialog(
                   context: context,
-                  builder: (_) => ConfirmDialog(
+                  builder: (_) => const ConfirmDialog(
                     title: '이메일 문의',
                     content: ('tablepick2022@gmail.com로\n문의 해주세요'),
                   ),
@@ -94,23 +89,23 @@ class _LoginPasswordScreenState extends State<LoginPasswordScreen> {
         body: SingleChildScrollView(
           child: Container(
             color: backgroundWhiteColor,
-            padding: EdgeInsets.all(24),
+            padding: const EdgeInsets.all(24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 28),
-                Text(
+                const SizedBox(height: 28),
+                const Text(
                   '비밀번호 입력',
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
-                Text(
+                const Text(
                   '비밀번호',
                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 8,
                 ),
                 LoginInputTextField(
@@ -120,7 +115,7 @@ class _LoginPasswordScreenState extends State<LoginPasswordScreen> {
                   hintText: '비밀번호를 입력해 주세요',
                   isLogin: true,
                 ),
-                SizedBox(height: 70),
+                const SizedBox(height: 70),
               ],
             ),
           ),

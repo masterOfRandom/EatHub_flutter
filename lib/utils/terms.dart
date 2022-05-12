@@ -1,5 +1,4 @@
 import 'package:eathub/utils/global_var.dart';
-import 'package:flutter/material.dart';
 
 class Term {
   final String title;
