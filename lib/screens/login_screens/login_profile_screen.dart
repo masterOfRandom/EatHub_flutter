@@ -95,7 +95,7 @@ class _LoginProfileScreenState extends State<LoginProfileScreen> {
         yearOfBirth: Timestamp.fromDate(DateTime(int.parse(year))),
       );
       showModalBottomSheet(
-        constraints:const BoxConstraints(maxHeight: 450),
+        constraints: const BoxConstraints(maxHeight: 450),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         context: context,
         builder: (context) {

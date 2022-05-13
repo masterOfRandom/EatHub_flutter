@@ -236,7 +236,7 @@ class FoodCardState extends State<FoodCard> {
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       final size = MediaQuery.of(context).size;
 
       controller.setScreenSize(size);

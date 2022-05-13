@@ -17,7 +17,7 @@ class RestaurantListView extends StatelessWidget {
             children: [
               InkWell(
                 onTap: () async {
-                  await launch(e.placeUrl);
+                  await launchUrl(Uri.parse(e.placeUrl));
                 },
                 child: Container(
                   width: double.infinity,

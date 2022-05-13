@@ -89,7 +89,7 @@ class _LoginEmailScreenState extends State<LoginEmailScreen> {
             padding: const EdgeInsets.all(24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children:  [
+              children: [
                 const SizedBox(height: 28),
                 const Text(
                   '이메일로 시작',

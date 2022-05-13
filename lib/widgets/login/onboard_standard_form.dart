@@ -46,12 +46,12 @@ class OnboardStandardForm extends StatelessWidget {
         ),
         Expanded(child: Container()),
         Container(
-          padding:const EdgeInsets.only(right: 8),
+          padding: const EdgeInsets.only(right: 8),
           alignment: Alignment.centerRight,
           child: TextButton(
             child: Text(
               buttonText,
-              style:const TextStyle(
+              style: const TextStyle(
                   color: primaryRedColor,
                   fontWeight: FontWeight.w700,
                   fontSize: 20),

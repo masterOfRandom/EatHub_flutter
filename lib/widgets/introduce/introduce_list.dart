@@ -58,19 +58,19 @@ class _SettingListState extends State<IntroduceList> {
           _myPageTile(
               text: '이용약관',
               callback: () async {
-                await launch(termsOfServiceUrl);
+                await launchUrl(Uri.parse(termsOfServiceUrl));
               }),
           const Divider(),
           _myPageTile(
               text: '개인 정보 처리 방침',
               callback: () async {
-                await launch(termsOfPrivacyPolicyUrl);
+                await launchUrl(Uri.parse(termsOfPrivacyPolicyUrl));
               }),
           const Divider(),
           _myPageTile(
               text: '위치 기반 서비스 약관',
               callback: () async {
-                await launch(termsOfLocationPolicyUrl);
+                await launchUrl(Uri.parse(termsOfLocationPolicyUrl));
               }),
           const Divider(),
           ListTile(
@@ -108,7 +108,7 @@ class _SettingListState extends State<IntroduceList> {
                     border: Border.all(color: const Color(0x00000000)),
                   ),
             duration: const Duration(milliseconds: 500),
-            height: isMore ? 260 : 0,
+            height: isMore ? 280 : 0,
             curve: Curves.ease,
             onEnd: () {
               isMore ? visible = true : visible = false;
@@ -116,6 +116,7 @@ class _SettingListState extends State<IntroduceList> {
             },
             child: visible
                 ? Container(
+                    alignment: Alignment.center,
                     width: double.infinity,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 32, vertical: 20),
@@ -140,7 +141,8 @@ class _SettingListState extends State<IntroduceList> {
                                 text: '최신버전으로 업데이트',
                                 callback: () async {
                                   if (versionStatus != null) {
-                                    await launch(versionStatus!.appStoreLink);
+                                    await launchUrl(
+                                        Uri.parse(versionStatus!.appStoreLink));
                                   }
                                 },
                               )

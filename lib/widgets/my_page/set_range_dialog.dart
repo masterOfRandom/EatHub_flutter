@@ -65,7 +65,7 @@ class _SetRangeDialogState extends State<SetRangeDialog> {
   @override
   Widget build(BuildContext context) {
     return CupertinoAlertDialog(
-      title:const Text(
+      title: const Text(
         '거리설정',
         style: TextStyle(color: primaryRedColor),
       ),

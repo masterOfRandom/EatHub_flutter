@@ -34,7 +34,7 @@ dependencies:
     email_validator: ^2.0.1
     firebase_analytics: ^9.1.2
     firebase_auth: ^3.3.11
-    firebase_core: ^1.13.1
+    firebase_core: ^1.16.0
     firebase_storage: ^10.2.9
     flutter:
         sdk: flutter
@@ -65,12 +65,12 @@ flutter:
     uses-material-design: true
     # To add assets to your application, add an assets section, like this:
     assets:
-        - assets/images/table_pick_logo.png
-        - assets/images/table_pick_logo.svg
-        - assets/images/mini_star.png
-        - assets/images/my_pick_logo.svg
-        - assets/images/heart_with_background.json
-        - assets/images/heart_without_background.json
+        # - assets/images/table_pick_logo.png
+        # - assets/images/table_pick_logo.svg
+        # - assets/images/mini_star.png
+        # - assets/images/my_pick_logo.svg
+        # - assets/images/heart_with_background.json
+        # - assets/images/heart_without_background.json
         - assets/lotties/empty_card.json
         - assets/lotties/onboard_first_page.json
         - assets/images/onboard_second_page.svg

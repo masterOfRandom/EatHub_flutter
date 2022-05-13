@@ -96,7 +96,7 @@ class _TermsOfServiceSheetState extends State<TermsOfServiceSheet> {
                     Expanded(child: Container()),
                     TextButton(
                       onPressed: () async {
-                        await launch(e.url);
+                        await launchUrl(Uri.parse(e.url));
                       },
                       child: const Text('보기'),
                     ),
