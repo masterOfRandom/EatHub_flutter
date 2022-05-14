@@ -8,10 +8,46 @@ import 'package:eathub/resources/shared_preference_methods.dart';
 import 'package:eathub/utils/global_var.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'dart:math';
 
-enum Sex {
-  male,
-  female,
+class RandomIndex {
+  int _startIndex = 0;
+  DateTime _updateDate = DateTime.now();
+  int _index = 0;
+  final limit = 8;
+  final int foodsLength;
+
+  int getRandomStartIndex() {
+    final seed = DateTime.now().millisecondsSinceEpoch;
+    final result = (Random(seed).nextDouble() * foodsLength).floor();
+    return result;
+  }
+
+  RandomIndex({required this.foodsLength}) {
+    _startIndex = getRandomStartIndex();
+  }
+
+  updateDateTime() {
+    final now = DateTime.now();
+
+    if (now.year <= _updateDate.year &&
+        now.month <= _updateDate.month &&
+        now.day <= _updateDate.day) {
+      return;
+    }
+    _updateDate = now;
+    _startIndex = getRandomStartIndex();
+  }
+
+  // null은 다 봤다는 뜻.
+  int? getRandomIndex() {
+    updateDateTime();
+    if (_index > foodsLength) {
+      return null;
+    }
+    _index += limit;
+    return (_startIndex + _index) % foodsLength;
+  }
 }
 
 class LoginController extends GetxController {
@@ -42,10 +78,9 @@ class LoginController extends GetxController {
 
 class UserController extends GetxController {
   var user = models.User(
-          name: '',
+          name: '초기화',
           birthday: Timestamp(0, 0),
           email: '',
-          favoriteKeyword: [''],
           profileUrl: '',
           isMale: true)
       .obs;
@@ -64,9 +99,25 @@ class GController extends GetxController {
   var checkedFoods = <CheckedFood>[].obs;
   var statusPoint = 0.0.obs;
   var status = CardStatus.nothing.obs;
-  var range = 1000.obs;
-
+  var range = 5000.obs;
+  var randomIndex = RandomIndex(foodsLength: 1).obs;
   var updating = false;
+
+  void randomIndexInit() async {
+    final foodsLength = await FirestoreMethods().getFoodsLength();
+    if (foodsLength == null) {
+      throw 'foodsLength 데이터를 받아오는데에 실패했습니다.';
+    }
+    randomIndex.value = RandomIndex(foodsLength: foodsLength);
+  }
+
+  int? getRandomIndex() {
+    final result = randomIndex.value.getRandomIndex();
+    if (result == null) {
+      return null;
+    }
+    return result;
+  }
 
   void startPosition(DragStartDetails details) {
     if (updating) {
@@ -81,7 +132,6 @@ class GController extends GetxController {
     }
     position.value += details.delta;
     final x = position.value.dx;
-    final y = position.value.dy;
     status.value = getStatusAndUpdateStatusPoint();
 
     angle.value = 40 * x / screenSize.value.width;
@@ -93,7 +143,7 @@ class GController extends GetxController {
     }
     isDragging.value = false;
 
-    if (statusPoint.value > 60) {
+    if (statusPoint.value > 100) {
       switch (status.value) {
         case CardStatus.like:
           like();
@@ -171,12 +221,13 @@ class GController extends GetxController {
     if (foods.isEmpty || updating) return;
 
     updating = true;
-    await Future.delayed(Duration(milliseconds: 300));
+    await Future.delayed(const Duration(milliseconds: 300));
     final lastFood = foods.last;
     final checkedFood = CheckedFood(
       name: lastFood.name!,
       imageUrl: lastFood.imageUrl!,
       status: status.value,
+      updateTime: Timestamp.now(),
     );
     checkedFoods.add(checkedFood);
     FirestoreMethods().addCheckedFood(checkedFood);
@@ -191,7 +242,7 @@ class GController extends GetxController {
 
   void addFoods() async {
     // 음식을 랜덤으로 가져오려면 수정이 필요하다.
-    final newFoods = await FirestoreMethods().getNewRandomFoods(['food']);
+    final newFoods = await FirestoreMethods().getNewRandomFoods();
     foods.value = newFoods.reversed.toList() + foods;
   }
 
@@ -208,10 +259,24 @@ class GController extends GetxController {
     } else {
       checkedFoods.value = foods;
     }
+    final nowDate = Timestamp.now().toDate();
+    checkedFoods.removeWhere((element) {
+      final date = element.updateTime.toDate();
+      if (element.status == CardStatus.yet &&
+          date.year <= nowDate.year &&
+          date.month <= nowDate.month &&
+          date.day < nowDate.day) {
+        FirestoreMethods().removeCheckedFood(element);
+        return true;
+      } else {
+        return false;
+      }
+    });
+    SharedPreferencesMethods().updateCheckedFoods(checkedFoods);
   }
 
-  void removeCheckedFoods() {
-    SharedPreferencesMethods().removeCheckedFoods();
+  Future<void> removeCheckedFoods() async {
+    await SharedPreferencesMethods().removeCheckedFoods();
     checkedFoods.value = [];
   }
 
@@ -221,5 +286,15 @@ class GController extends GetxController {
 
   void setRange(int newRange) {
     range.value = newRange;
+  }
+
+  deleteCheckedFood(CheckedFood food) async {
+    await FirestoreMethods().removeCheckedFood(food);
+    checkedFoods.remove(food);
+  }
+
+  updateCheckedFoods() async {
+    await SharedPreferencesMethods().removeCheckedFoods();
+    await SharedPreferencesMethods().updateCheckedFoods(checkedFoods);
   }
 }

@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eathub/widgets/etc/get_back_icon_button.dart';
 import 'package:eathub/getx/getx_controller.dart';
 import 'package:eathub/resources/auth_methods.dart';
 import 'package:eathub/utils/colors.dart';
+import 'package:eathub/widgets/login/choose_sex_button.dart';
 import 'package:eathub/widgets/login/login_input_text_field.dart';
 import 'package:eathub/widgets/login/terms_of_service.dart';
-import 'package:eathub/widgets/table_pick_elevated_button.dart';
+import 'package:eathub/table_pick_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -17,16 +19,15 @@ class LoginProfileScreen extends StatefulWidget {
 
 class _LoginProfileScreenState extends State<LoginProfileScreen> {
   final nameController = TextEditingController();
-  final sexController = TextEditingController();
   final yearController = TextEditingController();
 
   final controller = Get.put(LoginController());
   final nameFocusNode = FocusNode();
-  final sexFocusNode = FocusNode();
   final yearFocusNode = FocusNode();
+
+  bool isMale = false;
   var isLoading = false;
   String? nameErrMessage;
-  String? sexErrMessage;
   String? yearErrMessage;
 
   @override
@@ -37,26 +38,28 @@ class _LoginProfileScreenState extends State<LoginProfileScreen> {
   @override
   void dispose() {
     nameFocusNode.dispose();
-    sexFocusNode.dispose();
     yearFocusNode.dispose();
 
     nameController.dispose();
-    sexController.dispose();
     yearController.dispose();
     super.dispose();
+  }
+
+  _setMale(bool male) {
+    isMale = male;
+    setState(() {});
   }
 
   void _nextButtonCallback() async {
     // 여기서 확인 쫙 하자.
     final name = nameController.text;
-    final sex = sexController.text;
     final year = yearController.text;
 
     // 닉네임 체크
     final isValidName = await AuthMethods().isNameOverlaped(name);
-    if (name.length == 0) {
+    if (name.isEmpty) {
       setState(() {
-        nameErrMessage = '이름을 입력해 주세요.';
+        nameErrMessage = '닉네임을 입력해 주세요.';
       });
     } else if (isValidName) {
       setState(() {
@@ -67,17 +70,7 @@ class _LoginProfileScreenState extends State<LoginProfileScreen> {
         nameErrMessage = '이미 사용중입니다.';
       });
     }
-    // 성별 체크
-    if (!(sex == '남자' || sex == '여자')) {
-      setState(() {
-        sexErrMessage = '남자 혹은 여자를 입력하세요';
-      });
-    } else {
-      setState(() {
-        sexErrMessage = null;
-      });
-    }
-    // 출생연도 체크
+    // 출생 연도 체크
     if (year.length == 4) {
       if (year.isNum) {
         setState(() {
@@ -85,29 +78,38 @@ class _LoginProfileScreenState extends State<LoginProfileScreen> {
         });
       } else {
         setState(() {
-          yearErrMessage = '출생연도를 입력하세요.';
+          yearErrMessage = '숫자를 입력해주세요.';
         });
       }
     } else {
       setState(() {
-        yearErrMessage = '출생연도를 입력하세요.';
+        yearErrMessage = '네자리 출생 연도를 입력해주세요.';
       });
     }
 
     // profile 확인
-    if (nameErrMessage == null &&
-        sexErrMessage == null &&
-        yearErrMessage == null) {
+    if (nameErrMessage == null && yearErrMessage == null) {
       controller.updateProfile(
-          name: name,
-          isMale: sex == '남자' ? true : false,
-          yearOfBirth: Timestamp.fromDate(DateTime(int.parse(year))));
+        name: name,
+        isMale: isMale,
+        yearOfBirth: Timestamp.fromDate(DateTime(int.parse(year))),
+      );
       showModalBottomSheet(
-          context: context,
-          builder: (context) {
-            return TermsOfServiceSheet();
-          });
+        constraints: const BoxConstraints(maxHeight: 450),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        context: context,
+        builder: (context) {
+          return const TermsOfServiceSheet();
+        },
+      );
     }
+  }
+
+  Widget _listTitle(String title) {
+    return Text(
+      title,
+      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+    );
   }
 
   @override
@@ -117,55 +119,44 @@ class _LoginProfileScreenState extends State<LoginProfileScreen> {
       child: Scaffold(
         backgroundColor: backgroundWhiteColor,
         appBar: AppBar(
-          foregroundColor: grayScaleGray3,
+          leading: const GetBackIconButton(),
           backgroundColor: backgroundWhiteColor,
           elevation: 0,
         ),
         body: SingleChildScrollView(
           child: Container(
-            padding: EdgeInsets.all(24),
+            padding: const EdgeInsets.all(24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 28),
-                Text(
+                const SizedBox(height: 28),
+                const Text(
                   '프로필 설정',
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),
                 ),
-                SizedBox(height: 40),
-                Text(
-                  '닉네임',
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
-                ),
-                SizedBox(height: 8),
+                const SizedBox(height: 40),
+                _listTitle('닉네임'),
+                const SizedBox(height: 8),
                 LoginInputTextField(
                   focusNode: nameFocusNode,
                   controller: nameController,
                   errText: nameErrMessage,
+                  hintText: '닉네임을 입력해주세요',
                 ),
-                SizedBox(height: 40),
-                Text(
-                  '성별',
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
-                ),
-                SizedBox(height: 8),
-                LoginInputTextField(
-                  focusNode: sexFocusNode,
-                  controller: sexController,
-                  errText: sexErrMessage,
-                ),
-                SizedBox(height: 40),
-                Text(
-                  '출생연도',
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
-                ),
-                SizedBox(height: 8),
+                const SizedBox(height: 40),
+                _listTitle('성별'),
+                const SizedBox(height: 8),
+                ChooseSexButton(isMale: isMale, setMale: _setMale),
+                const SizedBox(height: 40),
+                _listTitle('출생 연도'),
+                const SizedBox(height: 8),
                 LoginInputTextField(
                   focusNode: yearFocusNode,
                   controller: yearController,
                   errText: yearErrMessage,
+                  hintText: '4자리로 입력해주세요',
                 ),
-                SizedBox(height: 70),
+                const SizedBox(height: 70),
               ],
             ),
           ),

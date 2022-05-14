@@ -1,10 +1,13 @@
+import 'package:eathub/confirm_dialog.dart';
+import 'package:eathub/widgets/etc/get_back_icon_button.dart';
 import 'package:eathub/getx/getx_controller.dart';
 import 'package:eathub/resources/auth_methods.dart';
 import 'package:eathub/screens/login_screens/login_password_screen.dart';
 import 'package:eathub/screens/login_screens/signup_password_screen.dart';
 import 'package:eathub/utils/colors.dart';
 import 'package:eathub/widgets/login/login_input_text_field.dart';
-import 'package:eathub/widgets/table_pick_elevated_button.dart';
+import 'package:eathub/table_pick_elevated_button.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:get/get.dart';
@@ -32,29 +35,23 @@ class _LoginEmailScreenState extends State<LoginEmailScreen> {
     final email = emailController.text;
     setState(() {
       isLoading = true;
-      errMessage = null;
     });
     if (email.isEmpty) {
-      setState(() {
-        errMessage = '입력창이 비어있습니다.';
-      });
+      errMessage = '입력창이 비어있습니다.';
     } else if (!EmailValidator.validate(email)) {
-      setState(() {
-        errMessage = '이메일 형식이 올바르지 않습니다.';
-      });
+      errMessage = '이메일 형식이 올바르지 않습니다.';
     } else {
       // 중복 확인.
       final isOverlap = await AuthMethods().isEmailOverlaped(email);
       controller.updateEmail(email: email);
       if (isOverlap) {
-        Get.to(LoginPasswordScreen());
+        Get.to(const LoginPasswordScreen());
       } else {
-        Get.to(SignupPasswordScreen());
+        Get.to(const SignupPasswordScreen());
       }
     }
-    setState(() {
-      isLoading = false;
-    });
+    isLoading = false;
+    setState(() {});
   }
 
   @override
@@ -64,33 +61,55 @@ class _LoginEmailScreenState extends State<LoginEmailScreen> {
       child: Scaffold(
         backgroundColor: backgroundWhiteColor,
         appBar: AppBar(
-          foregroundColor: grayScaleGray3,
+          leading: const GetBackIconButton(),
           backgroundColor: backgroundWhiteColor,
           elevation: 0,
+          actions: [
+            Container(
+              padding: const EdgeInsets.only(right: 20),
+              child: TextButton(
+                child: const Text(
+                  '고객문의',
+                  style: TextStyle(fontSize: 16),
+                ),
+                onPressed: () => showCupertinoDialog(
+                  context: context,
+                  builder: (_) => const ConfirmDialog(
+                    title: '이메일 문의',
+                    content: ('tablepick2022@gmail.com로\n문의 해주세요'),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
         body: SingleChildScrollView(
           child: Container(
             color: backgroundWhiteColor,
-            padding: EdgeInsets.all(24),
+            padding: const EdgeInsets.all(24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 28),
-                Text(
+                const SizedBox(height: 28),
+                const Text(
                   '이메일로 시작',
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
-                Text(
+                const Text(
                   '이메일',
                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 8,
                 ),
-                LoginInputTextField(controller: emailController),
+                LoginInputTextField(
+                  controller: emailController,
+                  errText: errMessage,
+                  hintText: '이메일을 입력해주세요',
+                ),
               ],
             ),
           ),

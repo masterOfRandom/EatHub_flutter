@@ -1,11 +1,10 @@
 import 'package:eathub/getx/getx_controller.dart';
+import 'package:eathub/presentation/table_pick_icons.dart';
 import 'package:eathub/screens/mypick_screens.dart/like_screen.dart';
 import 'package:eathub/screens/mypick_screens.dart/nope_screen.dart';
 import 'package:eathub/utils/colors.dart';
 import 'package:eathub/utils/global_var.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 class MyPickScreen extends StatefulWidget {
@@ -41,10 +40,11 @@ class _MyPickScreenState extends State<MyPickScreen>
       length: 2,
       child: Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           backgroundColor: backgroundWhiteColor,
           title: const Text(
-            'My Pick',
-            style: pageTitleTextStyle,
+            'My pick',
+            style: mainTitleTextStyle,
           ),
           elevation: 0,
         ),
@@ -58,29 +58,25 @@ class _MyPickScreenState extends State<MyPickScreen>
               controller: _tabController,
               indicatorColor: primaryRedColor,
               indicatorSize: TabBarIndicatorSize.label,
-              tabs: [
+              unselectedLabelColor: secondaryPinkGrayColor,
+              labelColor: primaryRedColor,
+              indicatorWeight: 4,
+              tabs: const [
                 Tab(
-                  child: Text(
-                    'like',
-                    style: TextStyle(
-                        color: _tabController.index == 0
-                            ? primaryRedColor
-                            : grayScaleGray4,
-                        fontFamily: 'Baloo2',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 32),
+                  height: 80,
+                  icon: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 40),
+                    child: Icon(
+                      TablePick.smallHeart,
+                    ),
                   ),
                 ),
                 Tab(
-                  child: Text(
-                    'nope',
-                    style: TextStyle(
-                        color: _tabController.index == 1
-                            ? primaryRedColor
-                            : grayScaleGray4,
-                        fontFamily: 'Baloo2',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 32),
+                  icon: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 40),
+                    child: Icon(
+                      TablePick.smallx,
+                    ),
                   ),
                 ),
               ],
@@ -88,7 +84,8 @@ class _MyPickScreenState extends State<MyPickScreen>
           ),
           body: SafeArea(
             child: Container(
-              padding: EdgeInsets.all(10),
+              color: backgroundWhiteColor,
+              padding: const EdgeInsets.all(10),
               child: Obx(
                 () {
                   final likedFoods = controller.checkedFoods
@@ -98,7 +95,7 @@ class _MyPickScreenState extends State<MyPickScreen>
                       .where((element) => element.status == CardStatus.nope)
                       .toList();
                   return TabBarView(
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     controller: _tabController,
                     children: [
                       LikeScreen(likedFoods: likedFoods),

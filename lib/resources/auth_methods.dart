@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:eathub/getx/getx_controller.dart';
 import 'package:eathub/models/user.dart' as models;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -67,7 +66,7 @@ class AuthMethods {
     required final bool isMale,
   }) async {
     try {
-      final result = await _auth.createUserWithEmailAndPassword(
+      await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       final user = _auth.currentUser;
       if (user != null) {
@@ -75,7 +74,6 @@ class AuthMethods {
           birthday: birthday,
           name: name,
           email: email,
-          favoriteKeyword: favoriteKeyword,
           profileUrl: profileUrl,
           isMale: isMale,
         );
@@ -98,6 +96,16 @@ class AuthMethods {
     }
     final userData =
         await _store.collection('users').doc(_auth.currentUser!.uid).get();
-    return models.User.fromSnap(userData);
+
+    final result = models.User.fromSnap(userData);
+    return result;
+  }
+
+  withDrawal() async {
+    if (_auth.currentUser == null) {
+      throw '로그인이 안된 유저입니다.';
+    }
+
+    await _auth.currentUser!.delete();
   }
 }

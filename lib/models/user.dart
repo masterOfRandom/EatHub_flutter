@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class User {
   final String? name;
   final String? email;
-  final List? favoriteKeyword;
   final Timestamp? birthday;
   final String? profileUrl;
   final bool? isMale;
@@ -11,7 +10,6 @@ class User {
   const User({
     required this.name,
     required this.email,
-    required this.favoriteKeyword,
     required this.birthday,
     required this.profileUrl,
     required this.isMale,
@@ -20,7 +18,6 @@ class User {
   Map<String, dynamic> toJson() => {
         'name': name,
         'email': email,
-        'favorite_keyword': favoriteKeyword,
         'birthday': birthday,
         'profile_url': profileUrl,
         'isMale': isMale,
@@ -34,7 +31,6 @@ class User {
     return User(
       name: snapshot['name'],
       email: snapshot['email'],
-      favoriteKeyword: snapshot['favorite_keyword'],
       birthday: snapshot['birthday'],
       profileUrl: snapshot['profile_url'],
       isMale: snapshot['isMale'],

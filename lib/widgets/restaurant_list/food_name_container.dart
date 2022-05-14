@@ -8,7 +8,7 @@ class FoodNameContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       alignment: Alignment.center,
       height: 58,
       decoration: BoxDecoration(
@@ -19,7 +19,7 @@ class FoodNameContainer extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             '내 근처의 ',
             style: TextStyle(
               fontSize: 20,
@@ -27,8 +27,8 @@ class FoodNameContainer extends StatelessWidget {
             ),
           ),
           Text(
-            '${foodName}집',
-            style: TextStyle(
+            '$foodName집',
+            style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w700,
             ),

@@ -33,23 +33,24 @@ class BriefDescription extends StatelessWidget {
             ),
             maxLines: 1,
           ),
-          SizedBox(
+          const SizedBox(
             height: 12,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: keyword.map((e) {
               return Container(
-                margin: EdgeInsets.symmetric(horizontal: 8),
+                margin: const EdgeInsets.symmetric(horizontal: 8),
                 alignment: Alignment.center,
-                padding: EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   border: Border.all(color: backgroundGrayColor),
                 ),
                 child: Text(
                   e,
-                  style: TextStyle(color: primaryRedColor, fontSize: 18),
+                  style: const TextStyle(color: primaryRedColor, fontSize: 18),
                 ),
               );
             }).toList(),

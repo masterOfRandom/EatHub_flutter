@@ -1,4 +1,5 @@
 import 'package:eathub/getx/getx_controller.dart';
+import 'package:eathub/presentation/table_pick_icons.dart';
 import 'package:eathub/utils/global_var.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -30,19 +31,19 @@ class _LikeNopeYetCheckerState extends State<LikeNopeYetChecker> {
 
               if (status == CardStatus.like) {
                 return const Icon(
-                  Icons.favorite,
+                  TablePick.smallHeart,
                   size: 200,
                   color: Colors.white,
                 );
               } else if (status == CardStatus.nope) {
                 return const Icon(
-                  Icons.close_rounded,
+                  TablePick.smallx,
                   size: 200,
                   color: Colors.white,
                 );
               } else {
                 return const Icon(
-                  Icons.star,
+                  TablePick.smallYet,
                   size: 200,
                   color: Colors.white,
                 );

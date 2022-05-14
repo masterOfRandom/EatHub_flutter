@@ -1,20 +1,33 @@
 import 'package:eathub/screens/layout_screens/mobile_layout_screen.dart';
-import 'package:eathub/screens/login_screens/multi_login_screen.dart';
+import 'package:eathub/screens/login_screens/onboard_screen.dart';
 import 'package:eathub/utils/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:new_version/new_version.dart';
 
 void main() async {
+  // version setting
+  NewVersion(iOSAppStoreCountry: 'KR');
   // firebase init 전 widget binding
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(GetMaterialApp(
     theme: ThemeData(
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+            primary: Colors.black,
+          ),
+        ),
+        checkboxTheme: CheckboxThemeData(
+            shape: const CircleBorder(),
+            fillColor: MaterialStateColor.resolveWith((states) {
+              return primaryRedColor;
+            })),
         fontFamily: 'NotoSans',
         bottomSheetTheme:
-            BottomSheetThemeData(backgroundColor: backgroundWhiteColor)),
+            const BottomSheetThemeData(backgroundColor: backgroundWhiteColor)),
     debugShowCheckedModeBanner: false,
     home: const MyApp(),
   ));
@@ -42,7 +55,7 @@ class MyApp extends StatelessWidget {
           return const Center(
               child: CircularProgressIndicator(color: primaryRedColor));
         }
-        return MultiLoginScreen();
+        return const MultiLoginScreen();
       },
     );
   }
