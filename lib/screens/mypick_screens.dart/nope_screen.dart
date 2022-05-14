@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eathub/models/checked_food.dart';
 import 'package:eathub/widgets/my_pick/delete_food_dialog.dart';
 import 'package:flutter/cupertino.dart';
@@ -27,8 +26,8 @@ class NopeScreen extends StatelessWidget {
             },
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
-              child: CachedNetworkImage(
-                imageUrl: e.imageUrl,
+              child: Image.network(
+                e.imageUrl,
                 fit: BoxFit.cover,
               ),
             ),

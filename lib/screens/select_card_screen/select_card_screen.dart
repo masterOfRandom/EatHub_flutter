@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eathub/getx/getx_controller.dart';
 import 'package:eathub/models/food.dart';
 import 'package:eathub/presentation/table_pick_icons.dart';
@@ -314,10 +313,10 @@ class FoodCardState extends State<FoodCard> {
                 decoration: BoxDecoration(
                   borderRadius: const BorderRadius.vertical(top: cardRadius),
                   image: DecorationImage(
-                    image: CachedNetworkImageProvider(
-                        widget.food.imageUrl == null
+                    image: Image.network(widget.food.imageUrl == null
                             ? defaultFoodImageUrl
-                            : widget.food.imageUrl!),
+                            : widget.food.imageUrl!)
+                        .image,
                     fit: BoxFit.cover,
                   ),
                 ),
