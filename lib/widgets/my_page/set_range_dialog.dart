@@ -1,8 +1,6 @@
 import 'package:eathub/getx/getx_controller.dart';
-import 'package:eathub/resources/auth_methods.dart';
 import 'package:eathub/utils/colors.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SetRangeDialog extends StatefulWidget {
@@ -67,13 +65,13 @@ class _SetRangeDialogState extends State<SetRangeDialog> {
   @override
   Widget build(BuildContext context) {
     return CupertinoAlertDialog(
-      title: Text(
+      title: const Text(
         '거리설정',
         style: TextStyle(color: primaryRedColor),
       ),
       content: Column(
         children: [
-          Text('주변 식당을 탐색하는\n거리 범위를 설정해보세요'),
+          const Text('주변 식당을 탐색하는\n거리 범위를 설정해보세요'),
           CupertinoSlider(
             thumbColor: primaryRedColor,
             activeColor: primaryRedColor,
@@ -88,19 +86,19 @@ class _SetRangeDialogState extends State<SetRangeDialog> {
           ),
           Container(
             alignment: Alignment.centerRight,
-            child: Text('${indexToRange(range.toInt())}m'),
+            child: Text('${indexToRange(range.toInt()).toInt()}m'),
           )
         ],
       ),
       actions: [
         CupertinoDialogAction(
-          child: Text('취소'),
-          textStyle: TextStyle(color: grayScaleGray3),
+          child: const Text('취소'),
+          textStyle: const TextStyle(color: grayScaleGray3),
           onPressed: () => Navigator.pop(context),
         ),
         CupertinoDialogAction(
-          child: Text('적용'),
-          textStyle: TextStyle(color: primaryRedColor),
+          child: const Text('적용'),
+          textStyle: const TextStyle(color: primaryRedColor),
           onPressed: () {
             controller.setRange(indexToRange(range.toInt()).toInt());
             Navigator.pop(context);

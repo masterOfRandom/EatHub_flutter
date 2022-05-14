@@ -21,7 +21,12 @@ class TablePickElevatedButton extends StatelessWidget {
             ),
             child: const CircularProgressIndicator(color: backgroundWhiteColor))
         : GestureDetector(
-            onTap: callback,
+            onTap: () {
+              if (callback != null) {
+                callback!();
+              }
+              FocusScope.of(context).unfocus();
+            },
             child: Container(
               height: 50,
               alignment: Alignment.center,

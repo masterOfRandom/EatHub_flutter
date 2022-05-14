@@ -12,7 +12,7 @@ class SharedPreferencesMethods {
     final pref = await SharedPreferences.getInstance();
 
     final checkedFoodsStringList =
-        checkedFoods.map((e) => jsonEncode(e.toJson())).toList();
+        checkedFoods.map((e) => jsonEncode(e.toSharedJson())).toList();
 
     pref.setStringList('checkedFoods', checkedFoodsStringList);
   }
@@ -25,14 +25,18 @@ class SharedPreferencesMethods {
       return null;
     }
     final checkedFoods = checkedFoodsString
-        .map((e) => CheckedFood.fromJson(jsonDecode(e)))
+        .map((e) => CheckedFood.fromSharedJson(jsonDecode(e)))
         .toList();
     return checkedFoods;
   }
 
-  removeCheckedFoods() async {
+  Future<void> removeCheckedFoods() async {
     final pref = await SharedPreferences.getInstance();
-
     pref.remove('checkedFoods');
+  }
+
+  updateCheckedFoods(List<CheckedFood> checkedFoods) async {
+    await removeCheckedFoods();
+    await setCheckedFoods(checkedFoods);
   }
 }

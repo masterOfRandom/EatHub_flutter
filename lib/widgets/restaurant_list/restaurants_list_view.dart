@@ -1,8 +1,6 @@
-import 'dart:io';
 import 'package:eathub/models/restautant.dart';
 import 'package:eathub/utils/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class RestaurantListView extends StatelessWidget {
@@ -19,7 +17,7 @@ class RestaurantListView extends StatelessWidget {
             children: [
               InkWell(
                 onTap: () async {
-                  await launch(e.placeUrl);
+                  await launchUrl(Uri.parse(e.placeUrl));
                 },
                 child: Container(
                   width: double.infinity,

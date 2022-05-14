@@ -1,9 +1,7 @@
-import 'package:eathub/getx/getx_controller.dart';
 import 'package:eathub/resources/auth_methods.dart';
+import 'package:eathub/resources/firestore_methods.dart';
 import 'package:eathub/utils/colors.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class WithdrawalDialog extends StatelessWidget {
   const WithdrawalDialog({Key? key}) : super(key: key);
@@ -11,25 +9,27 @@ class WithdrawalDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoAlertDialog(
-      title: Text(
+      title: const Text(
         '회원탈퇴',
         style: TextStyle(color: primaryRedColor),
       ),
-      content:
-          Text('정말로 탈퇴 하실건가요..?😢', style: TextStyle(color: grayScaleGray2)),
+      content: const Text('정말로 탈퇴 하실건가요..?😢\n탈퇴하시게 되면 그동안\n픽했던 데이터는 사라집니다',
+          style: TextStyle(color: grayScaleGray2)),
       actions: [
         CupertinoDialogAction(
-          child: Text('취소'),
-          textStyle:
-              TextStyle(color: grayScaleGray3, fontWeight: FontWeight.w700),
+          child: const Text('취소'),
+          textStyle: const TextStyle(
+              color: grayScaleGray3, fontWeight: FontWeight.w700),
           onPressed: () => Navigator.pop(context),
         ),
         CupertinoDialogAction(
-          child: Text('회원탈퇴'),
-          textStyle: TextStyle(color: grayScaleGray3),
-          onPressed: () {
+          child: const Text('회원탈퇴'),
+          textStyle: const TextStyle(color: grayScaleGray3),
+          onPressed: () async {
             // 회원탈퇴
-            print('회원탈퇴');
+            await FirestoreMethods().deleteUserData();
+            await AuthMethods().withDrawal();
+            Navigator.pop(context);
             Navigator.pop(context);
           },
         ),

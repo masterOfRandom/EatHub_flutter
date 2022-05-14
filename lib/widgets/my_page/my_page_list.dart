@@ -1,5 +1,5 @@
-import 'package:eathub/getx/getx_controller.dart';
-import 'package:eathub/resources/auth_methods.dart';
+import 'package:eathub/confirm_dialog.dart';
+import 'package:eathub/presentation/table_pick_icons.dart';
 import 'package:eathub/screens/my_page_screens/introduce_screen.dart';
 import 'package:eathub/utils/colors.dart';
 import 'package:eathub/widgets/my_page/logout_dialog.dart';
@@ -24,8 +24,8 @@ class _SettingListState extends State<MyPageList> {
     return ListTile(
       leading: Icon(lead),
       title: Text(text),
-      trailing: Icon(
-        Icons.chevron_right,
+      trailing: const Icon(
+        TablePick.navigate_next,
         color: grayScaleGray4,
       ),
       onTap: callback,
@@ -37,7 +37,7 @@ class _SettingListState extends State<MyPageList> {
     return Column(
       children: [
         _myPageTile(
-            lead: Icons.gps_fixed,
+            lead: TablePick.my_location,
             text: '주변 식당 범위 설정',
             callback: () {
               showCupertinoDialog(
@@ -47,18 +47,30 @@ class _SettingListState extends State<MyPageList> {
                     return const SetRangeDialog();
                   });
             }),
-        Divider(),
+        const Divider(),
         _myPageTile(
-            lead: Icons.gps_fixed,
+            lead: TablePick.card,
             text: '테이블픽 소개',
             callback: () {
-              Get.to(IntroduceScreen());
+              Get.to(const IntroduceScreen());
             }),
-        Divider(),
-        _myPageTile(lead: Icons.gps_fixed, text: '고객 문의', callback: () {}),
-        Divider(),
+        const Divider(),
         _myPageTile(
-            lead: Icons.gps_fixed,
+            lead: TablePick.help,
+            text: '고객 문의',
+            callback: () {
+              showCupertinoDialog(
+                  context: context,
+                  builder: (_) {
+                    return const ConfirmDialog(
+                      title: '이메일 문의',
+                      content: 'tablepick2022@gmail.com로\n문의해주세요',
+                    );
+                  });
+            }),
+        const Divider(),
+        _myPageTile(
+            lead: TablePick.logout,
             text: '로그아웃',
             callback: () {
               showCupertinoDialog(
@@ -68,7 +80,7 @@ class _SettingListState extends State<MyPageList> {
                     return const LogoutDialog();
                   });
             }),
-        Divider(),
+        const Divider(),
       ],
     );
   }
