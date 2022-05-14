@@ -1,34 +1,149 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eathub/models/checked_food.dart';
+import 'package:eathub/models/food.dart';
+import 'package:eathub/models/user.dart' as models;
+import 'package:eathub/resources/auth_methods.dart';
+import 'package:eathub/resources/firestore_methods.dart';
+import 'package:eathub/resources/shared_preference_methods.dart';
 import 'package:eathub/utils/global_var.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'dart:math';
+
+class RandomIndex {
+  int _startIndex = 0;
+  DateTime _updateDate = DateTime.now();
+  int _index = 0;
+  final limit = 8;
+  final int foodsLength;
+
+  int getRandomStartIndex() {
+    final seed = DateTime.now().millisecondsSinceEpoch;
+    final result = (Random(seed).nextDouble() * foodsLength).floor();
+    return result;
+  }
+
+  RandomIndex({required this.foodsLength}) {
+    _startIndex = getRandomStartIndex();
+  }
+
+  updateDateTime() {
+    final now = DateTime.now();
+
+    if (now.year <= _updateDate.year &&
+        now.month <= _updateDate.month &&
+        now.day <= _updateDate.day) {
+      return;
+    }
+    _updateDate = now;
+    _startIndex = getRandomStartIndex();
+  }
+
+  // null은 다 봤다는 뜻.
+  int? getRandomIndex() {
+    updateDateTime();
+    if (_index > foodsLength) {
+      return null;
+    }
+    _index += limit;
+    return (_startIndex + _index) % foodsLength;
+  }
+}
+
+class LoginController extends GetxController {
+  var email = ''.obs;
+  var password = ''.obs;
+  var name = ''.obs;
+  var isMale = true.obs;
+  var yearOfBirth = Timestamp(0, 0).obs;
+
+  void updateEmail({required final String email}) {
+    this.email.value = email;
+  }
+
+  void updatePassword({required final String password}) {
+    this.password.value = password;
+  }
+
+  void updateProfile({
+    required final String name,
+    required final bool isMale,
+    required final Timestamp yearOfBirth,
+  }) {
+    this.name.value = name;
+    this.isMale.value = isMale;
+    this.yearOfBirth.value = yearOfBirth;
+  }
+}
+
+class UserController extends GetxController {
+  var user = models.User(
+          name: '초기화',
+          birthday: Timestamp(0, 0),
+          email: '',
+          profileUrl: '',
+          isMale: true)
+      .obs;
+
+  void refreshUser() async {
+    user.value = await AuthMethods().getUserData();
+  }
+}
 
 class GController extends GetxController {
   var position = Offset.zero.obs;
   var isDragging = false.obs;
   var screenSize = Size.zero.obs;
   var angle = 0.0.obs;
-  var imageUrls = <String>[].obs;
+  var foods = <Food>[].obs;
+  var checkedFoods = <CheckedFood>[].obs;
   var statusPoint = 0.0.obs;
   var status = CardStatus.nothing.obs;
+  var range = 5000.obs;
+  var randomIndex = RandomIndex(foodsLength: 1).obs;
+  var updating = false;
+
+  void randomIndexInit() async {
+    final foodsLength = await FirestoreMethods().getFoodsLength();
+    if (foodsLength == null) {
+      throw 'foodsLength 데이터를 받아오는데에 실패했습니다.';
+    }
+    randomIndex.value = RandomIndex(foodsLength: foodsLength);
+  }
+
+  int? getRandomIndex() {
+    final result = randomIndex.value.getRandomIndex();
+    if (result == null) {
+      return null;
+    }
+    return result;
+  }
 
   void startPosition(DragStartDetails details) {
+    if (updating) {
+      return;
+    }
     isDragging.value = true;
   }
 
   void updatePosition(DragUpdateDetails details) {
+    if (updating) {
+      return;
+    }
     position.value += details.delta;
     final x = position.value.dx;
-    final y = position.value.dy;
     status.value = getStatusAndUpdateStatusPoint();
 
     angle.value = 40 * x / screenSize.value.width;
   }
 
   void endPosition() {
+    if (updating) {
+      return;
+    }
     isDragging.value = false;
 
-    if (statusPoint.value > 60) {
+    if (statusPoint.value > 100) {
       switch (status.value) {
         case CardStatus.like:
           like();
@@ -62,22 +177,22 @@ class GController extends GetxController {
     // 애니메이션이 느려진다면 여기를 의심하자.
     if (y > 0) {
       if (x > 0) {
-        statusPoint.value = x;
+        statusPoint.value = x * 2;
         return CardStatus.like;
       } else {
-        statusPoint.value = -x;
+        statusPoint.value = (-x) * 2;
         return CardStatus.yet;
       }
     } else {
       if (x < y) {
-        statusPoint.value = y - x;
+        statusPoint.value = (y - x) * 2;
         return CardStatus.yet;
       } else {
         if (-y > x) {
-          statusPoint.value = -y - x;
+          statusPoint.value = (-y - x) * 2;
           return CardStatus.nope;
         } else {
-          statusPoint.value = x + y;
+          statusPoint.value = (x + y) * 2;
           return CardStatus.like;
         }
       }
@@ -103,33 +218,83 @@ class GController extends GetxController {
   }
 
   Future nextCard() async {
-    if (imageUrls.isEmpty) return;
+    if (foods.isEmpty || updating) return;
 
-    await Future.delayed(Duration(milliseconds: 200));
-    imageUrls.removeLast();
+    updating = true;
+    await Future.delayed(const Duration(milliseconds: 300));
+    final lastFood = foods.last;
+    final checkedFood = CheckedFood(
+      name: lastFood.name!,
+      imageUrl: lastFood.imageUrl!,
+      status: status.value,
+      updateTime: Timestamp.now(),
+    );
+    checkedFoods.add(checkedFood);
+    FirestoreMethods().addCheckedFood(checkedFood);
+    SharedPreferencesMethods().setCheckedFoods(checkedFoods);
+    foods.removeLast();
     resetPosition();
+    if (foods.length == 2) {
+      addFoods();
+    }
+    updating = false;
   }
 
-  void resetUsers() {
-    imageUrls.value = <String>[
-      'https://img1.kakaocdn.net/cthumb/local/R0x420/?fname=http%3A%2F%2Ft1.daumcdn.net%2Fplace%2FCF25058968C0493096142CA35FC89EFC',
-      'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fmyplace-phinf.pstatic.net%2F20220220_263%2F1645354113369xzzBW_JPEG%2Fupload_3d6f35dbf92c77cee0c3f911b6cd3645.jpeg',
-      'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fmyplace-phinf.pstatic.net%2F20220322_113%2F1647954093603xlgUO_JPEG%2Fupload_2eb34d32de6381efe8b2c2acde455ef3.jpg',
-      'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fmyplace-phinf.pstatic.net%2F20220320_14%2F16477769214678csvB_JPEG%2Fupload_fca1f7a89e4baacf8f0eb200cc45f4fb.jpeg',
-      'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fmyplace-phinf.pstatic.net%2F20220323_104%2F1648026669604abgGH_JPEG%2Fupload_620d47847e212b5eb21072fb91dc9a00.jpg',
-      'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fmyplace-phinf.pstatic.net%2F20220220_29%2F1645334336147IFgpJ_JPEG%2Fupload_35eddb097619a344b7e5593deb6f4838.jpeg',
-      'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fmyplace-phinf.pstatic.net%2F20220214_182%2F1644821957660AoUWW_JPEG%2Fupload_6ea743f055f5bdc06fd00b8407c0a49f.jpg',
-      'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fmyplace-phinf.pstatic.net%2F20211205_197%2F1638701820259A7VOe_JPEG%2Fupload_2a6644e831c0975fc308b135e4fb281d.jpeg',
-      'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fmyplace-phinf.pstatic.net%2F20220127_157%2F16432721394834rkCr_JPEG%2Fupload_c820a17c54a53775fc56a1f3d42f3d4e.jpg',
-      'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fmyplace-phinf.pstatic.net%2F20220314_78%2F1647233279516afaso_JPEG%2Fupload_c1c19a6bea26b1795a5871d101476c11.jpeg',
-      'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fmyplace-phinf.pstatic.net%2F20220326_132%2F1648284109890clh1g_JPEG%2Fupload_3756a5d1d658bb9498ce1c83455ea6a2.jpeg',
-      'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fmyplace-phinf.pstatic.net%2F20220106_74%2F16414668482766EcCl_JPEG%2Fupload_e4a79787ae6edf189a338f942a1b90e7.jpeg',
-      'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fmyplace-phinf.pstatic.net%2F20211129_6%2F1638117062735Ttf7C_JPEG%2Fupload_35728b53a04a08eccee61bb717566dcc.jpeg',
-      'https://search.pstatic.net/common/?autoRotate=true&quality=95&type=w750&src=https%3A%2F%2Fmyplace-phinf.pstatic.net%2F20220220_233%2F164535712940788D6z_JPEG%2Fupload_7e029521127db0675764585122e8d9e5.jpeg',
-    ].reversed.toList();
+  void addFoods() async {
+    // 음식을 랜덤으로 가져오려면 수정이 필요하다.
+    final newFoods = await FirestoreMethods().getNewRandomFoods();
+    foods.value = newFoods.reversed.toList() + foods;
   }
 
   void setScreenSize(Size size) {
     screenSize.value = size;
+  }
+
+  Future<void> initCheckedFoods() async {
+    // checked 푸드 가져오기.
+    final foods = await SharedPreferencesMethods().getCheckedFoods();
+    if (foods == null) {
+      // 로컬에 없으면 땡겨오기.
+      checkedFoods.value = await FirestoreMethods().getCheckedFoods();
+    } else {
+      checkedFoods.value = foods;
+    }
+    final nowDate = Timestamp.now().toDate();
+    checkedFoods.removeWhere((element) {
+      final date = element.updateTime.toDate();
+      if (element.status == CardStatus.yet &&
+          date.year <= nowDate.year &&
+          date.month <= nowDate.month &&
+          date.day < nowDate.day) {
+        FirestoreMethods().removeCheckedFood(element);
+        return true;
+      } else {
+        return false;
+      }
+    });
+    SharedPreferencesMethods().updateCheckedFoods(checkedFoods);
+  }
+
+  Future<void> removeCheckedFoods() async {
+    await SharedPreferencesMethods().removeCheckedFoods();
+    checkedFoods.value = [];
+  }
+
+  void removeFoods() {
+    foods.value = [];
+  }
+
+  void setRange(int newRange) {
+    range.value = newRange;
+  }
+
+  deleteCheckedFood(CheckedFood food) async {
+    await FirestoreMethods().removeCheckedFood(food);
+    checkedFoods.remove(food);
+  }
+
+  updateCheckedFoods() async {
+    await SharedPreferencesMethods().removeCheckedFoods();
+    await SharedPreferencesMethods().updateCheckedFoods(checkedFoods);
   }
 }
