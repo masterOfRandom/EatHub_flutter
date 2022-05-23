@@ -48,3 +48,9 @@ app.*.map.json
 # Secrete
 GoogleService-Info.plist
 env.dart
+key.jks
+key.properties
+
+pubspec.lock
+Podfile.lock
+

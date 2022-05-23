@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>1002176910690-4ohc642s8a3ufhu0eetkm52ep2pjunnm.apps.googleusercontent.com</string>
+	<string>1002176910690-dg6t4pdnvdeblobm6n49pp1885kdribs.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.1002176910690-4ohc642s8a3ufhu0eetkm52ep2pjunnm</string>
+	<string>com.googleusercontent.apps.1002176910690-dg6t4pdnvdeblobm6n49pp1885kdribs</string>
 	<key>API_KEY</key>
 	<string>AIzaSyBHOkiyjs601cjgpkusFkxZfrWdANWEq-o</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.masterOfRandom.EatHub</string>
+	<string>com.masterOfRandom.tablePick</string>
 	<key>PROJECT_ID</key>
 	<string>eathub-be921</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1002176910690:ios:dc9c9a81182cb2c592883b</string>
+	<string>1:1002176910690:ios:0d373c305e82cb2192883b</string>
 </dict>
 </plist>
