@@ -14,20 +14,24 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(GetMaterialApp(
+    getPages: [
+      GetPage(name: '/', page: () => const MyApp()),
+    ],
     theme: ThemeData(
-        textButtonTheme: TextButtonThemeData(
-          style: TextButton.styleFrom(
-            primary: Colors.black,
-          ),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          primary: Colors.black,
         ),
-        checkboxTheme: CheckboxThemeData(
-            shape: const CircleBorder(),
-            fillColor: MaterialStateColor.resolveWith((states) {
-              return primaryRedColor;
-            })),
-        fontFamily: 'NotoSans',
-        bottomSheetTheme:
-            const BottomSheetThemeData(backgroundColor: backgroundWhiteColor)),
+      ),
+      checkboxTheme: CheckboxThemeData(
+          shape: const CircleBorder(),
+          fillColor: MaterialStateColor.resolveWith((states) {
+            return primaryRedColor;
+          })),
+      fontFamily: 'NotoSans',
+      bottomSheetTheme:
+          const BottomSheetThemeData(backgroundColor: backgroundWhiteColor),
+    ),
     debugShowCheckedModeBanner: false,
     home: const MyApp(),
   ));

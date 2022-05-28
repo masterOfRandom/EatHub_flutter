@@ -120,7 +120,7 @@ class _TermsOfServiceSheetState extends State<TermsOfServiceSheet> {
                     final email = controller.email.value;
                     final password = controller.password.value;
                     final name = controller.name.value;
-                    final isMale = controller.isMale.value;
+                    final gender = controller.gender.value;
                     final birthday = controller.yearOfBirth.value;
                     final result = await AuthMethods().signUp(
                         email: email,
@@ -130,12 +130,9 @@ class _TermsOfServiceSheetState extends State<TermsOfServiceSheet> {
                         birthday: birthday,
                         profileUrl:
                             'https://www.attendit.net/images/easyblog_shared/July_2018/7-4-18/b2ap3_large_totw_network_profile_400.jpg',
-                        isMale: isMale);
+                        gender: gender);
                     if (result == SignState.success) {
-                      Get.back();
-                      Get.back();
-                      Get.back();
-                      Get.back();
+                      Get.offAllNamed('/');
                     } else {
                       Get.snackbar('회원가입에 문제가 발생했습니다.', '고객센터에 문의해주세요.');
                     }
