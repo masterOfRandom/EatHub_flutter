@@ -84,11 +84,11 @@ class LoginController extends GetxController {
 
 class UserController extends GetxController {
   var user = models.User(
-          name: '초기화',
+          name: '방문자',
           birthday: Timestamp(0, 0),
-          email: '',
-          profileUrl: '',
-          isMale: true)
+          email: null,
+          profileUrl: null,
+          isMale: null)
       .obs;
 
   void refreshUser() async {

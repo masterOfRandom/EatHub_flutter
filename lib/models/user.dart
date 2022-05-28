@@ -8,11 +8,11 @@ class User {
   final bool? isMale;
 
   const User({
-    required this.name,
-    required this.email,
-    required this.birthday,
-    required this.profileUrl,
-    required this.isMale,
+    this.name,
+    this.email,
+    this.birthday,
+    this.profileUrl,
+    this.isMale,
   });
 
   Map<String, dynamic> toJson() => {

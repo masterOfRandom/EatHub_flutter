@@ -23,7 +23,7 @@ class OnboardStandardForm extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          padding: const EdgeInsets.only(top: 24),
+          padding: const EdgeInsets.only(top: 72),
           color: onboardingPinkColor,
           alignment: Alignment.center,
           width: double.infinity,
@@ -46,7 +46,7 @@ class OnboardStandardForm extends StatelessWidget {
         ),
         Expanded(child: Container()),
         Container(
-          padding: const EdgeInsets.only(right: 8),
+          padding: const EdgeInsets.only(right: 32, bottom: 32),
           alignment: Alignment.centerRight,
           child: TextButton(
             child: Text(

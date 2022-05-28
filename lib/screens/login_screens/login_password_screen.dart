@@ -43,8 +43,7 @@ class _LoginPasswordScreenState extends State<LoginPasswordScreen> {
           .signIn(controller.email.value, controller.password.value);
       if (state == SignState.success) {
         FocusManager.instance.primaryFocus?.unfocus();
-        Get.back();
-        Get.back();
+        Get.offAllNamed('/');
         Get.snackbar('로그인 성공', '로그인에 성공하셨습니다!');
       } else if (state == SignState.wrongPassword) {
         errMessage = '비밀번호가 틀립니다.';
