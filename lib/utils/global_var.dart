@@ -20,7 +20,7 @@ const mainTitleTextStyle = TextStyle(
   fontFamily: 'Baloo2',
   fontWeight: FontWeight.w900,
   color: primaryRedColor,
-  fontSize: 32,
+  fontSize: 26,
 );
 const pageTitleTextStyle = TextStyle(
   fontWeight: FontWeight.w500,

@@ -18,7 +18,7 @@ class LikeScreen extends StatelessWidget {
             crossAxisSpacing: 8,
             crossAxisCount: 2,
             childAspectRatio: 3 / 4,
-            children: likedFoods.map((e) {
+            children: likedFoods.reversed.map((e) {
               return GestureDetector(
                 onTap: () {
                   Get.to(RestaurantListScreen(foodName: e.name));
@@ -37,8 +37,8 @@ class LikeScreen extends StatelessWidget {
                       Container(
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
-                            begin: Alignment(0, 1),
-                            end: Alignment(0, 0.4),
+                            begin: const Alignment(0, 1),
+                            end: const Alignment(0, 0.4),
                             colors: [
                               Colors.black.withOpacity(1),
                               Colors.black.withOpacity(0),
@@ -54,14 +54,14 @@ class LikeScreen extends StatelessWidget {
                           height: 52,
                           child: Text(
                             e.name,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: backgroundWhiteColor,
                               fontSize: 16,
                               fontWeight: FontWeight.w700,
                             ),
                           ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),

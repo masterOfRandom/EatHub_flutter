@@ -72,59 +72,20 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
             children: [
               Obx(() {
                 return RecommandText(
-                    text: '오늘은 이 메뉴 어때요?',
+                    text: '오늘은\n이 메뉴 어때요? 🤤',
                     isVisible: controller.foods.isNotEmpty);
               }),
-              const SizedBox(height: 16),
+              const SizedBox(height: 10),
               Expanded(
                 child: Container(
                   alignment: Alignment.center,
                   child: buildCards(),
                 ),
               ),
-              const SizedBox(height: 36),
+              const SizedBox(height: 16),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  GestureDetector(
-                    onTapDown: (detail) {
-                      isPressedYet = true;
-                      setState(() {});
-                    },
-                    onTapCancel: () {
-                      isPressedYet = false;
-                      setState(() {});
-                    },
-                    onTapUp: (detail) {
-                      isPressedYet = false;
-                      setState(() {});
-                    },
-                    onTap: () async {
-                      controller.statusPoint.value = 200;
-                      controller.status.value = CardStatus.yet;
-                      await Future.delayed(const Duration(milliseconds: 150));
-                      controller.yet();
-                    },
-                    child: Container(
-                      height: 88,
-                      width: 88,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: secondaryPinkColor,
-                        boxShadow: [
-                          BoxShadow(
-                              offset: const Offset(0, 10),
-                              blurRadius: 10,
-                              color: secondaryPinkColor.withOpacity(0.15)),
-                        ],
-                      ),
-                      child: Icon(
-                        isPressedYet ? TablePick.bigYet : TablePick.smallYet,
-                        color: Colors.white,
-                        size: 42,
-                      ),
-                    ),
-                  ),
                   GestureDetector(
                     onTapDown: (detail) {
                       isPressedNope = true;
@@ -145,25 +106,26 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
                       controller.nope();
                     },
                     child: Container(
-                      width: 60,
-                      height: 60,
-                      margin: const EdgeInsets.symmetric(horizontal: 28),
+                      height: 66,
+                      width: 66,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Colors.white,
+                        color: grayScaleGray3,
                         boxShadow: [
                           BoxShadow(
                               offset: const Offset(0, 10),
                               blurRadius: 10,
-                              color: secondaryPinkGrayColor.withOpacity(0.15)),
+                              color: secondaryPinkColor.withOpacity(0.15)),
                         ],
                       ),
                       child: Icon(
                         isPressedNope ? TablePick.bigx : TablePick.smallx,
-                        color: secondaryPinkGrayColor,
+                        color: Colors.white,
+                        size: 32,
                       ),
                     ),
                   ),
+                  const SizedBox(width: 16),
                   GestureDetector(
                     onTapDown: (detail) {
                       isPressedLike = true;
@@ -184,8 +146,8 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
                       controller.like();
                     },
                     child: Container(
-                      height: 88,
-                      width: 88,
+                      height: 66,
+                      width: 66,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: primaryRedColor,
@@ -201,13 +163,13 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
                             ? TablePick.bigHeart
                             : TablePick.smallHeart,
                         color: Colors.white,
-                        size: 42,
+                        size: 32,
                       ),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 16),
             ],
           ),
         ),
@@ -258,24 +220,19 @@ class FoodCardState extends State<FoodCard> {
           final isDragging = controller.isDragging.value;
           final milliseconds = isDragging ? 0 : cardReturnMillisecond;
           final position = controller.position.value;
-
-          final center = constrains.smallest.center(Offset.zero);
           final angle = controller.angle.value * pi / 180;
           final rotatedMatrix = isDragging
               ? (Matrix4.identity()
-                ..translate(center.dx, center.dy)
-                ..scale(1.05)
                 ..rotateZ(angle)
-                ..translate(-center.dx, -center.dy))
+                ..scale(1.05))
               : Matrix4.identity()
-            ..translate(center.dx, center.dy)
-            ..rotateZ(angle)
-            ..translate(-center.dx, -center.dy);
+            ..rotateZ(angle);
           final resultMatrix = rotatedMatrix
             ..translate(position.dx, position.dy);
 
           return AnimatedContainer(
             curve: Curves.easeInOut,
+            transformAlignment: FractionalOffset.center,
             transform: resultMatrix,
             duration: Duration(milliseconds: milliseconds),
             child: buildCard(true),
@@ -312,25 +269,50 @@ class FoodCardState extends State<FoodCard> {
           child: Stack(
             children: [
               ClipRRect(
-                borderRadius: const BorderRadius.vertical(top: cardRadius),
-                child: FadeInImage.memoryNetwork(
-                  placeholder: kTransparentImage,
-                  image: widget.food.imageUrl == null
-                      ? defaultFoodImageUrl
-                      : widget.food.imageUrl!,
-                  fit: BoxFit.cover,
-                  height: double.infinity,
-                  width: double.infinity,
-                ),
+                borderRadius: const BorderRadius.all(cardRadius),
+                child: Stack(children: [
+                  FadeInImage.memoryNetwork(
+                    placeholder: kTransparentImage,
+                    image: widget.food.imageUrl == null
+                        ? defaultFoodImageUrl
+                        : widget.food.imageUrl!,
+                    fit: BoxFit.cover,
+                    height: double.infinity,
+                    width: double.infinity,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: const Alignment(0, 1),
+                        end: const Alignment(0, 0.3),
+                        colors: [
+                          Colors.black.withOpacity(1),
+                          Colors.black.withOpacity(0),
+                          Colors.white.withOpacity(0),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 52,
+                      child: Text(
+                        widget.food.name!,
+                        style: const TextStyle(
+                          color: backgroundWhiteColor,
+                          fontSize: 24,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                  ),
+                ]),
               ),
               isFront ? const LikeNopeYetChecker() : Container(),
             ],
           ),
-        ),
-        BriefDescription(
-          name: widget.food.name == null ? '이름이 없습니다.' : widget.food.name!,
-          keyword:
-              widget.food.flavors == null ? ['nothing'] : widget.food.flavors!,
         ),
       ],
     );

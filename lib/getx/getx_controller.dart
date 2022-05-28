@@ -140,7 +140,7 @@ class GController extends GetxController {
     final x = position.value.dx;
     status.value = getStatusAndUpdateStatusPoint();
 
-    angle.value = 40 * x / screenSize.value.width;
+    angle.value = 15 * x / screenSize.value.width;
   }
 
   void endPosition() {
@@ -187,16 +187,17 @@ class GController extends GetxController {
         return CardStatus.like;
       } else {
         statusPoint.value = (-x) * 2;
-        return CardStatus.yet;
+        return CardStatus.nope;
       }
     } else {
       if (x < y) {
         statusPoint.value = (y - x) * 2;
-        return CardStatus.yet;
+        return CardStatus.nope;
       } else {
         if (-y > x) {
-          statusPoint.value = (-y - x) * 2;
-          return CardStatus.nope;
+          // statusPoint.value = (-y - x) * 2;
+          statusPoint.value = 0;
+          return CardStatus.yet;
         } else {
           statusPoint.value = (x + y) * 2;
           return CardStatus.like;
@@ -212,14 +213,14 @@ class GController extends GetxController {
   }
 
   void nope() {
-    angle.value = 0;
-    position.value += Offset(0, screenSize.value.height * -2);
+    angle.value = -20;
+    position.value += Offset(screenSize.value.width * -2, 0);
     nextCard();
   }
 
   void yet() {
-    angle.value = -20;
-    position.value += Offset(screenSize.value.width * -2, 0);
+    angle.value = 0;
+    position.value += Offset(0, screenSize.value.height * -2);
     nextCard();
   }
 
@@ -268,7 +269,7 @@ class GController extends GetxController {
     final nowDate = Timestamp.now().toDate();
     checkedFoods.removeWhere((element) {
       final date = element.updateTime.toDate();
-      if (element.status == CardStatus.yet &&
+      if (element.status == CardStatus.nope &&
           date.year <= nowDate.year &&
           date.month <= nowDate.month &&
           date.day < nowDate.day) {
