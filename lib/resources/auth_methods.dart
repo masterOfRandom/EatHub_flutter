@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eathub/getx/getx_controller.dart';
 import 'package:eathub/models/user.dart' as models;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -63,12 +64,17 @@ class AuthMethods {
     required final List<String> favoriteKeyword,
     required final Timestamp birthday,
     required final String profileUrl,
-    required final bool isMale,
+    required final Gender gender,
   }) async {
     try {
       await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       final user = _auth.currentUser;
+      final isMale = gender == Gender.male
+          ? true
+          : gender == Gender.female
+              ? false
+              : null;
       if (user != null) {
         final modelUser = models.User(
           birthday: birthday,

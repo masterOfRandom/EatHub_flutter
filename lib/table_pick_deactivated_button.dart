@@ -33,7 +33,7 @@ class TablePickDeactivatedButton extends StatelessWidget {
               child: Text(
                 text,
                 style: const TextStyle(
-                    fontSize: 18,
+                    fontSize: 16,
                     fontWeight: FontWeight.w700,
                     color: grayScaleGray5),
               ),

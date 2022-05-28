@@ -147,7 +147,7 @@ class _SettingListState extends State<IntroduceList> {
                                 },
                               )
                             : const TablePickDeactivatedButton(
-                                text: '최신버전입니다.', isLoading: false),
+                                text: '최신버전입니다', isLoading: false),
                         const SizedBox(height: 32),
                         TextButton(
                           onPressed: () {

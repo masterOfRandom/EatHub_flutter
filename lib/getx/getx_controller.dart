@@ -50,11 +50,17 @@ class RandomIndex {
   }
 }
 
+enum Gender {
+  male,
+  female,
+  nothing,
+}
+
 class LoginController extends GetxController {
   var email = ''.obs;
   var password = ''.obs;
   var name = ''.obs;
-  var isMale = true.obs;
+  var gender = Gender.nothing.obs;
   var yearOfBirth = Timestamp(0, 0).obs;
 
   void updateEmail({required final String email}) {
@@ -67,11 +73,11 @@ class LoginController extends GetxController {
 
   void updateProfile({
     required final String name,
-    required final bool isMale,
+    required final Gender gender,
     required final Timestamp yearOfBirth,
   }) {
     this.name.value = name;
-    this.isMale.value = isMale;
+    this.gender.value = gender;
     this.yearOfBirth.value = yearOfBirth;
   }
 }
@@ -240,7 +246,7 @@ class GController extends GetxController {
     updating = false;
   }
 
-  void addFoods() async {
+  Future<void> addFoods() async {
     // 음식을 랜덤으로 가져오려면 수정이 필요하다.
     final newFoods = await FirestoreMethods().getNewRandomFoods();
     foods.value = newFoods.reversed.toList() + foods;

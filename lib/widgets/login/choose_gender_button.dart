@@ -1,13 +1,15 @@
+import 'package:eathub/getx/getx_controller.dart';
 import 'package:eathub/utils/colors.dart';
 import 'package:flutter/material.dart';
 
-class ChooseSexButton extends StatelessWidget {
-  final bool isMale;
-  final Function(bool isMale) setMale;
-  const ChooseSexButton({Key? key, required this.isMale, required this.setMale})
+class ChooseGenderButton extends StatelessWidget {
+  final Gender gender;
+  final Function(Gender gender) setGender;
+  const ChooseGenderButton(
+      {Key? key, required this.gender, required this.setGender})
       : super(key: key);
 
-  Widget _sexContainer(String title, bool isChecked) {
+  Widget _genderContainer(String title, bool isChecked) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 200),
       curve: Curves.ease,
@@ -39,17 +41,25 @@ class ChooseSexButton extends StatelessWidget {
             Expanded(
               child: GestureDetector(
                   onTap: () {
-                    setMale(false);
+                    setGender(Gender.female);
                   },
-                  child: _sexContainer('여자', !isMale)),
+                  child: _genderContainer('여자', gender == Gender.female)),
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: 4),
             Expanded(
               child: GestureDetector(
                   onTap: () {
-                    setMale(true);
+                    setGender(Gender.male);
                   },
-                  child: _sexContainer('남자', isMale)),
+                  child: _genderContainer('남자', gender == Gender.male)),
+            ),
+            const SizedBox(width: 4),
+            Expanded(
+              child: GestureDetector(
+                  onTap: () {
+                    setGender(Gender.nothing);
+                  },
+                  child: _genderContainer('선택안함', gender == Gender.nothing)),
             ),
           ],
         ));

@@ -3,7 +3,7 @@ import 'package:eathub/widgets/etc/get_back_icon_button.dart';
 import 'package:eathub/getx/getx_controller.dart';
 import 'package:eathub/resources/auth_methods.dart';
 import 'package:eathub/utils/colors.dart';
-import 'package:eathub/widgets/login/choose_sex_button.dart';
+import 'package:eathub/widgets/login/choose_gender_button.dart';
 import 'package:eathub/widgets/login/login_input_text_field.dart';
 import 'package:eathub/widgets/login/terms_of_service.dart';
 import 'package:eathub/table_pick_elevated_button.dart';
@@ -25,7 +25,7 @@ class _LoginProfileScreenState extends State<LoginProfileScreen> {
   final nameFocusNode = FocusNode();
   final yearFocusNode = FocusNode();
 
-  bool isMale = false;
+  Gender gender = Gender.nothing;
   var isLoading = false;
   String? nameErrMessage;
   String? yearErrMessage;
@@ -45,8 +45,8 @@ class _LoginProfileScreenState extends State<LoginProfileScreen> {
     super.dispose();
   }
 
-  _setMale(bool male) {
-    isMale = male;
+  _setGender(Gender gender) {
+    this.gender = gender;
     setState(() {});
   }
 
@@ -91,7 +91,7 @@ class _LoginProfileScreenState extends State<LoginProfileScreen> {
     if (nameErrMessage == null && yearErrMessage == null) {
       controller.updateProfile(
         name: name,
-        isMale: isMale,
+        gender: gender,
         yearOfBirth: Timestamp.fromDate(DateTime(int.parse(year))),
       );
       showModalBottomSheet(
@@ -146,7 +146,10 @@ class _LoginProfileScreenState extends State<LoginProfileScreen> {
                 const SizedBox(height: 40),
                 _listTitle('성별'),
                 const SizedBox(height: 8),
-                ChooseSexButton(isMale: isMale, setMale: _setMale),
+                ChooseGenderButton(
+                  gender: gender,
+                  setGender: _setGender,
+                ),
                 const SizedBox(height: 40),
                 _listTitle('출생 연도'),
                 const SizedBox(height: 8),

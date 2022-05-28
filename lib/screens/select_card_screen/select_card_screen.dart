@@ -12,6 +12,7 @@ import 'package:eathub/widgets/select_card/empty_card.dart';
 import 'package:eathub/widgets/select_card/recommand_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class SelectCardScreen extends StatefulWidget {
   const SelectCardScreen({Key? key}) : super(key: key);
@@ -37,6 +38,7 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
   Widget buildCards() {
     return Obx(() {
       final foods = controller.foods;
+
       return foods.isEmpty
           ? const EmptyCard()
           : Stack(
@@ -309,16 +311,16 @@ class FoodCardState extends State<FoodCard> {
         Expanded(
           child: Stack(
             children: [
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.vertical(top: cardRadius),
-                  image: DecorationImage(
-                    image: Image.network(widget.food.imageUrl == null
-                            ? defaultFoodImageUrl
-                            : widget.food.imageUrl!)
-                        .image,
-                    fit: BoxFit.cover,
-                  ),
+              ClipRRect(
+                borderRadius: const BorderRadius.vertical(top: cardRadius),
+                child: FadeInImage.memoryNetwork(
+                  placeholder: kTransparentImage,
+                  image: widget.food.imageUrl == null
+                      ? defaultFoodImageUrl
+                      : widget.food.imageUrl!,
+                  fit: BoxFit.cover,
+                  height: double.infinity,
+                  width: double.infinity,
                 ),
               ),
               isFront ? const LikeNopeYetChecker() : Container(),
