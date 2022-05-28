@@ -36,78 +36,98 @@ class _MyPickScreenState extends State<MyPickScreen>
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          backgroundColor: backgroundWhiteColor,
-          title: const Text(
-            'My pick',
-            style: mainTitleTextStyle,
-          ),
-          elevation: 0,
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: backgroundWhiteColor,
+        title: const Text(
+          'My pick',
+          style: mainTitleTextStyle,
         ),
-        body: Scaffold(
-          backgroundColor: backgroundLightPinkColor,
-          appBar: AppBar(
-            elevation: 0,
-            backgroundColor: backgroundLightPinkColor,
-            flexibleSpace: TabBar(
-              onTap: (_) => setState(() {}),
-              controller: _tabController,
-              indicatorColor: primaryRedColor,
-              indicatorSize: TabBarIndicatorSize.label,
-              unselectedLabelColor: secondaryPinkGrayColor,
-              labelColor: primaryRedColor,
-              indicatorWeight: 4,
-              tabs: const [
-                Tab(
-                  height: 80,
-                  icon: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 40),
-                    child: Icon(
-                      TablePick.smallHeart,
-                    ),
-                  ),
-                ),
-                Tab(
-                  icon: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 40),
-                    child: Icon(
-                      TablePick.smallx,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          body: SafeArea(
-            child: Container(
-              color: backgroundWhiteColor,
-              padding: const EdgeInsets.all(10),
-              child: Obx(
-                () {
-                  final likedFoods = controller.checkedFoods
-                      .where((element) => element.status == CardStatus.like)
-                      .toList();
-                  final nopedFoods = controller.checkedFoods
-                      .where((element) => element.status == CardStatus.nope)
-                      .toList();
-                  return TabBarView(
-                    physics: const NeverScrollableScrollPhysics(),
-                    controller: _tabController,
-                    children: [
-                      LikeScreen(likedFoods: likedFoods),
-                      NopeScreen(nopedFoods: nopedFoods),
-                    ],
-                  );
-                },
-              ),
-            ),
-          ),
-        ),
+        elevation: 0,
       ),
+      body: Obx(() {
+        final likedFoods = controller.checkedFoods
+            .where((element) => element.status == CardStatus.like)
+            .toList();
+        return LikeScreen(
+          likedFoods: likedFoods,
+        );
+      }),
     );
+
+    // return DefaultTabController(
+    //   length: 2,
+    //   child: Scaffold(
+    //     appBar: AppBar(
+    //       centerTitle: true,
+    //       backgroundColor: backgroundWhiteColor,
+    //       title: const Text(
+    //         'My pick',
+    //         style: mainTitleTextStyle,
+    //       ),
+    //       elevation: 0,
+    //     ),
+    //     body: Scaffold(
+    //       backgroundColor: backgroundLightPinkColor,
+    //       appBar: AppBar(
+    //         elevation: 0,
+    //         backgroundColor: backgroundLightPinkColor,
+    //         flexibleSpace: TabBar(
+    //           onTap: (_) => setState(() {}),
+    //           controller: _tabController,
+    //           indicatorColor: primaryRedColor,
+    //           indicatorSize: TabBarIndicatorSize.label,
+    //           unselectedLabelColor: secondaryPinkGrayColor,
+    //           labelColor: primaryRedColor,
+    //           indicatorWeight: 4,
+    //           tabs: const [
+    //             Tab(
+    //               height: 80,
+    //               icon: Padding(
+    //                 padding: EdgeInsets.symmetric(horizontal: 40),
+    //                 child: Icon(
+    //                   TablePick.smallHeart,
+    //                 ),
+    //               ),
+    //             ),
+    //             Tab(
+    //               icon: Padding(
+    //                 padding: EdgeInsets.symmetric(horizontal: 40),
+    //                 child: Icon(
+    //                   TablePick.smallx,
+    //                 ),
+    //               ),
+    //             ),
+    //           ],
+    //         ),
+    //       ),
+    //       body: SafeArea(
+    //         child: Container(
+    //           color: backgroundWhiteColor,
+    //           padding: const EdgeInsets.all(10),
+    //           child: Obx(
+    //             () {
+    //               final likedFoods = controller.checkedFoods
+    //                   .where((element) => element.status == CardStatus.like)
+    //                   .toList();
+    //               final nopedFoods = controller.checkedFoods
+    //                   .where((element) => element.status == CardStatus.nope)
+    //                   .toList();
+    //               return TabBarView(
+    //                 physics: const NeverScrollableScrollPhysics(),
+    //                 controller: _tabController,
+    //                 children: [
+    //                   LikeScreen(likedFoods: likedFoods),
+    //                   NopeScreen(nopedFoods: nopedFoods),
+    //                 ],
+    //               );
+    //             },
+    //           ),
+    //         ),
+    //       ),
+    //     ),
+    //   ),
+    // );
   }
 }
