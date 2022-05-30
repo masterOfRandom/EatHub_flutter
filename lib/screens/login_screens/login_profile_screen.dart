@@ -6,7 +6,7 @@ import 'package:eathub/utils/colors.dart';
 import 'package:eathub/widgets/login/choose_gender_button.dart';
 import 'package:eathub/widgets/login/login_input_text_field.dart';
 import 'package:eathub/widgets/login/terms_of_service.dart';
-import 'package:eathub/table_pick_elevated_button.dart';
+import 'package:eathub/widgets/table_pick_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

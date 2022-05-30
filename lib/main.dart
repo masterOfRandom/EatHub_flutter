@@ -18,6 +18,7 @@ void main() async {
       GetPage(name: '/', page: () => const MyApp()),
     ],
     theme: ThemeData(
+      backgroundColor: backgroundWhiteColor,
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           primary: Colors.black,
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: FirebaseAuth.instance.userChanges(),
+      stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, AsyncSnapshot<User?> snapshot) {
         final user = FirebaseAuth.instance.currentUser;
         final connectionState = snapshot.connectionState;

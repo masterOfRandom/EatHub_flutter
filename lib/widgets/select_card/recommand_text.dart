@@ -17,18 +17,18 @@ class _RecommandTextState extends State<RecommandText> {
 
   @override
   Widget build(BuildContext context) {
-    final width = controller.screenSize.value.width;
+    final height = controller.screenSize.value.height;
 
     return AnimatedContainer(
       duration: const Duration(milliseconds: 200),
       curve: Curves.ease,
       alignment: Alignment.centerLeft,
-      padding: EdgeInsets.only(left: 10),
-      height: widget.isVisible ? (width > 400 ? 100 : 80) : 0,
+      padding: const EdgeInsets.only(left: 10),
+      height: widget.isVisible ? (height > 700 ? 56 : 36) : 0,
       child: Text(
         widget.text,
         style: TextStyle(
-          fontSize: width > 400 ? 32 : 28,
+          fontSize: height > 700 ? 28 : 24,
           fontWeight: FontWeight.w700,
         ),
       ),

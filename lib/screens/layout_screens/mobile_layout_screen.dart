@@ -98,7 +98,10 @@ class _MobileLayoutScreenState extends State<MobileLayoutScreen> {
         ],
       ),
       body: isLoading
-          ? const Center(child: CircularProgressIndicator())
+          ? const Center(
+              child: CircularProgressIndicator(
+              color: primaryRedColor,
+            ))
           : homeScreenItems[selectedIndex],
     );
   }

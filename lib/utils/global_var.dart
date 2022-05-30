@@ -15,7 +15,7 @@ const termsOfLocationPolicyUrl =
 
 enum CardStatus { like, yet, nope, nothing }
 
-const cardReturnMillisecond = 400;
+const cardReturnMillisecond = 700;
 const mainTitleTextStyle = TextStyle(
   fontFamily: 'Baloo2',
   fontWeight: FontWeight.w900,

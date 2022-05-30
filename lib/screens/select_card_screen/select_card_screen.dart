@@ -1,12 +1,11 @@
-import 'dart:math';
 import 'package:eathub/getx/getx_controller.dart';
 import 'package:eathub/models/food.dart';
 import 'package:eathub/presentation/table_pick_icons.dart';
+import 'package:eathub/tutorials/select_tutorial.dart';
 import 'package:eathub/utils/colors.dart';
 import 'package:eathub/utils/global_style.dart';
 import 'package:eathub/utils/global_var.dart';
 import 'package:eathub/screens/restaurant_list_screens/restaurant_list_screen.dart';
-import 'package:eathub/widgets/select_card/brief_description.dart';
 import 'package:eathub/widgets/like_nope_yet_checker.dart';
 import 'package:eathub/widgets/select_card/empty_card.dart';
 import 'package:eathub/widgets/select_card/recommand_text.dart';
@@ -26,13 +25,31 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
   bool isPressedYet = false;
   bool isPressedLike = false;
   bool isPressedNope = false;
+  bool isLoading = true;
+  final foodCardKey = GlobalKey();
+  final likeNopeButtonKey = GlobalKey();
 
   @override
   void initState() {
     super.initState();
+    init();
+  }
+
+  init() async {
     if (controller.foods.length < 3) {
-      controller.addFoods();
+      await controller.addFoods();
     }
+    final tutorial = SelectCardScreenTutorial(
+        context: context,
+        foodCard: foodCardKey,
+        likeNopeButton: likeNopeButtonKey);
+    if (controller.isFirstLogin) {
+      Future.delayed(Duration.zero, tutorial.showTutorial);
+      controller.setIsFirstLogin(false);
+    }
+    isLoading = false;
+
+    setState(() {});
   }
 
   Widget buildCards() {
@@ -55,7 +72,7 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundLightPinkColor,
+      backgroundColor: backgroundWhiteColor,
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: backgroundWhiteColor,
@@ -66,113 +83,135 @@ class _SelectCardScreenState extends State<SelectCardScreen> {
         elevation: 0,
       ),
       body: SafeArea(
-        child: Container(
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            children: [
-              Obx(() {
-                return RecommandText(
-                    text: '오늘은\n이 메뉴 어때요? 🤤',
-                    isVisible: controller.foods.isNotEmpty);
-              }),
-              const SizedBox(height: 10),
-              Expanded(
-                child: Container(
-                  alignment: Alignment.center,
-                  child: buildCards(),
+        child: !isLoading
+            ? Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+                child: Column(
+                  children: [
+                    Obx(() {
+                      return RecommandText(
+                          text: '오늘은 이 메뉴 어때요? 🤤',
+                          isVisible: controller.foods.isNotEmpty);
+                    }),
+                    const SizedBox(height: 10),
+                    Expanded(
+                      key: foodCardKey,
+                      child: Container(
+                        alignment: Alignment.center,
+                        child: buildCards(),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Row(
+                      children: [
+                        Expanded(child: Container()),
+                        Row(
+                          key: likeNopeButtonKey,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Flex(direction: Axis.horizontal),
+                            GestureDetector(
+                              onTapDown: (detail) {
+                                isPressedNope = true;
+                                setState(() {});
+                              },
+                              onTapCancel: () {
+                                isPressedNope = false;
+                                setState(() {});
+                              },
+                              onTapUp: (detail) {
+                                isPressedNope = false;
+                                setState(() {});
+                              },
+                              onTap: () async {
+                                controller.statusPoint.value = 200;
+                                controller.status.value = CardStatus.nope;
+                                await Future.delayed(
+                                    const Duration(milliseconds: 150));
+                                controller.nope();
+                              },
+                              child: Container(
+                                height: 66,
+                                width: 66,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: grayScaleGray3,
+                                  boxShadow: [
+                                    BoxShadow(
+                                        offset: const Offset(0, 10),
+                                        blurRadius: 10,
+                                        color: secondaryPinkColor
+                                            .withOpacity(0.15)),
+                                  ],
+                                ),
+                                child: Icon(
+                                  isPressedNope
+                                      ? TablePick.bigx
+                                      : TablePick.smallx,
+                                  color: Colors.white,
+                                  size: 32,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 16),
+                            GestureDetector(
+                              onTapDown: (detail) {
+                                isPressedLike = true;
+                                setState(() {});
+                              },
+                              onTapCancel: () {
+                                isPressedLike = false;
+                                setState(() {});
+                              },
+                              onTapUp: (detail) {
+                                isPressedLike = false;
+                                setState(() {});
+                              },
+                              onTap: () async {
+                                controller.statusPoint.value = 200;
+                                controller.status.value = CardStatus.like;
+                                await Future.delayed(
+                                    const Duration(milliseconds: 150));
+                                controller.like();
+                              },
+                              child: Container(
+                                height: 66,
+                                width: 66,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: primaryRedColor,
+                                  boxShadow: [
+                                    BoxShadow(
+                                        offset: const Offset(0, 10),
+                                        blurRadius: 10,
+                                        color:
+                                            primaryRedColor.withOpacity(0.15)),
+                                  ],
+                                ),
+                                child: Icon(
+                                  isPressedLike
+                                      ? TablePick.bigHeart
+                                      : TablePick.smallHeart,
+                                  color: Colors.white,
+                                  size: 32,
+                                ),
+                              ),
+                            ),
+                            Flex(direction: Axis.horizontal),
+                          ],
+                        ),
+                        Expanded(child: Container()),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                  ],
                 ),
-              ),
-              const SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    onTapDown: (detail) {
-                      isPressedNope = true;
-                      setState(() {});
-                    },
-                    onTapCancel: () {
-                      isPressedNope = false;
-                      setState(() {});
-                    },
-                    onTapUp: (detail) {
-                      isPressedNope = false;
-                      setState(() {});
-                    },
-                    onTap: () async {
-                      controller.statusPoint.value = 200;
-                      controller.status.value = CardStatus.nope;
-                      await Future.delayed(const Duration(milliseconds: 150));
-                      controller.nope();
-                    },
-                    child: Container(
-                      height: 66,
-                      width: 66,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: grayScaleGray3,
-                        boxShadow: [
-                          BoxShadow(
-                              offset: const Offset(0, 10),
-                              blurRadius: 10,
-                              color: secondaryPinkColor.withOpacity(0.15)),
-                        ],
-                      ),
-                      child: Icon(
-                        isPressedNope ? TablePick.bigx : TablePick.smallx,
-                        color: Colors.white,
-                        size: 32,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  GestureDetector(
-                    onTapDown: (detail) {
-                      isPressedLike = true;
-                      setState(() {});
-                    },
-                    onTapCancel: () {
-                      isPressedLike = false;
-                      setState(() {});
-                    },
-                    onTapUp: (detail) {
-                      isPressedLike = false;
-                      setState(() {});
-                    },
-                    onTap: () async {
-                      controller.statusPoint.value = 200;
-                      controller.status.value = CardStatus.like;
-                      await Future.delayed(const Duration(milliseconds: 150));
-                      controller.like();
-                    },
-                    child: Container(
-                      height: 66,
-                      width: 66,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: primaryRedColor,
-                        boxShadow: [
-                          BoxShadow(
-                              offset: const Offset(0, 10),
-                              blurRadius: 10,
-                              color: primaryRedColor.withOpacity(0.15)),
-                        ],
-                      ),
-                      child: Icon(
-                        isPressedLike
-                            ? TablePick.bigHeart
-                            : TablePick.smallHeart,
-                        color: Colors.white,
-                        size: 32,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-            ],
-          ),
-        ),
+              )
+            : const Center(
+                child: CircularProgressIndicator(
+                color: primaryRedColor,
+              )),
       ),
     );
   }
@@ -201,7 +240,6 @@ class FoodCardState extends State<FoodCard> {
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       final size = MediaQuery.of(context).size;
-
       controller.setScreenSize(size);
     });
   }
@@ -220,22 +258,24 @@ class FoodCardState extends State<FoodCard> {
           final isDragging = controller.isDragging.value;
           final milliseconds = isDragging ? 0 : cardReturnMillisecond;
           final position = controller.position.value;
-          final angle = controller.angle.value * pi / 180;
-          final rotatedMatrix = isDragging
-              ? (Matrix4.identity()
-                ..rotateZ(angle)
-                ..scale(1.05))
-              : Matrix4.identity()
-            ..rotateZ(angle);
-          final resultMatrix = rotatedMatrix
+          final angle = controller.angle.value / 360;
+          final scaledMatrix = isDragging
+              ? (Matrix4.identity()..scale(1.05))
+              : Matrix4.identity();
+          final resultMatrix = scaledMatrix
             ..translate(position.dx, position.dy);
 
           return AnimatedContainer(
-            curve: Curves.easeInOut,
+            curve: Curves.bounceOut,
             transformAlignment: FractionalOffset.center,
             transform: resultMatrix,
             duration: Duration(milliseconds: milliseconds),
-            child: buildCard(true),
+            child: AnimatedRotation(
+              curve: Curves.bounceOut,
+              turns: angle,
+              duration: Duration(milliseconds: milliseconds),
+              child: buildCard(true),
+            ),
           );
         });
       }),

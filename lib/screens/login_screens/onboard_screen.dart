@@ -1,7 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eathub/getx/getx_controller.dart';
 import 'package:eathub/resources/auth_methods.dart';
-import 'package:eathub/screens/login_screens/login_email_screen.dart';
 import 'package:eathub/utils/colors.dart';
 import 'package:eathub/widgets/login/onboard_standard_form.dart';
 import 'package:flutter/material.dart';
@@ -18,11 +17,13 @@ class MultiLoginScreen extends StatefulWidget {
 
 class _MultiLoginScreenState extends State<MultiLoginScreen> {
   final carouselController = CarouselController();
+  final controller = Get.put(GController());
   int checkedPageIndex = 0;
 
   @override
   void initState() {
     super.initState();
+    controller.setIsFirstLogin(true);
   }
 
   void _nextPage() {

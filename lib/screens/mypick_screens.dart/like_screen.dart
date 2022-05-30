@@ -1,6 +1,7 @@
 import 'package:eathub/models/checked_food.dart';
 import 'package:eathub/screens/restaurant_list_screens/restaurant_list_screen.dart';
 import 'package:eathub/utils/colors.dart';
+import 'package:eathub/widgets/my_pick/empty_checked_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,7 +14,7 @@ class LikeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return likedFoods.isNotEmpty
         ? GridView.count(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             mainAxisSpacing: 8,
             crossAxisSpacing: 8,
             crossAxisCount: 2,
@@ -27,7 +28,6 @@ class LikeScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                   child: Stack(
                     children: [
-                      // Container(color: Colors.red),
                       Image.network(
                         e.imageUrl,
                         fit: BoxFit.cover,
@@ -68,8 +68,6 @@ class LikeScreen extends StatelessWidget {
               );
             }).toList(),
           )
-        : const Center(
-            child: Text('좋아요한 음식이 없습니다'),
-          );
+        : const EmptyCheckedCard();
   }
 }

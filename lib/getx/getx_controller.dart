@@ -108,6 +108,11 @@ class GController extends GetxController {
   var range = 5000.obs;
   var randomIndex = RandomIndex(foodsLength: 1).obs;
   var updating = false;
+  var isFirstLogin = false;
+
+  void setIsFirstLogin(bool isFirstLogin) {
+    this.isFirstLogin = isFirstLogin;
+  }
 
   void randomIndexInit() async {
     final foodsLength = await FirestoreMethods().getFoodsLength();
@@ -140,7 +145,7 @@ class GController extends GetxController {
     final x = position.value.dx;
     status.value = getStatusAndUpdateStatusPoint();
 
-    angle.value = 15 * x / screenSize.value.width;
+    angle.value = 30 * x / screenSize.value.width;
   }
 
   void endPosition() {
@@ -270,9 +275,7 @@ class GController extends GetxController {
     checkedFoods.removeWhere((element) {
       final date = element.updateTime.toDate();
       if (element.status == CardStatus.nope &&
-          date.year <= nowDate.year &&
-          date.month <= nowDate.month &&
-          date.day < nowDate.day) {
+          date.compareTo(nowDate.subtract(const Duration(days: 3))) == -1) {
         FirestoreMethods().removeCheckedFood(element);
         return true;
       } else {

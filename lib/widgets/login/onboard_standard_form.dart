@@ -49,6 +49,7 @@ class OnboardStandardForm extends StatelessWidget {
           padding: const EdgeInsets.only(right: 32, bottom: 32),
           alignment: Alignment.centerRight,
           child: TextButton(
+            onPressed: callback,
             child: Text(
               buttonText,
               style: const TextStyle(
@@ -56,7 +57,6 @@ class OnboardStandardForm extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                   fontSize: 20),
             ),
-            onPressed: callback,
           ),
         ),
       ],

@@ -1,10 +1,14 @@
+import 'package:eathub/getx/getx_controller.dart';
 import 'package:eathub/resources/auth_methods.dart';
 import 'package:eathub/resources/firestore_methods.dart';
 import 'package:eathub/utils/colors.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 
 class WithdrawalDialog extends StatelessWidget {
-  const WithdrawalDialog({Key? key}) : super(key: key);
+  final controller = Get.put(GController());
+
+  WithdrawalDialog({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,21 +21,23 @@ class WithdrawalDialog extends StatelessWidget {
           style: TextStyle(color: grayScaleGray2)),
       actions: [
         CupertinoDialogAction(
-          child: const Text('취소'),
           textStyle: const TextStyle(
               color: grayScaleGray3, fontWeight: FontWeight.w700),
           onPressed: () => Navigator.pop(context),
+          child: const Text('취소'),
         ),
         CupertinoDialogAction(
-          child: const Text('회원탈퇴'),
           textStyle: const TextStyle(color: grayScaleGray3),
-          onPressed: () async {
+          onPressed: () {
             // 회원탈퇴
-            await FirestoreMethods().deleteUserData();
-            await AuthMethods().withDrawal();
-            Navigator.pop(context);
-            Navigator.pop(context);
+            FirestoreMethods().deleteUserData();
+            AuthMethods().withDrawal();
+            controller.removeCheckedFoods();
+            controller.removeFoods();
+            Get.back();
+            Get.back();
           },
+          child: const Text('회원탈퇴'),
         ),
       ],
     );

@@ -117,8 +117,8 @@ class AuthMethods {
     }
   }
 
-  logOut() {
-    _auth.signOut();
+  logOut() async {
+    await _auth.currentUser!.delete();
   }
 
   Future<models.User> getUserData() async {
