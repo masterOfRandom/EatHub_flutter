@@ -1,5 +1,6 @@
-import 'package:eathub/utils/colors.dart';
+import 'package:eathub/getx/getx_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class RecommandText extends StatefulWidget {
   final String text;
@@ -12,22 +13,23 @@ class RecommandText extends StatefulWidget {
 }
 
 class _RecommandTextState extends State<RecommandText> {
+  final controller = Get.put(GController());
+
   @override
   Widget build(BuildContext context) {
+    final height = controller.screenSize.value.height;
+
     return AnimatedContainer(
       duration: const Duration(milliseconds: 200),
       curve: Curves.ease,
-      alignment: Alignment.center,
-      height: widget.isVisible ? 58 : 0,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: backgroundWhiteColor,
-      ),
+      alignment: Alignment.centerLeft,
+      padding: const EdgeInsets.only(left: 10),
+      height: widget.isVisible ? (height > 700 ? 56 : 36) : 0,
       child: Text(
         widget.text,
-        style: const TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.w400,
+        style: TextStyle(
+          fontSize: height > 700 ? 28 : 24,
+          fontWeight: FontWeight.w700,
         ),
       ),
     );

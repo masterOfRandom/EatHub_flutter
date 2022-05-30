@@ -47,7 +47,7 @@ class _AroundRestaurantListState extends State<RestaurantListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundLightPinkColor,
+      backgroundColor: backgroundWhiteColor,
       appBar: AppBar(
         centerTitle: true,
         leading: const GetBackIconButton(),

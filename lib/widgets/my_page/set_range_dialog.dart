@@ -92,17 +92,17 @@ class _SetRangeDialogState extends State<SetRangeDialog> {
       ),
       actions: [
         CupertinoDialogAction(
-          child: const Text('취소'),
           textStyle: const TextStyle(color: grayScaleGray3),
           onPressed: () => Navigator.pop(context),
+          child: const Text('취소'),
         ),
         CupertinoDialogAction(
-          child: const Text('적용'),
           textStyle: const TextStyle(color: primaryRedColor),
           onPressed: () {
             controller.setRange(indexToRange(range.toInt()).toInt());
             Navigator.pop(context);
           },
+          child: const Text('적용'),
         ),
       ],
     );

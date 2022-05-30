@@ -27,19 +27,19 @@ class _DeleteFoodDialogState extends State<DeleteFoodDialog> {
           style: TextStyle(color: grayScaleGray2)),
       actions: [
         CupertinoDialogAction(
-          child: const Text('취소'),
           textStyle: const TextStyle(
               color: grayScaleGray3, fontWeight: FontWeight.w700),
           onPressed: () => Navigator.pop(context),
+          child: const Text('취소'),
         ),
         CupertinoDialogAction(
-          child: const Text('삭제'),
           textStyle: const TextStyle(color: primaryRedColor),
           onPressed: () async {
             await controller.deleteCheckedFood(widget.food);
             await controller.updateCheckedFoods();
-            Navigator.pop(context);
+            Get.back();
           },
+          child: const Text('삭제'),
         ),
       ],
     );

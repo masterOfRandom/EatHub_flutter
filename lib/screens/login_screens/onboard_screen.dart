@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:eathub/screens/login_screens/login_email_screen.dart';
+import 'package:eathub/getx/getx_controller.dart';
+import 'package:eathub/resources/auth_methods.dart';
 import 'package:eathub/utils/colors.dart';
 import 'package:eathub/widgets/login/onboard_standard_form.dart';
 import 'package:flutter/material.dart';
@@ -16,11 +17,13 @@ class MultiLoginScreen extends StatefulWidget {
 
 class _MultiLoginScreenState extends State<MultiLoginScreen> {
   final carouselController = CarouselController();
+  final controller = Get.put(GController());
   int checkedPageIndex = 0;
 
   @override
   void initState() {
     super.initState();
+    controller.setIsFirstLogin(true);
   }
 
   void _nextPage() {
@@ -80,8 +83,8 @@ class _MultiLoginScreenState extends State<MultiLoginScreen> {
         title: const Text('원하시는 메뉴가 이곳에',
             style: TextStyle(fontWeight: FontWeight.w700, fontSize: 24)),
         descript: '고르신 메뉴가 마음에 드셨나요?\n가까운 이곳은 어떠세요?',
-        callback: () => Get.to(const LoginEmailScreen()),
-        buttonText: '이메일로 시작하기',
+        callback: () => AuthMethods().signInWithAnonymous(),
+        buttonText: '시작하기',
       ),
     ];
   }
@@ -104,9 +107,7 @@ class _MultiLoginScreenState extends State<MultiLoginScreen> {
   }
 
   Widget _indicator(int index) {
-    return Container(
-      padding: const EdgeInsets.only(top: 16, left: 16),
-      width: double.infinity,
+    return SizedBox(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -120,6 +121,17 @@ class _MultiLoginScreenState extends State<MultiLoginScreen> {
           oneIndicator(index == 3),
         ],
       ),
+    );
+  }
+
+  Widget _justStartButton() {
+    return TextButton(
+      child: const Text(
+        '바로 시작하기',
+        style: TextStyle(
+            color: primaryRedColor, fontWeight: FontWeight.w700, fontSize: 16),
+      ),
+      onPressed: () => AuthMethods().signInWithAnonymous(),
     );
   }
 
@@ -146,8 +158,21 @@ class _MultiLoginScreenState extends State<MultiLoginScreen> {
                 ),
               ),
               Positioned(
-                child: _indicator(checkedPageIndex),
-              )
+                top: 0,
+                height: 72,
+                width: MediaQuery.of(context).size.width,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      _indicator(checkedPageIndex),
+                      Expanded(child: Container()),
+                      checkedPageIndex != 3 ? _justStartButton() : Container(),
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
         ),

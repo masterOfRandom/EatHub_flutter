@@ -25,12 +25,12 @@ class _EmptyCardState extends State<EmptyCard> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Flexible(
-            child: Container(),
             flex: 1,
+            child: Container(),
           ),
           Expanded(
-            child: Lottie.asset('assets/lotties/empty_card.json'),
             flex: 8,
+            child: Lottie.asset('assets/lotties/empty_card.json'),
           ),
           const SizedBox(height: 48),
           Obx(() {
@@ -41,8 +41,8 @@ class _EmptyCardState extends State<EmptyCard> {
             );
           }),
           Flexible(
-            child: Container(),
             flex: 1,
+            child: Container(),
           ),
         ],
       ),

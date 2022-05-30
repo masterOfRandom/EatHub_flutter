@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eathub/resources/auth_methods.dart';
 
 class User {
   final String? name;
@@ -8,11 +9,11 @@ class User {
   final bool? isMale;
 
   const User({
-    required this.name,
-    required this.email,
-    required this.birthday,
-    required this.profileUrl,
-    required this.isMale,
+    this.name,
+    this.email,
+    this.birthday,
+    this.profileUrl,
+    this.isMale,
   });
 
   Map<String, dynamic> toJson() => {
@@ -26,6 +27,7 @@ class User {
   static User fromSnap(DocumentSnapshot<Map<String, dynamic>> snap) {
     final snapshot = snap.data();
     if (snapshot == null) {
+      AuthMethods().logOut();
       throw 'DocumentSnapshot에 user가 없습니다.';
     }
     return User(

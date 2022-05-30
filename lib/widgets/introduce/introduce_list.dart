@@ -1,8 +1,8 @@
-import 'package:eathub/table_pick_deactivated_button.dart';
 import 'package:eathub/utils/colors.dart';
 import 'package:eathub/utils/global_var.dart';
 import 'package:eathub/widgets/my_page/withdrawal_dialog.dart';
-import 'package:eathub/table_pick_elevated_button.dart';
+import 'package:eathub/widgets/table_pick_deactivated_button.dart';
+import 'package:eathub/widgets/table_pick_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:new_version/new_version.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -153,7 +153,7 @@ class _SettingListState extends State<IntroduceList> {
                           onPressed: () {
                             showDialog(
                                 context: context,
-                                builder: (_) => const WithdrawalDialog());
+                                builder: (_) => WithdrawalDialog());
                           },
                           child: const Text('회원탈퇴',
                               style: TextStyle(

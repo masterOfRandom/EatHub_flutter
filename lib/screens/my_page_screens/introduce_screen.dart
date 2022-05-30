@@ -29,9 +29,10 @@ class _IntroduceScreenState extends State<IntroduceScreen> {
         ),
         elevation: 0,
       ),
+      backgroundColor: backgroundWhiteColor,
       body: SingleChildScrollView(
         child: Container(
-          color: backgroundLightPinkColor,
+          color: backgroundWhiteColor,
           padding: const EdgeInsets.all(20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
