@@ -36,8 +36,9 @@ class _MyPageScreenState extends State<MyPageScreen>
         ),
         elevation: 0,
       ),
+      backgroundColor: backgroundWhiteColor,
       body: Container(
-        color: backgroundLightPinkColor,
+        color: backgroundWhiteColor,
         padding: const EdgeInsets.all(20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,

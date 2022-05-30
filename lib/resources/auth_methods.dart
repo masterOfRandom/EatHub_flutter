@@ -38,6 +38,31 @@ class AuthMethods {
     }
   }
 
+  Future<SignState> signInWithAnonymous() async {
+    try {
+      await _auth.signInAnonymously();
+      const user = models.User(name: '방문자');
+      _store.collection('users').doc(_auth.currentUser!.uid).set(user.toJson());
+
+      return SignState.success;
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case "operation-not-allowed":
+          Get.showSnackbar(GetSnackBar(
+            title: e.code.toString(),
+            message: '자세한 내용은 고객메일에 문의하여 주세요',
+          ));
+          break;
+        default:
+          Get.showSnackbar(const GetSnackBar(
+            title: '알 수 없는 오류가 발생하였습니다',
+            message: '자세한 내용은 고객메일에 문의하여 주세요',
+          ));
+      }
+      return SignState.err;
+    }
+  }
+
   Future<SignState> signIn(final String email, final String password) async {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
@@ -92,8 +117,8 @@ class AuthMethods {
     }
   }
 
-  logOut() {
-    _auth.signOut();
+  logOut() async {
+    await _auth.currentUser!.delete();
   }
 
   Future<models.User> getUserData() async {

@@ -1,4 +1,4 @@
-import 'package:eathub/confirm_dialog.dart';
+import 'package:eathub/widgets/confirm_dialog.dart';
 import 'package:eathub/presentation/table_pick_icons.dart';
 import 'package:eathub/screens/my_page_screens/introduce_screen.dart';
 import 'package:eathub/utils/colors.dart';

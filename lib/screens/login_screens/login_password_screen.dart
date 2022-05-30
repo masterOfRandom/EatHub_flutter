@@ -1,10 +1,10 @@
-import 'package:eathub/confirm_dialog.dart';
+import 'package:eathub/widgets/confirm_dialog.dart';
 import 'package:eathub/widgets/etc/get_back_icon_button.dart';
 import 'package:eathub/getx/getx_controller.dart';
 import 'package:eathub/widgets/login/login_input_text_field.dart';
 import 'package:eathub/resources/auth_methods.dart';
 import 'package:eathub/utils/colors.dart';
-import 'package:eathub/table_pick_elevated_button.dart';
+import 'package:eathub/widgets/table_pick_elevated_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -43,8 +43,7 @@ class _LoginPasswordScreenState extends State<LoginPasswordScreen> {
           .signIn(controller.email.value, controller.password.value);
       if (state == SignState.success) {
         FocusManager.instance.primaryFocus?.unfocus();
-        Get.back();
-        Get.back();
+        Get.offAllNamed('/');
         Get.snackbar('로그인 성공', '로그인에 성공하셨습니다!');
       } else if (state == SignState.wrongPassword) {
         errMessage = '비밀번호가 틀립니다.';
