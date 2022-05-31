@@ -35,6 +35,11 @@ class SharedPreferencesMethods {
     pref.remove('checkedFoods');
   }
 
+  Future<bool> clearAllPref() async {
+    final pref = await SharedPreferences.getInstance();
+    return await pref.clear();
+  }
+
   updateCheckedFoods(List<CheckedFood> checkedFoods) async {
     await removeCheckedFoods();
     await setCheckedFoods(checkedFoods);

@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:eathub/getx/getx_controller.dart';
 import 'package:eathub/resources/auth_methods.dart';
+import 'package:eathub/resources/shared_preference_methods.dart';
 import 'package:eathub/utils/colors.dart';
 import 'package:eathub/widgets/login/onboard_standard_form.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,7 @@ class _MultiLoginScreenState extends State<MultiLoginScreen> {
   void initState() {
     super.initState();
     controller.setIsFirstLogin(true);
+    SharedPreferencesMethods().clearAllPref();
   }
 
   void _nextPage() {
