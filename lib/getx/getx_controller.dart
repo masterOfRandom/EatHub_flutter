@@ -92,6 +92,7 @@ class UserController extends GetxController {
       .obs;
 
   void refreshUser() async {
+    await AuthMethods().authReload();
     user.value = await AuthMethods().getUserData();
   }
 }

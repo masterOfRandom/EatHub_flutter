@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eathub/getx/getx_controller.dart';
 import 'package:eathub/models/user.dart' as models;
+import 'package:eathub/resources/firestore_methods.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
@@ -15,6 +16,13 @@ enum SignState {
 class AuthMethods {
   final _auth = FirebaseAuth.instance;
   final _store = FirebaseFirestore.instance;
+
+  Future<void> authReload() async {
+    if (_auth.currentUser == null) {
+      throw 'currentUser not exist';
+    }
+    _auth.currentUser!.reload();
+  }
 
   Future<bool> isNameOverlaped(final String name) async {
     try {
@@ -118,7 +126,8 @@ class AuthMethods {
   }
 
   logOut() async {
-    await _auth.currentUser!.delete();
+    // await _auth.signOut();
+    await AuthMethods().withDrawal();
   }
 
   Future<models.User> getUserData() async {
@@ -127,16 +136,19 @@ class AuthMethods {
     }
     final userData =
         await _store.collection('users').doc(_auth.currentUser!.uid).get();
-
     final result = models.User.fromSnap(userData);
     return result;
   }
 
-  withDrawal() async {
+  Future<void> withDrawal() async {
     if (_auth.currentUser == null) {
       throw '로그인이 안된 유저입니다.';
     }
-
-    await _auth.currentUser!.delete();
+    await FirestoreMethods().deleteUserData();
+    try {
+      await _auth.currentUser!.delete();
+    } catch (e) {
+      await _auth.signOut();
+    }
   }
 }

@@ -81,7 +81,7 @@ class FirestoreMethods {
     snap.docs[0].reference.delete();
   }
 
-  deleteUserData() async {
+  Future<void> deleteUserData() async {
     if (_user.currentUser == null) {
       throw 'no user error';
     }
