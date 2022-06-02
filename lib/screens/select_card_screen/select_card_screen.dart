@@ -270,6 +270,14 @@ class FoodCardState extends State<FoodCard> {
             transformAlignment: FractionalOffset.center,
             transform: resultMatrix,
             duration: Duration(milliseconds: milliseconds),
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                    color: const Color(0xFF828282).withOpacity(0.05),
+                    offset: const Offset(0, 10),
+                    blurRadius: 10),
+              ],
+            ),
             child: AnimatedRotation(
               curve: Curves.bounceOut,
               turns: angle,

@@ -1,6 +1,5 @@
 import 'package:eathub/getx/getx_controller.dart';
 import 'package:eathub/resources/auth_methods.dart';
-import 'package:eathub/resources/firestore_methods.dart';
 import 'package:eathub/utils/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -30,7 +29,6 @@ class WithdrawalDialog extends StatelessWidget {
           textStyle: const TextStyle(color: grayScaleGray3),
           onPressed: () {
             // 회원탈퇴
-            FirestoreMethods().deleteUserData();
             AuthMethods().withDrawal();
             controller.removeCheckedFoods();
             controller.removeFoods();

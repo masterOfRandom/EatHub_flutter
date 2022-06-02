@@ -38,6 +38,7 @@ class SelectCardScreenTutorial {
     targets.clear();
     targets.add(
       TargetFocus(
+        paddingFocus: 0,
         identify: "foodCard",
         keyTarget: foodCard,
         alignSkip: Alignment.topRight,
